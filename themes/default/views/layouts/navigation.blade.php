@@ -17,15 +17,15 @@
             <ul class="ml-auto navbar-nav">
                 <!-- Authentication Links -->
                 @guest
-                    @if (Route::has('login'))
+                    @if (Route::has('customer.login'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="nav-link" href="{{ route('customer.login') }}">{{ __('Login') }}</a>
                         </li>
                     @endif
 
-                    @if (Route::has('register'))
+                    @if (Route::has('customer.registration'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            <a class="nav-link" href="{{ route('customer.registration') }}">{{ __('Register') }}</a>
                         </li>
                     @endif
                 @else
@@ -35,13 +35,13 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('logout') }}"
+                            <a class="dropdown-item" href="{{ route('customer.logout') }}"
                                onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            <form id="logout-form" action="{{ route('customer.logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
                         </div>
