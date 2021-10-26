@@ -28,9 +28,17 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        $request->authenticate();
+        if($request->routeIs('admin.*')) {
+            $request->authenticate('admin');
+        } else {
+            $request->authenticate();
+        }
 
         $request->session()->regenerate();
+
+        if($request->routeIs('admin.*')) {
+            return redirect(RouteServiceProvider::ADMIN);
+        }
 
         return redirect(RouteServiceProvider::HOME);
     }
@@ -43,12 +51,19 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        Auth::guard('web')->logout();
+        if($request->routeIs('admin.*')) {
+            Auth::guard('admin')->logout();
+        } else {
+            Auth::guard('web')->logout();
+        }
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        if($request->routeIs('admin.*')) {
+            return redirect()->route('admin.login');
+        }
+        return redirect()->route('customer.login');
     }
 }

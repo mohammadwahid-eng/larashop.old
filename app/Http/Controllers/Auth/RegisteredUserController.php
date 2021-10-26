@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Admin;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -32,6 +33,25 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+        if($request->routeIs('admin.*')) {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:admins',
+                'password' => 'required|string|confirmed|min:8',
+            ]);
+    
+            Auth::guard('admin')->login($admin = Admin::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]));
+    
+            event(new Registered($admin));
+    
+            return redirect(RouteServiceProvider::ADMIN);
+        }
+
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
