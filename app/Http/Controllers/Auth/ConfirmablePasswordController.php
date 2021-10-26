@@ -29,7 +29,13 @@ class ConfirmablePasswordController extends Controller
      */
     public function store(Request $request)
     {
-        if (!Auth::guard('web')->validate([
+        $guard = 'web';
+
+        if($request->routeIs('admin.*')) {
+            $guard = 'admin';
+        }
+
+        if (!Auth::guard($guard)->validate([
             'email' => $request->user()->email,
             'password' => $request->password,
         ])) {
@@ -39,6 +45,10 @@ class ConfirmablePasswordController extends Controller
         }
 
         $request->session()->put('auth.password_confirmed_at', time());
+
+        if($request->routeIs('admin.*')) {
+            return redirect()->intended(RouteServiceProvider::ADMIN);
+        }
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

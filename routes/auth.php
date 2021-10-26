@@ -34,9 +34,9 @@ Route::prefix('customer')->name('customer.')->middleware(['theme:default'])->gro
         Route::get('/confirm-password', [ConfirmablePasswordController::class, 'show'])->name('password.confirm');
         Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store']);
 
-        Route::get('/account', function () {
-            return view('home');
-        })->name('home');
+        Route::middleware(['verified'])->group(function () {
+            Route::view('/', 'home')->name('home');
+        });
 
         Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
     });
@@ -68,9 +68,9 @@ Route::prefix('admin')->name('admin.')->middleware(['theme:admin'])->group(funct
         Route::get('/confirm-password', [ConfirmablePasswordController::class, 'show'])->name('password.confirm');
         Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store']);
 
-        Route::get('/dashboard', function () {
-            return view('home');
-        })->name('home');
+        Route::middleware(['verified'])->group(function () {
+            Route::view('/', 'home')->name('home');
+        });
 
         Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
     });
