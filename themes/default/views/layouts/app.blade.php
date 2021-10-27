@@ -27,7 +27,6 @@
 
                 <!--Body Content-->
                 <div id="page-content">
-                    
                     <div class="page section-header text-center">
                         <div class="page-title">
                             <div class="wrapper">

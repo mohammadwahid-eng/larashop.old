@@ -385,7 +385,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder { opacity:1; -ms-fil
   11. Section
 ========================================================================*/
 .section { padding-top:35px; padding-bottom:35px; }
-.section-header { margin-bottom:35px; }
+.section-header { }
 .pb-section { padding-bottom:35px; }
 .pt-section { padding-top:35px; }
 .no-pb-section { padding-bottom:0; }
@@ -748,7 +748,7 @@ a.quick-view { margin-bottom:5px !important; }
 /*======================================================================
   20. Bredcrumb
 ========================================================================*/
-.bredcrumbWrap { background:#f9f9f9; padding:10px 0; margin:0 0 30px; border-top:solid 1px #e8e9eb; }
+.bredcrumbWrap { background:#f9f9f9; padding:10px 0; margin:0 0 30px; }
 .breadcrumbs a, .breadcrumbs span { color:#111; display:inline-block; padding:0 7px 0 0; margin-right:7px; font-size:12px; }
 
 /*======================================================================

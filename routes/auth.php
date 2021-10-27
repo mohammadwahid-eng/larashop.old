@@ -34,10 +34,6 @@ Route::prefix('customer')->middleware(['theme:default'])->group(function() {
         Route::get('/confirm-password', [ConfirmablePasswordController::class, 'show'])->name('customer.password.confirm');
         Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store']);
 
-        Route::middleware(['verified'])->group(function () {
-            Route::view('/', 'customers.index')->name('customer.home');
-        });
-
         Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('customer.logout');
     });
 
