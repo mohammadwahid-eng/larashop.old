@@ -48,11 +48,11 @@
                     </form>
 
                     <div class="text-center mt-5 text-small">
-                        &copy; <a href="{{ config('app.url') }}" class="text-reset">{{ config('app.name') }}</a>. All Rights Reserved
+                        &copy; {{ date('Y') }} <a href="{{ config('app.url') }}" class="text-reset">{{ config('app.name') }}</a>. {{ __('All Rights Reserved') }}.
                         <div class="mt-2">
-                            <a href="#">Privacy Policy</a>
+                            <a href="#">{{ __('Privacy Policy') }}</a>
                             <div class="bullet"></div>
-                            <a href="#">Terms of Service</a>
+                            <a href="#">{{ __('Terms of Service') }}</a>
                         </div>
                     </div>
                 </div>
@@ -71,8 +71,3 @@
         </div>
     </section>
 </x-app-layout>
-
-
-@push('css_lib')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/4.9.2/bootstrap-social.min.css">
-@endpush
