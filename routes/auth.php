@@ -74,7 +74,7 @@ Route::prefix('admin')->name('admin.')->middleware(['theme:admin'])->group(funct
         Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store']);
 
         Route::middleware(['verified'])->group(function() {
-            Route::view('/', 'index')->name('home');
+            Route::view('/', 'dashboard.index')->name('home');
         });
 
         Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');

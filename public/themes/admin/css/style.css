@@ -2795,7 +2795,7 @@ body.layout-3 .main-footer {
       display: flex;
       align-items: center;
       height: 50px;
-      padding: 0 20px;
+      padding: 0 10px;
       width: 100%;
       letter-spacing: .3px;
       color: #78828a;
@@ -2806,7 +2806,7 @@ body.layout-3 .main-footer {
         margin-top: 2px; }
       .main-sidebar .sidebar-menu li a i {
         width: 28px;
-        margin-right: 20px;
+        margin-right: 10px;
         text-align: center; }
       .main-sidebar .sidebar-menu li a span {
         margin-top: 3px;
@@ -2845,7 +2845,7 @@ body.layout-3 .main-footer {
       .main-sidebar .sidebar-menu li ul.dropdown-menu li a {
         color: #868e96;
         height: 35px;
-        padding-left: 65px;
+        padding-left: 48px;
         font-weight: 400; }
         .main-sidebar .sidebar-menu li ul.dropdown-menu li a:hover {
           color: #6777ef;
