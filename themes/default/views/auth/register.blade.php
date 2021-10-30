@@ -43,6 +43,16 @@
                                     <input id="password-confirm" type="password" class="form-control rounded-0 @error('password-confirm') is-invalid @enderror" name="password_confirmation" required autocomplete="new-password">
                                 </div>
                             </div>
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group form-check">
+                                    <label class="form-check-label padding-15px-left">
+                                        <input type="checkbox" name="agree" class="form-check-input @error('agree') is-invalid @enderror" required {{ old('agree') ? 'checked' : '' }}> {{ __('I agree with the') }} <a href="{{ route('terms') }}">{{ __('Terms of Service') }}</a>
+                                        @error('agree')
+                                            <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+                                        @enderror
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="text-center col-12 col-sm-12 col-md-12 col-lg-12">

@@ -39,11 +39,14 @@
                                     <label for="password">{{ __('Confirm Password') }}</label>
                                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                                 </div>
-
+                                
                                 <div class="form-group">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" name="agree" class="custom-control-input" id="agree" required>
-                                        <label class="custom-control-label" for="agree">{{ __('I agree with the terms and conditions') }}</label>
+                                        <input type="checkbox" name="agree" class="custom-control-input @error('agree') is-invalid @enderror" id="agree" required {{ old('agree') ? 'checked' : '' }}>
+                                        <label class="custom-control-label" for="agree">{{ __('I agree with the') }} <a href="{{ route('terms') }}">{{ __('Terms of Service') }}</a></label>
+                                        @error('agree')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
 

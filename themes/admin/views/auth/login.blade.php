@@ -25,13 +25,7 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-
-                        <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" name="remember" class="custom-control-input" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                <label class="custom-control-label" for="remember">{{ __('Remember Me') }}</label>
-                            </div>
-                        </div>
+                        
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary btn-lg btn-icon icon-right w-100">{{ __('Login') }}</button>
                         </div>
@@ -50,9 +44,9 @@
                     <div class="text-center mt-5 text-small">
                         &copy; {{ date('Y') }} <a href="{{ config('app.url') }}" class="text-reset">{{ config('app.name') }}</a>. {{ __('All Rights Reserved') }}.
                         <div class="mt-2">
-                            <a href="#">{{ __('Privacy Policy') }}</a>
+                            <a href="{{ route('privacy') }}">{{ __('Privacy Policy') }}</a>
                             <div class="bullet"></div>
-                            <a href="#">{{ __('Terms of Service') }}</a>
+                            <a href="{{ route('terms') }}">{{ __('Terms of Service') }}</a>
                         </div>
                     </div>
                 </div>

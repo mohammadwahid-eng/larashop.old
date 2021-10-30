@@ -33,12 +33,6 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                <div class="form-group form-check d-flex align-items-center">
-                                    <input type="checkbox" class="form-check-input mt-0" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="remember">{{ __('Remember Me') }}</label>
-                                </div>                                
-                            </div>
                         </div>
                         <div class="row">
                             <div class="text-center col-12 col-sm-12 col-md-12 col-lg-12">

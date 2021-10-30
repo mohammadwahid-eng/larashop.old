@@ -35,14 +35,15 @@ class RegisteredUserController extends Controller
     {
         if($request->routeIs('admin.*')) {
             $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:admins',
+                'name'     => 'required|string|max:255',
+                'email'    => 'required|string|email|max:255|unique:admins',
                 'password' => 'required|string|confirmed|min:8',
+                'agree'    => 'required',
             ]);
     
             Auth::guard('admin')->login($admin = Admin::create([
-                'name' => $request->name,
-                'email' => $request->email,
+                'name'     => $request->name,
+                'email'    => $request->email,
                 'password' => Hash::make($request->password),
             ]));
     
@@ -53,14 +54,15 @@ class RegisteredUserController extends Controller
 
 
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|confirmed|min:8',
+            'agree'    => 'required',
         ]);
 
         Auth::login($user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'name'     => $request->name,
+            'email'    => $request->email,
             'password' => Hash::make($request->password),
         ]));
 
