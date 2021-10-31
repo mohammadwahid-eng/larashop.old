@@ -21,4 +21,12 @@ class Shop extends Model
         'rating',
         'admin_id',
     ];
+
+    /**
+     * Get the admin that owns the shop.
+     */
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class);
+    }
 }

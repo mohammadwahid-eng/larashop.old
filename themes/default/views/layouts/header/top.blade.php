@@ -42,7 +42,7 @@
                         @endif
                     @else
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ __('Hello') }}, {{ Auth::user()->name }}</a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ __('Hello') }}, {{ Auth::user()->first_name }}</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#">Action</a>
                                 <a class="dropdown-item" href="#">Another action</a>

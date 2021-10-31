@@ -17,7 +17,7 @@
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label for="password">{{ __('Password') }}</label>
-                                    <input id="password" type="password" class="form-control rounded-0 @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                    <input id="password" type="password" class="form-control rounded-0 @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" autofocus>
                                     @error('password')
                                         <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                                     @enderror

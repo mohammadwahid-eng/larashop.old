@@ -70,4 +70,11 @@ class Admin extends Authenticatable implements MustVerifyEmail
         $this->notify(new EmailVerification());
     }
 
+    /**
+     * Get the shop associated with the admin.
+     */
+    public function shop() {
+        return $this->hasOne(Shop::class);
+    }
+
 }

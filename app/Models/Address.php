@@ -24,4 +24,11 @@ class Address extends Model
         'user_id',
     ];
 
+    /**
+     * Get the user that owns the address.
+     */
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
 }

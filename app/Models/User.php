@@ -66,4 +66,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendEmailVerificationNotification() {
         $this->notify(new EmailVerification());
     }
+
+    /**
+     * Get the addresses for the user.
+     */
+    public function addresses() {
+        return $this->hasMany(Address::class);
+    }
 }
