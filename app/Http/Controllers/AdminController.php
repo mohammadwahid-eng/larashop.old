@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -13,7 +14,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        $users = Admin::all();
+        return view('users.index', compact(['users']));
     }
 
     /**
@@ -23,7 +25,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.addnew');
     }
 
     /**
@@ -45,7 +47,7 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('users.show');
     }
 
     /**
@@ -56,7 +58,7 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('users.edit');
     }
 
     /**

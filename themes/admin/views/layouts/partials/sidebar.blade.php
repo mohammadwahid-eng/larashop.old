@@ -8,40 +8,20 @@
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">{{ __('Navigation') }}</li>
-            <li>
-                <a class="nav-link" href="{{ route('admin.home') }}"><i class="fas fa-home"></i><span>{{ __('Dashboard') }}</span></a>
-            </li>
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-cubes"></i> <span>Products</span></a>
-                <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="#">All Products</a></li>
-                    <li><a class="nav-link" href="#">Add New</a></li>
-                    <li><a class="nav-link" href="#">Categories</a></li>
-                    <li><a class="nav-link" href="#">Tags</a></li>
-                    <li><a class="nav-link" href="#">Attributes</a></li>
-                </ul>
-            </li>
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-store"></i> <span>Shop</span></a>
-                <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="#">Orders</a></li>
-                    <li><a class="nav-link" href="#">Coupons</a></li>
-                    <li><a class="nav-link" href="#">Settings</a></li>
-                </ul>
-            </li>
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-wallet"></i> <span>Payment Getways</span></a>
-                <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="#">Stripe</a></li>
-                    <li><a class="nav-link" href="#">PayPal</a></li>
-                </ul>
-            </li>
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-sliders-h"></i> <span>Settings</span></a>
-                <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="#">General</a></li>
-                </ul>
-            </li>
+            @foreach (config('larashop.admin.sidebar') as $item)
+                @if (count($item['children']) === 0)
+                    <li class="nav-item {{ request()->routeIs($item['url']) ? 'active' : '' }}"><a href="{{ route($item['url']) }}" class="nav-link"><i class="{{ $item['icon'] }}"></i> {{ $item['name'] }}</a></li>
+                @else
+                    <li class="nav-item dropdown">
+                        <a href="{{ route($item['url']) }}" class="nav-link has-dropdown"><i class="{{ $item['icon'] }}"></i>{{ $item['name'] }}</a>
+                        <ul class="dropdown-menu">
+                            @foreach ($item['children'] as $childItem)
+                                <li {{ request()->routeIs($item['url']) ? 'active' : '' }}><a href="{{ route($childItem['url']) }}" class="nav-link">{{ $childItem['name'] }}</a></li>
+                            @endforeach
+                        </ul>
+                    </li>
+                @endif
+            @endforeach
         </ul>
     </aside>
 </div>

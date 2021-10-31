@@ -9,19 +9,24 @@
 
         <title>{{ config('app.name', 'Larashop') }}</title>
 
+        <!-- Favicon -->
+        <link rel="icon" href="{{ asset('themes/admin/img/favicon.svg') }}">
+
         <!-- General CSS Files -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
 
         <!-- CSS Libraries -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-        @stack('css_lib')
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/1.11.3/dataTables.bootstrap4.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-select-bs4/1.3.3/select.bootstrap4.min.css">
+        @yield('css_lib')
 
         <!-- Template CSS -->
         <link rel="stylesheet" href="{{ asset('themes/admin/css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('themes/admin/css/components.css') }}">
 
-        @stack('head')
+        @yield('head')
     </head>
 
     <body>
@@ -44,13 +49,16 @@
         </script>
 
         <!-- JS Libraies -->
-        @stack('js_lib')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/1.11.3/dataTables.bootstrap4.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-select-bs4/1.3.3/select.bootstrap4.min.js"></script>
 
         <!-- Template JS File -->
         <script src="{{ asset('themes/admin/js/scripts.js') }}"></script>
         <script src="{{ asset('themes/admin/js/custom.js') }}"></script>
+        <script src="{{ asset('themes/admin/js/page/modules-datatables.js') }}"></script>
 
         <!-- Page Specific JS File -->
-        @stack('footer')
+        @yield('footer')
     </body>
 </html>

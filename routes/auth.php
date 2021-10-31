@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -75,6 +76,10 @@ Route::prefix('admin')->name('admin.')->middleware(['theme:admin'])->group(funct
 
         Route::middleware(['verified'])->group(function() {
             Route::view('/', 'dashboard.index')->name('home');
+            Route::prefix('products')->name('products.')->group(function() {
+                Route::view('/', 'products.index')->name('home');
+            });
+            Route::resource('users', AdminController::class);
         });
 
         Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
