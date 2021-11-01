@@ -2,7 +2,7 @@
     {{ __("Shop") }}
 @endsection
 
-<x-app-layout>
+<x-guest-layout>
     <div class="container">
         <div class="row">
             <!--Sidebar-->

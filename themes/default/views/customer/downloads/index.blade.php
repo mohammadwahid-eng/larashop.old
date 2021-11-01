@@ -1,3 +1,3 @@
-<x-customer-layout>
+<x-app-layout>
     Downloads
-</x-customer-layout>
+</x-app-layout>

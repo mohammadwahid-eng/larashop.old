@@ -1,3 +1,3 @@
-<x-customer-layout>
+<x-app-layout>
     Orders
-</x-customer-layout>
+</x-app-layout>

@@ -2,7 +2,7 @@
     {{ __('Verify Your Email Address') }}
 @endsection
 
-<x-app-layout>
+<x-guest-layout>
     <div class="container">
         <div class="row">
             <div class="col-12 col-sm-12 col-md-6 col-lg-6 main-col offset-md-3">
@@ -21,4 +21,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-guest-layout>

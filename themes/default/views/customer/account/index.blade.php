@@ -1,3 +1,3 @@
-<x-customer-layout>
+<x-app-layout>
     Account
-</x-customer-layout>
+</x-app-layout>

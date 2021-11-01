@@ -16,7 +16,7 @@
                         <a href="{{ route($item['url']) }}" class="nav-link has-dropdown"><i class="{{ $item['icon'] }}"></i>{{ $item['name'] }}</a>
                         <ul class="dropdown-menu">
                             @foreach ($item['children'] as $childItem)
-                                <li {{ request()->routeIs($item['url']) ? 'active' : '' }}><a href="{{ route($childItem['url']) }}" class="nav-link">{{ $childItem['name'] }}</a></li>
+                                <li class="{{ request()->routeIs($item['url']) ? 'active' : '' }}"><a href="{{ route($childItem['url']) }}" class="nav-link">{{ $childItem['name'] }}</a></li>
                             @endforeach
                         </ul>
                     </li>

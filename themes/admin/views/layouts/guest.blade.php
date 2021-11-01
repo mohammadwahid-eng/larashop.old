@@ -18,8 +18,6 @@
 
         <!-- CSS Libraries -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/1.11.3/dataTables.bootstrap4.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-select-bs4/1.3.3/select.bootstrap4.min.css">
         @yield('css_lib')
 
         <!-- Template CSS -->
@@ -49,14 +47,11 @@
         </script>
 
         <!-- JS Libraies -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/1.11.3/dataTables.bootstrap4.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-select-bs4/1.3.3/select.bootstrap4.min.js"></script>
+        @yield('js_lib')
 
         <!-- Template JS File -->
         <script src="{{ asset('themes/admin/js/scripts.js') }}"></script>
         <script src="{{ asset('themes/admin/js/custom.js') }}"></script>
-        <script src="{{ asset('themes/admin/js/page/modules-datatables.js') }}"></script>
 
         <!-- Page Specific JS File -->
         @yield('footer')

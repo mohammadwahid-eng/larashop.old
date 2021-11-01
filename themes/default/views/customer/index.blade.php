@@ -1,3 +1,3 @@
-<x-customer-layout>
+<x-app-layout>
     Dashboard
-</x-customer-layout>
+</x-app-layout>

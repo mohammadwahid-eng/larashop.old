@@ -1,3 +1,3 @@
-<x-customer-layout>
+<x-app-layout>
     Addresses
-</x-customer-layout>
+</x-app-layout>
