@@ -24,7 +24,7 @@ return [
                     ],
                     [
                         'name'   => 'Categories',
-                        'url'    => 'admin.home',
+                        'url'    => 'admin.products.categories.index',
                     ],
                     [
                         'name'   => 'Tags',

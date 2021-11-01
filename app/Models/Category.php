@@ -24,4 +24,17 @@ class Category extends Model
         'menu',
         'image',
     ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'parent_id' => 'integer',
+        'featured'  => 'integer',
+        'menu'      => 'integer',
+    ];
+
+
 }

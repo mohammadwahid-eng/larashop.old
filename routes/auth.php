@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('customer')->name('customer.')->middleware(['theme:default'])->group(function() {
@@ -78,6 +79,7 @@ Route::prefix('admin')->name('admin.')->middleware(['theme:admin'])->group(funct
             Route::view('/', 'dashboard.index')->name('home');
             Route::prefix('products')->name('products.')->group(function() {
                 Route::view('/', 'products.index')->name('home');
+                Route::resource('categories', CategoryController::class);
             });
             Route::resource('users', AdminController::class);
         });
