@@ -1,8 +1,10 @@
+@extends('layouts.guest')
+
 @section('title')
-    {{ __("Checkout") }}
+    {{ __('Checkout') }}
 @endsection
 
-<x-guest-layout>
+@section('content')
     <div class="container">
         <div class="row">
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-3">
@@ -298,4 +300,4 @@
             </div>
         </div>
     </div>    
-</x-guest-layout>
+@endsection

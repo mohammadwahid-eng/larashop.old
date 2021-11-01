@@ -1,3 +1,9 @@
-<x-app-layout>
+@extends('layouts.app')
+
+@section('title')
+    {{ __('Payment Methods') }}
+@endsection
+
+@section('content')
     Payment Methods
-</x-app-layout>
+@endsection

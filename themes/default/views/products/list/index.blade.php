@@ -1,8 +1,10 @@
+@extends('layouts.guest')
+
 @section('title')
     {{ __("Shop") }}
 @endsection
 
-<x-guest-layout>
+@section('content')
     <div class="container">
         <div class="row">
             <!--Sidebar-->

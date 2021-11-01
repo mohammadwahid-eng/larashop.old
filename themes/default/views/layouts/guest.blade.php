@@ -18,7 +18,7 @@
 		<!-- Main Style CSS -->
 		<link rel="stylesheet" href="{{ asset('themes/default/css/style.css') }}">
 		<link rel="stylesheet" href="{{ asset('themes/default/css/responsive.css') }}">
-        @yield('head')
+        @stack('head')
 	</head>
 	<body>
         <div id="app">
@@ -41,7 +41,7 @@
                         </div>
                     </div>
 
-                    {{ $slot }}
+                    @yield('content')
                 </div>
                 <!--End Body Content-->
                 
@@ -66,6 +66,6 @@
         <script src="{{ asset('themes/default/js/lazysizes.js') }}"></script>
         <script src="{{ asset('themes/default/js/main.js') }}"></script>
         
-        @yield('footer')
+        @stack('footer')
 	</body>
 </html>

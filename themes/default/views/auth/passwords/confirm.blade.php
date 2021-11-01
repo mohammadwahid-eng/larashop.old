@@ -1,8 +1,10 @@
+@extends('layouts.guest')
+
 @section('title')
     {{ __('Confirm Password') }}
 @endsection
 
-<x-guest-layout>
+@section('content')
     <div class="container">
         <div class="row">
             <div class="col-12 col-sm-12 col-md-6 col-lg-6 main-col offset-md-3">
@@ -39,4 +41,4 @@
             </div>
         </div>
     </div>
-</x-guest-layout>
+@endsection

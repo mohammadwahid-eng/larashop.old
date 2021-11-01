@@ -1,3 +1,9 @@
-<x-app-layout>
+@extends('layouts.app')
+
+@section('title')
+    {{ __('Addresses') }}
+@endsection
+
+@section('content')
     Addresses
-</x-app-layout>
+@endsection
