@@ -18,18 +18,18 @@
 
         <!-- CSS Libraries -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-        @yield('css_lib')
+        @stack('css_lib')
 
         <!-- Template CSS -->
         <link rel="stylesheet" href="{{ asset('themes/admin/css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('themes/admin/css/components.css') }}">
 
-        @yield('head')
+        @stack('head')
     </head>
 
     <body>
         <div id="app">
-            {{ $slot }}
+            @yield('content')
         </div>
 
         <!-- General JS Scripts -->
@@ -47,13 +47,13 @@
         </script>
 
         <!-- JS Libraies -->
-        @yield('js_lib')
+        @stack('js_lib')
 
         <!-- Template JS File -->
         <script src="{{ asset('themes/admin/js/scripts.js') }}"></script>
         <script src="{{ asset('themes/admin/js/custom.js') }}"></script>
 
         <!-- Page Specific JS File -->
-        @yield('footer')
+        @stack('footer')
     </body>
 </html>

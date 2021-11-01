@@ -1,3 +1,9 @@
-<x-app-layout>
+@extends('layouts.app')
+
+@section('title')
+    {{ __('Settings') }}
+@endsection
+
+@section('content')
     Settings
-</x-app-layout>
+@endsection

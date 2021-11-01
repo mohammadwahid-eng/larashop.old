@@ -1,3 +1,9 @@
-<x-app-layout>
+@extends('layouts.app')
+
+@section('title')
+    {{ __('Add Coupon') }}
+@endsection
+
+@section('content')
     Add Coupon
-</x-app-layout>
+@endsection

@@ -1,3 +1,9 @@
-<x-app-layout>
+@extends('layouts.app')
+
+@section('title')
+    {{ __('All User') }}
+@endsection
+
+@section('content')
     View user
-</x-app-layout>
+@endsection

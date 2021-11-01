@@ -1,7 +1,9 @@
+@extends('layouts.app')
+
 @section('title')
 	{{ __('Dashboard') }}
 @endsection
 
-<x-app-layout>
+@section('content')
 	Dashboard contents
-</x-app-layout>
+@endsection

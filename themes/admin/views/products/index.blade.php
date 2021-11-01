@@ -1,8 +1,10 @@
+@extends('layouts.app')
+
 @section('title')
     {{ __('All Products') }}
 @endsection
 
-<x-app-layout>
+@section('content')
     <div class="table-responsive">
         <table class="table table-striped" id="table-2">
             <thead>
@@ -47,4 +49,4 @@
             </tbody>
         </table>
     </div>
-</x-app-layout>
+@endsection

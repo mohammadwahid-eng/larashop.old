@@ -1,3 +1,9 @@
-<x-app-layout>
+@extends('layouts.app')
+
+@section('title')
+    {{ __('All Customers') }}
+@endsection
+
+@section('content')
     All Customers
-</x-app-layout>
+@endsection

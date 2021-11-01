@@ -1,4 +1,5 @@
-<x-guest-layout>
+@extends('layouts.guest')
+@section('content')
     <section class="section">
         <div class="container mt-5">
             <div class="row">
@@ -48,4 +49,4 @@
             </div>
         </div>
     </section>
-</x-guest-layout>
+@endsection

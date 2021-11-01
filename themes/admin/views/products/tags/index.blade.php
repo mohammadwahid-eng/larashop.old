@@ -1,3 +1,9 @@
-<x-app-layout>
+@extends('layouts.app')
+
+@section('title')
+    {{ __('All Tags') }}
+@endsection
+
+@section('content')
     All Tags
-</x-app-layout>
+@endsection

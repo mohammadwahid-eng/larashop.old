@@ -1,13 +1,15 @@
+@extends('layouts.app')
+
 @section('title')
     {{ __('All User') }}
 @endsection
 
-@section('css_lib')
+@push('css_lib')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/1.11.3/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-select-bs4/1.3.3/select.bootstrap4.min.css">
-@endsection
+@endpush
 
-<x-app-layout>
+@section('content')
     <div class="table-responsive">
         <table class="table table-striped" id="table-2">
             <thead>
@@ -44,14 +46,14 @@
             </tbody>
         </table>
     </div>
-</x-app-layout>
+@endsection
 
-@section('js_lib')
+@push('js_lib')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/1.11.3/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-select-bs4/1.3.3/select.bootstrap4.min.js"></script>
-@endsection
+@endpush
 
-@section('footer')
+@push('footer')
     <script src="{{ asset('themes/admin/js/page/modules-datatables.js') }}"></script>
-@endsection
+@endpush
