@@ -25,8 +25,15 @@ class Shop extends Model
     /**
      * Get the admin that owns the shop.
      */
-    public function admin()
+    public function owner()
     {
         return $this->belongsTo(Admin::class);
+    }
+
+    /**
+     * The customers that belong to the shop.
+     */
+    public function customers() {
+        return $this->belongsToMany(User::class);
     }
 }

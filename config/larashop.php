@@ -27,10 +27,6 @@ return [
                         'url'    => 'admin.products.categories.index',
                     ],
                     [
-                        'name'   => 'Tags',
-                        'url'    => 'admin.home',
-                    ],
-                    [
                         'name'   => 'Attributes',
                         'url'    => 'admin.home',
                     ],
@@ -39,8 +35,12 @@ return [
             [
                 'name'   => 'Shop',
                 'icon'   => 'fas fa-store',
-                'url'    => 'admin.home',
+                'url'    => 'admin.shops.index',
                 'children' => [
+                    [
+                        'name'   => 'All Shops',
+                        'url'    => 'admin.shops.index',
+                    ],
                     [
                         'name'   => 'Orders',
                         'url'    => 'admin.home',
@@ -70,25 +70,6 @@ return [
                     ],
                     [
                         'name'   => 'PayPal',
-                        'url'    => 'admin.home',
-                    ],
-                ]
-            ],            
-            [
-                'name'   => 'Users',
-                'icon'   => 'fas fa-user',
-                'url'    => 'admin.users.index',
-                'children' => [
-                    [
-                        'name'   => 'All Users',
-                        'url'    => 'admin.users.index',
-                    ],
-                    [
-                        'name'   => 'Add New',
-                        'url'    => 'admin.users.create',
-                    ],
-                    [
-                        'name'   => 'My Profile',
                         'url'    => 'admin.home',
                     ],
                 ]

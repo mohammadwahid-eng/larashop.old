@@ -5,8 +5,8 @@
 @endsection
 
 @push('css_lib')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/1.11.3/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-select-bs4/1.3.3/select.bootstrap4.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/1.11.3/dataTables.bootstrap4.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-select-bs4/1.3.3/select.bootstrap4.min.css">
 @endpush
 
 @section('content')
@@ -75,13 +75,13 @@
 							</div>
 							<div class="form-group">
 								<label for="image">{{ __('Image') }}</label>
-                                <div class="custom-file">
+								<div class="custom-file">
 									<input type="file" id="image" class="custom-file-input h-100 @error('image') is-invalid @enderror" name="image" accept=".jpg, .jpeg, .png, .gif, .svg">
-                                    <label class="custom-file-label" for="image">{{ __('Choose file') }}</label>
-                                    @error('image')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
+									<label class="custom-file-label" for="image">{{ __('Choose file') }}</label>
+									@error('image')
+										<div class="invalid-feedback">{{ $message }}</div>
+									@enderror
+								</div>
 							</div>
 							<button type="submit" class="btn btn-primary">{{ __('Add New Category') }}</button>
 						</form>
@@ -90,7 +90,7 @@
 			</div>
 			<div class="col-lg-8">
 				<div class="table-responsive">
-					<table class="table table-striped" id="category_table">
+					<table class="table table-striped" data-toggle="datatable">
 						<thead>
 							<tr>
 								<th class="text-center">
@@ -148,17 +148,11 @@
 @endsection
 
 @push('js_lib')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/1.11.3/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-select-bs4/1.3.3/select.bootstrap4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/1.11.3/dataTables.bootstrap4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-select-bs4/1.3.3/select.bootstrap4.min.js"></script>
 @endpush
 
 @push('footer')
-    <script src="{{ asset('themes/admin/js/page/modules-datatables.js') }}"></script>
-	<script>
-		$("#category_table").dataTable({
-			autoWidth: true,
-			ordering: false,
-		});
-	</script>
+	<script src="{{ asset('themes/admin/js/page/modules-datatables.js') }}"></script>
 @endpush

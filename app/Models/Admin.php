@@ -77,4 +77,11 @@ class Admin extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(Shop::class);
     }
 
+    /**
+     * Get the admin's full name.
+     */
+    public function fullname() {
+        return $this->first_name . ' ' .  $this->last_name;
+    }
+
 }
