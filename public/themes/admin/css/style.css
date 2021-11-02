@@ -949,6 +949,9 @@ table tr:hover .table-links {
 
 .table-striped tbody tr:nth-of-type(odd) {
   background-color: rgba(0, 0, 0, 0.02); }
+.table img {
+  object-fit: cover;
+}
 
 @media (max-width: 575.98px) {
   .table-responsive table {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class CategoryController extends Controller
 {
@@ -99,7 +100,31 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $category)
     {
-        //
+        $request->validate([
+            'name'        => ['required', 'string', 'max:255', Rule::unique('categories')->ignore($category)],
+            'parent_id'   => 'required',
+            'featured'    => 'required',
+            'menu'        => 'required',
+            'description' => 'nullable|string',
+            'image'       => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
+        ]);
+
+        $category = Category::find($category);
+        $category->name = $request->name;
+        $category->description = $request->description;
+        $category->parent_id = $request->parent_id;
+        $category->featured = $request->featured;
+        $category->menu = $request->menu;
+
+        if(isset($request->image)) {
+            $imageName = $category->image ?? time().'.'.$request->image->extension();
+            $request->image->move(public_path('storage/uploads'), $imageName);
+            $category->image = $imageName;
+        }
+
+        $category->save();
+
+        return redirect()->route('admin.products.categories.index')->with('status', 'Category has updated successfully.');
     }
 
     /**
@@ -110,6 +135,11 @@ class CategoryController extends Controller
      */
     public function destroy($category)
     {
-        //
+        $cat = Category::find($category);
+        if($cat->image) {
+            unlink(public_path('storage/uploads/' . $cat->image));
+        }
+        $cat->delete();
+        return back()->with('status', 'Category has deleted successfully.');
     }
 }

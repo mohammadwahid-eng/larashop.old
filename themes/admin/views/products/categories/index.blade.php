@@ -77,7 +77,7 @@
 								<label for="image">{{ __('Image') }}</label>
                                 <div class="custom-file">
 									<input type="file" id="image" class="custom-file-input h-100 @error('image') is-invalid @enderror" name="image" accept=".jpg, .jpeg, .png, .gif, .svg">
-                                    <label class="custom-file-label" for="customFile">{{ __('Choose file') }}</label>
+                                    <label class="custom-file-label" for="image">{{ __('Choose file') }}</label>
                                     @error('image')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -90,10 +90,10 @@
 			</div>
 			<div class="col-lg-8">
 				<div class="table-responsive">
-					<table class="table table-striped" id="table-2">
+					<table class="table table-striped" id="category_table">
 						<thead>
 							<tr>
-								<th>
+								<th class="text-center">
 									<div class="custom-checkbox custom-control">
 										<input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all">
 										<label for="checkbox-all" class="custom-control-label">&nbsp;</label>
@@ -102,25 +102,40 @@
 								<th><i class="fas fa-image"></i></th>
 								<th>{{ __('Name') }}</th>
 								<th>{{ __('Slug') }}</th>
-								<th>{{ __('Products') }}</th>
-								<th>{{ __('Action') }}</th>
+								<th class="text-center">{{ __('Products') }}</th>
+								<th class="text-center">{{ __('Action') }}</th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach ($categories as $category)
 								<tr>
-									<td class="align-middle">
+									<td class="align-middle text-center">
 										<div class="custom-checkbox custom-control">
-											<input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-1">
-											<label for="checkbox-1" class="custom-control-label">&nbsp;</label>
+											<input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-{{ $category->id }}" name="cats[]">
+											<label for="checkbox-{{ $category->id }}" class="custom-control-label">&nbsp;</label>
 										</div>
 									</td>
-									<td class="align-middle"><img alt="image" src="{{ asset('themes/admin/img/avatar/avatar-5.png') }}" class="rounded-circle" width="35" data-toggle="tooltip" title="Wildan Ahdian"></td>
-									<td class="align-middle"><a href="#">{{ $category->name }}</a></td>
-									<td class="align-middle">{{ $category->slug }}</td>
-									<td class="align-middle">0</td>
 									<td class="align-middle">
-										<a href="{{ route('admin.products.categories.edit', $category) }}" class="btn btn-icon btn-sm btn-secondary">{{ __('Details') }}</a>
+										<img
+											@if ($category->image)
+												src="{{ asset('storage/uploads/'.$category->image.'') }}"
+											@else
+												src="{{ asset('themes/admin/img/photo.svg') }}"
+											@endif
+											width="25"
+											height="20"
+											alt="{{ $category->name }}">
+									</td>
+									<td class="align-middle"><a href="{{ route('admin.products.categories.edit', $category) }}">{{ $category->name }}</a></td>
+									<td class="align-middle">{{ $category->slug }}</td>
+									<td class="align-middle text-center">0</td>
+									<td class="align-middle text-center">
+										<a href="{{ route('admin.products.categories.edit', $category) }}" class="btn btn-icon btn-sm btn-secondary"><i class="fas fa-edit"></i></a>
+										<form action="{{ route('admin.products.categories.destroy', $category) }}" method="POST" class="d-inline-block">
+											@csrf
+											@method('DELETE')
+											<button type="submit" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></button>
+										</form>
 									</td>
 								</tr>
 							@endforeach
@@ -140,4 +155,10 @@
 
 @push('footer')
     <script src="{{ asset('themes/admin/js/page/modules-datatables.js') }}"></script>
+	<script>
+		$("#category_table").dataTable({
+			autoWidth: true,
+			ordering: false,
+		});
+	</script>
 @endpush
