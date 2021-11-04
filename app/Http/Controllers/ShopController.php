@@ -25,7 +25,7 @@ class ShopController extends Controller
      */
     public function create()
     {
-        //
+        return view('shop.add');
     }
 
     /**
@@ -42,10 +42,10 @@ class ShopController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  object  $shop
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($shop)
     {
         //
     }
@@ -53,33 +53,36 @@ class ShopController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  object  $shop
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($shop)
     {
-        //
+        $shop = Shop::find($shop);
+        return view('shop.edit', compact(['shop']));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  object  $shop
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $shop)
     {
-        //
+        
+
+        $shop = Shop::find($shop);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  object  $shop
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($shop)
     {
         //
     }

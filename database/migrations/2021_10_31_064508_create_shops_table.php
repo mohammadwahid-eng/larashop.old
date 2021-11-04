@@ -17,6 +17,14 @@ class CreateShopsTable extends Migration
             $table->id();
             $table->string('name');
             $table->longText('description')->nullable();
+            $table->string('street')->nullable();
+            $table->string('state')->nullable();
+            $table->string('city')->nullable();
+            $table->string('country')->nullable();
+            $table->string('postal')->nullable();
+            $table->string('mobile')->nullable();
+            $table->string('tin')->nullable();
+            $table->string('logo')->nullable();
             $table->float('rating')->default(0);
             $table->foreignId('admin_id')->constrained()->onDelete('cascade');
             $table->timestamps();

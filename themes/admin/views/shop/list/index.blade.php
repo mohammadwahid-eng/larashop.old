@@ -4,6 +4,10 @@
     {{ __('All Shops') }}
 @endsection
 
+@section('title_add_new_btn')
+    <a href="{{ route('admin.shops.create') }}" class="btn btn-sm btn-primary ml-3">{{ __('Add New') }}</a>
+@endsection
+
 @push('css_lib')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/1.11.3/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-select-bs4/1.3.3/select.bootstrap4.min.css">
