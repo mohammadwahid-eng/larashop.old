@@ -28,7 +28,7 @@ return [
                     ],
                     [
                         'name'   => 'Attributes',
-                        'url'    => 'admin.home',
+                        'url'    => 'admin.products.attributes.index',
                     ],
                 ]
             ],

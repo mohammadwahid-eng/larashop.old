@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             AddressSeeder::class,
             CategorySeeder::class,
+            AttributeSeeder::class,
+            AttributeValueSeeder::class,
         ]);
     }
 }
