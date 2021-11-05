@@ -35,12 +35,8 @@ return [
             [
                 'name'   => 'Shop',
                 'icon'   => 'fas fa-store',
-                'url'    => 'admin.shops.index',
+                'url'    => 'admin.home',
                 'children' => [
-                    [
-                        'name'   => 'All Shops',
-                        'url'    => 'admin.shops.index',
-                    ],
                     [
                         'name'   => 'Orders',
                         'url'    => 'admin.home',
