@@ -27,7 +27,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('products.categories.add');
     }
 
     /**
@@ -39,7 +39,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'        => 'required|string|max:255|unique:categories',
+            'name'        => 'required|string|max:255',
             'slug'        => 'required|string|max:255|unique:categories',
             'parent_id'   => 'required',
             'featured'    => 'required',
@@ -64,7 +64,7 @@ class CategoryController extends Controller
 
         $category->save();
 
-        return back()->with('status', 'Category Added successfully.');
+        return redirect()->route('admin.products.categories.index')->with('status', 'Category Added successfully.');
     }
 
     /**
@@ -86,9 +86,8 @@ class CategoryController extends Controller
      */
     public function edit($category)
     {
-        $categories = Category::all();
         $category = Category::find($category);
-        return view('products.categories.edit', compact(['categories', 'category']));
+        return view('products.categories.edit', compact(['category']));
     }
 
     /**

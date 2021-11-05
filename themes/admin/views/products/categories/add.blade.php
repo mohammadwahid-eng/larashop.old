@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-	{{ __('Categories') }}
+	{{ __('Add New Category') }}
 @endsection
 
 @section('content')
@@ -10,16 +10,22 @@
 			<div class="col-lg-12">
 				<div class="card">
 					<div class="card-header">
-						<h4>{{ __('Edit Category') }}</h4>
+						<h4>{{ __('Category Meta') }}</h4>
 					</div>
 					<div class="card-body pt-0">
-						<form action="{{ route('admin.products.categories.update', $category) }}" method="POST" enctype="multipart/form-data">
+						<form action="{{ route('admin.products.categories.store') }}" method="POST" enctype="multipart/form-data">
 							@csrf
-                            @method('PUT')
 							<div class="form-group">
 								<label for="name">{{ __('Name') }} <span class="text-danger">*</span></label>
-								<input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $category->name }}" required>
+								<input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" autofocus required>
 								@error('name')
+									<div class="invalid-feedback">{{ $message }}</div>
+								@enderror
+							</div>
+							<div class="form-group">
+								<label for="slug">{{ __('Slug') }} <span class="text-danger">*</span></label>
+								<input id="slug" type="text" class="form-control @error('slug') is-invalid @enderror" name="slug" value="{{ old('slug') }}" required>
+								@error('slug')
 									<div class="invalid-feedback">{{ $message }}</div>
 								@enderror
 							</div>
@@ -27,8 +33,8 @@
 								<label for="parent_id">{{ __('Parent') }} <span class="text-danger">*</span></label>
 								<select id="parent_id" class="form-control @error('parent_id') is-invalid @enderror" name="parent_id" required>
 									<option value="1">{{ __('None') }}</option>
-									@foreach (\App\Models\Category::all() as $cat)
-										<option value="{{ $cat->id }}" @if($category->parent_id === $cat->id) selected @endif>{{ $cat->name }}</option>
+									@foreach (\App\Models\Category::all() as $category)
+										<option value="{{ $category->id }}" @if(old('parent_id') === $category->id) selected @endif>{{ $category->name }}</option>
 									@endforeach
 								</select>
 								@error('parent_id')
@@ -37,7 +43,7 @@
 							</div>
 							<div class="form-group">
 								<label for="description">{{ __('Description') }}</label>
-								<textarea id="description" class="summernote-simple @error('description') is-invalid @enderror" name="description">{{ $category->description }}</textarea>
+								<textarea id="description" class="summernote-simple @error('description') is-invalid @enderror" name="description">{{ old('description') }}</textarea>
 								@error('description')
 									<div class="invalid-feedback">{{ $message }}</div>
 								@enderror
@@ -46,7 +52,7 @@
 								<label for="featured">{{ __('Featured') }} <span class="text-danger">*</span></label>
 								<select id="featured" class="form-control @error('featured') is-invalid @enderror" name="featured" required>
 									<option value="0">{{ __('No') }}</option>
-									<option value="1" @if($category->featured) selected @endif>{{ __('Yes') }}</option>
+									<option value="1" @if(old('featured')) selected @endif>{{ __('Yes') }}</option>
 								</select>
 								@error('featured')
 									<div class="invalid-feedback">{{ $message }}</div>
@@ -56,13 +62,13 @@
 								<label for="menu">{{ __('Menu') }} <span class="text-danger">*</span></label>
 								<select id="menu" class="form-control @error('menu') is-invalid @enderror" name="menu" required>
 									<option value="0">{{ __('No') }}</option>
-									<option value="1" @if($category->menu) selected @endif>{{ __('Yes') }}</option>
+									<option value="1" @if(old('menu')) selected @endif>{{ __('Yes') }}</option>
 								</select>
 								@error('menu')
 									<div class="invalid-feedback">{{ $message }}</div>
 								@enderror
 							</div>
-							<div class="form-group">
+                            <div class="form-group">
 								<label for="image">{{ __('Image') }}</label>
                                 <div class="d-flex" style="gap: 5px">
                                     <div class="custom-file">
@@ -72,10 +78,10 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div id="upload-preview" class="rounded" style="background-image: url({{ $category->image ? asset('storage/uploads/'.$category->image.'') : asset('themes/admin/img/photo.svg') }})"></div>
+                                    <div id="upload-preview" class="rounded" style="background-image: url({{ asset('themes/admin/img/photo.svg') }})"></div>
                                 </div>
 							</div>
-							<button type="submit" class="btn btn-primary">{{ __('Update Category') }}</button>
+							<button type="submit" class="btn btn-primary">{{ __('Add New Category') }}</button>
 						</form>
 					</div>
 				</div>
