@@ -16,21 +16,9 @@ class Attribute extends Model
      * @var string[]
      */
     protected $fillable = [
-        'code',
         'name',
+        'slug',
         'frontend_type',
-        'is_filterable',
-        'is_required',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts  = [
-        'is_filterable' => 'boolean',
-        'is_required'   => 'boolean',
     ];
 
     /**

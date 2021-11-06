@@ -18,10 +18,10 @@ class Category extends Model
     protected $fillable = [
         'name',
         'slug',
-        'description',
         'parent_id',
-        'featured',
-        'menu',
+        'description',
+        'is_featured',
+        'in_menu',
         'image',
     ];
 
@@ -31,9 +31,9 @@ class Category extends Model
      * @var array
      */
     protected $casts = [
-        'parent_id' => 'integer',
-        'featured'  => 'integer',
-        'menu'      => 'integer',
+        'parent_id'   => 'integer',
+        'is_featured' => 'boolean',
+        'in_menu'     => 'boolean',
     ];
 
 

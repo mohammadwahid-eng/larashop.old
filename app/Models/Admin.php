@@ -26,9 +26,6 @@ class Admin extends Authenticatable implements MustVerifyEmail
         'last_name',
         'email',
         'password',
-        'address',
-        'city',
-        'country',
         'is_super',
     ];
 
@@ -49,6 +46,7 @@ class Admin extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_super'          => 'boolean',
     ];
 
     /**

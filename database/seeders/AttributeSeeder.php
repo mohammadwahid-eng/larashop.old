@@ -16,20 +16,16 @@ class AttributeSeeder extends Seeder
     {
         // Create a size attribute
         Attribute::create([
-            'code'          => 'size',
             'name'          => 'Size',
+            'slug'          => 'size',
             'frontend_type' => 'select',
-            'is_filterable' => true,
-            'is_required'   => true,
         ]);
 
         // Create a color attribute
         Attribute::create([
-            'code'          => 'color',
             'name'          => 'Color',
+            'slug'          => 'color',
             'frontend_type' => 'select',
-            'is_filterable' => true,
-            'is_required'   => true,
         ]);
     }
 }
