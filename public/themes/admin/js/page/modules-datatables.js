@@ -27,8 +27,3 @@ $("[data-checkboxes]").each(function() {
 		}
 	});
 });
-
-$('[data-toggle=datatable]').dataTable({
-	ordering: false,
-	autoWidth: true,
-});

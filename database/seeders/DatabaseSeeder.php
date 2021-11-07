@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             AdminSeeder::class,
             AddressSeeder::class,
-            CategorySeeder::class,
+            // CategorySeeder::class,
             AttributeSeeder::class,
             AttributeValueSeeder::class,
         ]);

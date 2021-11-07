@@ -935,6 +935,30 @@ select.form-control:not([size]):not([multiple]) {
   .table.table-bordered th {
     border-color: #f6f6f6; }
 
+    .dataTable .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      opacity: 0;
+      visibility: hidden;
+      transition: .35s;
+    }
+    .dataTable .actions a {
+      display: inline-block;
+      font-size: 12px;
+      line-height: 1;
+      margin-top: 2px;
+      color: inherit;
+  }
+  .dataTable .actions a:not(:last-child) {
+    border-right: 1px solid #bbbbbb;
+    padding-right: 5px;
+  }
+  .dataTable tbody tr:hover .actions {
+    opacity: 1;
+    visibility: visible;
+  }
+
 .table-links {
   color: #34395e;
   font-size: 12px;
@@ -2369,7 +2393,7 @@ pre {
       margin-bottom: 0;
       font-weight: 700;
       display: inline-block;
-      font-size: 24px;
+      font-size: 20px;
       margin-top: 3px;
       color: #34395e; }
     .section .section-header .section-header-back {

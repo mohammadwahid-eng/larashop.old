@@ -36,5 +36,19 @@ class Category extends Model
         'in_menu'     => 'boolean',
     ];
 
+    /**
+     * Get the parent that owns the category.
+     */
+    public function parent() {
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
+
+    /**
+     * Get the children of the category.
+     */
+    public function children() {
+        return $this->hasMany(Category::class, 'parent_id');
+    }
+
 
 }
