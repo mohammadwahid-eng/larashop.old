@@ -42,6 +42,10 @@
 			</div>
 		</div>
 	</div>
+	<form method="POST" class="deleteForm d-none">
+		@csrf
+		@method('DELETE')
+	</form>
 @endsection
 
 @push('js_lib')
@@ -74,6 +78,20 @@
 				],
 				order: [[2, 'asc']]
 			});
+
+
+			$(document).on('click','.delete',function(e){
+				e.preventDefault();
+				if(!confirm("Are you sure?")) return;
+
+				let elem = $(this),
+					id = elem.data('id'),
+					action = elem.attr('href'),
+					form = $('.deleteForm');
+
+				form.attr("action", action);
+				form.submit();
+			})
 		});
 	  </script>
 @endpush

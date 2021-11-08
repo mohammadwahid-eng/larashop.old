@@ -40,7 +40,7 @@ class CategoryController extends Controller
                         $html .= '<div class="actions">';
                             $html .= '<a href="'.route('admin.products.categories.edit', $category).'">'.__("Edit").'</a>';
                             $html .= '<a href="'.route('admin.products.categories.show', $category).'">'.__("View").'</a>';
-                            $html .= '<a href="'.route('admin.products.categories.destroy', $category).'" class="text-danger">'.__("Delete").'</a>';
+                            $html .= '<a href="'.route('admin.products.categories.destroy', $category).'" class="text-danger delete" data-id="'.$category->id.'">'.__("Delete").'</a>';
                         $html .= '</div>';
                         return $html;
                     })
