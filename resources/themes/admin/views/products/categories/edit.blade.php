@@ -83,13 +83,23 @@
 									<button class="btn btn-link text-danger px-2 invisible remove-preview" type="button"><i class="fas fa-times"></i></button>
                                 </div>
 							</div>
-							<button type="submit" class="btn btn-primary">{{ __('Update Category') }}</button>
+							<div class="d-flex justify-content-between">
+								<div>
+									<button type="submit" class="btn btn-primary">{{ __('Update Category') }}</button>
+									<a href="{{ route('admin.products.categories.index') }}" class="btn btn-light">{{ __('Cancel') }}</a>
+								</div>
+								<a href="{{ route('admin.products.categories.destroy', $category) }}" class="btn btn-danger delete" data-id="{{ $category->id }}">{{ __('Delete') }}</a>
+							</div>
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<form method="POST" class="deleteForm d-none">
+		@csrf
+		@method('DELETE')
+	</form>
 @endsection
 
 @push('css_lib')
@@ -130,6 +140,7 @@
 				}
             });
 
+			// Remove image
 			$('.remove-preview').click(function(e) {
 				e.preventDefault();
 				$(this).addClass('invisible');
@@ -142,6 +153,20 @@
 			//Slugify
 			$('[data-slugify-source]').keyup(function() {
 				$('[data-slugify-target]').val($(this).val().trim().toLowerCase().replace(/[^a-zA-Z0-9]+/g,'-'));
+			});
+
+			//Delete Category
+			$(document).on('click','.delete',function(e){
+				e.preventDefault();
+				if(!confirm("Are you sure?")) return;
+
+				let elem = $(this),
+					id = elem.data('id'),
+					action = elem.attr('href'),
+					form = $('.deleteForm');
+
+				form.attr("action", action);
+				form.submit();
 			});
         }(jQuery));
     </script>

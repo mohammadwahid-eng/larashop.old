@@ -45,7 +45,7 @@ class CategoryController extends Controller
                         return $html;
                     })
                     ->editColumn('parent_id', function($category) {
-                        return '<a href="#">'.$category->parent->name.'</a>';
+                        return $category->parent ? '<a href="#">'.$category->parent->name.'</a>' : '-';
                     })
                     ->editColumn('is_featured', function($category) {
                         return $category->is_featured ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>';
@@ -85,7 +85,7 @@ class CategoryController extends Controller
         $request->validate([
             'name'        => 'required|string|max:255',
             'slug'        => 'nullable|string|max:255|unique:categories',
-            'parent_id'   => 'required',
+            'parent_id'   => 'nullable',
             'description' => 'nullable|string',
             'is_featured' => 'required',
             'in_menu'     => 'required',
@@ -146,7 +146,7 @@ class CategoryController extends Controller
         $request->validate([
             'name'        => 'required|string|max:255',
             'slug'        => ['required', 'string', 'max:255', Rule::unique('categories')->ignore($category)],
-            'parent_id'   => 'required',
+            'parent_id'   => 'nullable',
             'description' => 'nullable|string',
             'is_featured' => 'required',
             'in_menu'     => 'required',
@@ -185,7 +185,7 @@ class CategoryController extends Controller
             unlink(public_path('storage/uploads/' . $cat->image));
         }
         $cat->delete();
-        return back()->with('status', 'Category has deleted successfully.');
+        return redirect()->route('admin.products.categories.index')->with('status', 'Category has deleted successfully.');
     }
     
 }

@@ -28,8 +28,8 @@
 							</div>
 							<div class="form-group">
 								<label for="parent_id">{{ __('Parent') }} <span class="text-danger">*</span></label>
-								<select id="parent_id" class="form-control @error('parent_id') is-invalid @enderror" name="parent_id" required>
-									<option value="1">{{ __('None') }}</option>
+								<select id="parent_id" class="form-control @error('parent_id') is-invalid @enderror" name="parent_id">
+									<option value="">{{ __('None') }}</option>
 									@foreach (\App\Models\Category::all() as $category)
 										<option value="{{ $category->id }}" @if(old('parent_id') === $category->id) selected @endif>{{ ucwords($category->name) }}</option>
 									@endforeach
@@ -80,6 +80,7 @@
                                 </div>
 							</div>
 							<button type="submit" class="btn btn-primary">{{ __('Add New Category') }}</button>
+							<a href="{{ route('admin.products.categories.index') }}" class="btn btn-light">{{ __('Cancel') }}</a>
 						</form>
 					</div>
 				</div>

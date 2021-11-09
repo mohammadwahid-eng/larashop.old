@@ -91,7 +91,7 @@
 
 				form.attr("action", action);
 				form.submit();
-			})
+			});
 		});
 	  </script>
 @endpush

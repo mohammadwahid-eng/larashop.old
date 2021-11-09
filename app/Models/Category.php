@@ -37,10 +37,10 @@ class Category extends Model
     ];
 
     /**
-     * Get the parent that owns the category.
+     * Get the parent of the category.
      */
     public function parent() {
-        return $this->belongsTo(Category::class, 'parent_id');
+        return $this->belongsTo(Category::class);
     }
 
     /**
