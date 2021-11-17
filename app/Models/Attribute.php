@@ -19,6 +19,7 @@ class Attribute extends Model
         'name',
         'slug',
         'frontend_type',
+        'is_required',
     ];
 
     /**

@@ -18,6 +18,7 @@ class CreateAttributesTable extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->enum('frontend_type', ['select', 'radio', 'checkbox', 'text', 'textarea']);
+            $table->boolean('is_required')->default(false);
             $table->timestamps();
         });
     }

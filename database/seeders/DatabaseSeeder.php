@@ -14,12 +14,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            UserSeeder::class,
-            AdminSeeder::class,
-            AddressSeeder::class,
-            // CategorySeeder::class,
-            AttributeSeeder::class,
-            AttributeValueSeeder::class,
+            // UserSeeder::class,
+            // AdminSeeder::class,
+            CategorySeeder::class,
         ]);
     }
 }

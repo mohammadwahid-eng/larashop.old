@@ -57,7 +57,7 @@
 @push('footer')
 	<script src="{{ asset('themes/admin/js/page/modules-datatables.js') }}"></script>
 	<script>
-		$(function () {		  
+		$(function () {
 			$('[data-toggle=dataTable]').DataTable({
 				processing: true,
 				serverSide: true,
@@ -76,7 +76,7 @@
 					{ width: 28, targets: 0 },
 					{ width: 30, targets: 1 },
 				],
-				order: [[2, 'asc']]
+				order: [[2, 'asc']],
 			});
 
 
