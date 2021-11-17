@@ -31,7 +31,6 @@ class Category extends Model
      * @var array
      */
     protected $casts = [
-        'parent_id'   => 'integer',
         'is_featured' => 'boolean',
         'in_menu'     => 'boolean',
     ];

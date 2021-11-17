@@ -5,7 +5,7 @@
 @endsection
 
 @section('title_add_new_btn')
-    <a href="{{ route('admin.products.attributes.create') }}" class="btn btn-sm btn-primary ml-3">{{ __('Add New') }}</a>
+    <a href="{{ route('admin.catalogue.attributes.create') }}" class="btn btn-sm btn-primary ml-3">{{ __('Add New') }}</a>
 @endsection
 
 @push('css_lib')
@@ -46,7 +46,7 @@
 										</div>
 									</td>
 									<td class="align-middle">{{ $attribute->code }}</td>
-									<td class="align-middle"><a href="{{ route('admin.products.attributes.edit', $attribute) }}">{{ $attribute->name }}</a></td>
+									<td class="align-middle"><a href="{{ route('admin.catalogue.attributes.edit', $attribute) }}">{{ $attribute->name }}</a></td>
 									<td class="align-middle">
                                         @foreach ($attribute->values as $item)
                                             {{ $item->value }}
@@ -69,8 +69,8 @@
                                         @endif
                                     </td>
 									<td class="align-middle text-center">
-										<a href="{{ route('admin.products.attributes.edit', $attribute) }}" class="btn btn-icon btn-sm btn-secondary"><i class="fas fa-edit"></i></a>
-										<form action="{{ route('admin.products.attributes.destroy', $attribute) }}" method="POST" class="d-inline-block">
+										<a href="{{ route('admin.catalogue.attributes.edit', $attribute) }}" class="btn btn-icon btn-sm btn-secondary"><i class="fas fa-edit"></i></a>
+										<form action="{{ route('admin.catalogue.attributes.destroy', $attribute) }}" method="POST" class="d-inline-block">
 											@csrf
 											@method('DELETE')
 											<button type="submit" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></button>

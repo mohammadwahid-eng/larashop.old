@@ -10,13 +10,13 @@
             <li class="menu-header">{{ __('Navigation') }}</li>
             @foreach (config('larashop.admin.sidebar') as $item)
                 @if (count($item['children']) === 0)
-                    <li class="nav-item {{ request()->routeIs($item['url']) ? 'active' : '' }}"><a href="{{ route($item['url']) }}" class="nav-link"><i class="{{ $item['icon'] }}"></i> {{ $item['name'] }}</a></li>
+                    <li class="nav-item {{ request()->routeIs($item['route']) ? 'active' : '' }}"><a href="{{ route($item['route']) }}" class="nav-link"><i class="{{ $item['icon'] }}"></i> {{ $item['name'] }}</a></li>
                 @else
                     <li class="nav-item dropdown">
-                        <a href="{{ route($item['url']) }}" class="nav-link has-dropdown"><i class="{{ $item['icon'] }}"></i>{{ $item['name'] }}</a>
+                        <a href="{{ route($item['route']) }}" class="nav-link has-dropdown"><i class="{{ $item['icon'] }}"></i>{{ $item['name'] }}</a>
                         <ul class="dropdown-menu">
                             @foreach ($item['children'] as $childItem)
-                                <li class="{{ request()->routeIs($item['url']) ? 'active' : '' }}"><a href="{{ route($childItem['url']) }}" class="nav-link">{{ $childItem['name'] }}</a></li>
+                                <li class="{{ request()->routeIs($item['route']) ? 'active' : '' }}"><a href="{{ route($childItem['route']) }}" class="nav-link">{{ $childItem['name'] }}</a></li>
                             @endforeach
                         </ul>
                     </li>

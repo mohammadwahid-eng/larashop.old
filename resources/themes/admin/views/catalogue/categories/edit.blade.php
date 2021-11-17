@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-	{{ __('Add New Category') }}
+	{{ __('Update Category') }}
 @endsection
 
 @section('content')
@@ -10,18 +10,19 @@
 			<div class="col-lg-12">
 				<div class="card">
 					<div class="card-body pt-4">
-						<form action="{{ route('admin.products.categories.store') }}" method="POST" enctype="multipart/form-data">
+						<form action="{{ route('admin.catalogue.categories.update', $category) }}" method="POST" enctype="multipart/form-data">
 							@csrf
+							@method('PUT')
 							<div class="form-group">
 								<label for="name">{{ __('Name') }} <span class="text-danger">*</span></label>
-								<input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" autofocus required data-slugify-source>
+								<input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') ?? $category->name }}" autofocus required data-slugify-source>
 								@error('name')
 									<div class="invalid-feedback">{{ $message }}</div>
 								@enderror
 							</div>
 							<div class="form-group">
 								<label for="slug">{{ __('Slug') }} <span class="text-danger">*</span></label>
-								<input id="slug" type="text" class="form-control @error('slug') is-invalid @enderror" name="slug" value="{{ old('slug') }}" data-slugify-target>
+								<input id="slug" type="text" class="form-control @error('slug') is-invalid @enderror" name="slug" value="{{ old('slug') ?? $category->slug }}" data-slugify-target>
 								@error('slug')
 									<div class="invalid-feedback">{{ $message }}</div>
 								@enderror
@@ -30,8 +31,11 @@
 								<label for="parent_id">{{ __('Parent') }} <span class="text-danger">*</span></label>
 								<select id="parent_id" class="form-control @error('parent_id') is-invalid @enderror" name="parent_id">
 									<option value="">{{ __('None') }}</option>
-									@foreach (\App\Models\Category::all() as $category)
-										<option value="{{ $category->id }}" @if(old('parent_id') === $category->id) selected @endif>{{ ucwords($category->name) }}</option>
+									@foreach (\App\Models\Category::all() as $cat)
+										@if ($cat->id === $category->id)
+											@continue
+										@endif
+										<option value="{{ $cat->id }}" @if($category->parent_id === $cat->id) selected @endif>{{ ucwords($cat->name) }}</option>
 									@endforeach
 								</select>
 								@error('parent_id')
@@ -40,7 +44,7 @@
 							</div>
 							<div class="form-group">
 								<label for="description">{{ __('Description') }}</label>
-								<textarea id="description" class="summernote-simple @error('description') is-invalid @enderror" name="description">{{ old('description') }}</textarea>
+								<textarea id="description" class="summernote-simple @error('description') is-invalid @enderror" name="description">{{ old('description') ?? $category->description }}</textarea>
 								@error('description')
 									<div class="invalid-feedback">{{ $message }}</div>
 								@enderror
@@ -49,7 +53,7 @@
 								<label for="is_featured">{{ __('Featured') }} <span class="text-danger">*</span></label>
 								<select id="is_featured" class="form-control @error('is_featured') is-invalid @enderror" name="is_featured" required>
 									<option value="0">{{ __('No') }}</option>
-									<option value="1" @if(old('is_featured')) selected @endif>{{ __('Yes') }}</option>
+									<option value="1" @if(old('is_featured') ?? $category->is_featured) selected @endif>{{ __('Yes') }}</option>
 								</select>
 								@error('is_featured')
 									<div class="invalid-feedback">{{ $message }}</div>
@@ -59,7 +63,7 @@
 								<label for="in_menu">{{ __('Menu') }} <span class="text-danger">*</span></label>
 								<select id="in_menu" class="form-control @error('in_menu') is-invalid @enderror" name="in_menu" required>
 									<option value="0">{{ __('No') }}</option>
-									<option value="1" @if(old('in_menu')) selected @endif>{{ __('Yes') }}</option>
+									<option value="1" @if(old('in_menu') ?? $category->in_menu) selected @endif>{{ __('Yes') }}</option>
 								</select>
 								@error('in_menu')
 									<div class="invalid-feedback">{{ $message }}</div>
@@ -75,18 +79,29 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-									<div class="upload-preview rounded" style="background-image: url({{ asset('themes/admin/img/placeholder.png') }})"></div>
+									<div class="upload-preview rounded" style="background-image: url({{ $category->image ? asset('storage/uploads/'.$category->image.'') : asset('themes/admin/img/placeholder.png') }})"></div>
 									<button class="btn btn-link text-danger px-2 invisible remove-preview" type="button"><i class="fas fa-times"></i></button>
                                 </div>
 							</div>
-							<button type="submit" class="btn btn-primary">{{ __('Add New Category') }}</button>
-							<a href="{{ route('admin.products.categories.index') }}" class="btn btn-light">{{ __('Cancel') }}</a>
+							<div class="d-flex justify-content-between">
+								<div>
+									<button type="submit" class="btn btn-primary">{{ __('Update Category') }}</button>
+									<a href="{{ route('admin.catalogue.categories.index') }}" class="btn btn-light">{{ __('Cancel') }}</a>
+								</div>
+								@if($category->id !== 1)
+									<a href="{{ route('admin.catalogue.categories.destroy', $category) }}" class="btn btn-danger btn-delete" data-id="{{ $category->id }}">{{ __('Delete') }}</a>
+								@endif
+							</div>
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<form method="POST" class="deleteForm d-none">
+		@csrf
+		@method('DELETE')
+	</form>
 @endsection
 
 @push('css_lib')
@@ -108,7 +123,7 @@
             padding: 20px;
             background-repeat: no-repeat;
             background-position: center;
-            background-size: contain;
+            background-size: contain !important;
 			border: 1px solid #e4e6fc;
         }
     </style>
@@ -127,6 +142,7 @@
 				}
             });
 
+			// Remove image
 			$('.remove-preview').click(function(e) {
 				e.preventDefault();
 				$(this).addClass('invisible');
@@ -139,6 +155,20 @@
 			//Slugify
 			$('[data-slugify-source]').keyup(function() {
 				$('[data-slugify-target]').val($(this).val().trim().toLowerCase().replace(/[^a-zA-Z0-9]+/g,'-'));
+			});
+
+			//Delete Category
+			$(document).on('click','.btn-delete',function(e){
+				e.preventDefault();
+				if(!confirm("Are you sure?")) return;
+
+				let elem = $(this),
+					id = elem.data('id'),
+					action = elem.attr('href'),
+					form = $('.deleteForm');
+
+				form.attr("action", action);
+				form.submit();
 			});
         }(jQuery));
     </script>

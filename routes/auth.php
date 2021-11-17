@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AttributeController;
 use Illuminate\Support\Facades\Route;
@@ -78,8 +79,8 @@ Route::prefix('admin')->name('admin.')->middleware(['theme:admin'])->group(funct
 
         Route::middleware(['verified'])->group(function() {
             Route::view('/', 'dashboard.index')->name('home');
-            Route::prefix('products')->name('products.')->group(function() {
-                Route::view('/', 'products.index')->name('home');
+            Route::prefix('catalogue')->name('catalogue.')->group(function() {
+                Route::resource('products', ProductController::class);
                 Route::resource('categories', CategoryController::class);
                 Route::resource('attributes', AttributeController::class);
             });

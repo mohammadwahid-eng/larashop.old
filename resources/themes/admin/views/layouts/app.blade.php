@@ -36,7 +36,7 @@
 					<section class="section">
 						<div class="section-header">
 							<h1 class="mt-0 align-items-center d-inline-flex">@yield('title', 'Title') @yield('title_add_new_btn')</h1>
-							@include('layouts.partials.breadcrumb')
+							@yield('breadcrumbs')
 						</div>
 					</section>
 					@yield('content')
