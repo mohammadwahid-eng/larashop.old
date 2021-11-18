@@ -23,6 +23,7 @@
         <!-- Template CSS -->
         <link rel="stylesheet" href="{{ asset('themes/admin/css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('themes/admin/css/components.css') }}">
+        <link rel="stylesheet" href="{{ asset('themes/admin/css/custom.css') }}">
 
         @stack('head')
     </head>
