@@ -55,6 +55,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <script src="{{ asset('themes/admin/js/stisla.js') }}"></script>
         <script>
+            toastr.options.timeOut = 1800;
             @if(Session::has('status'))
                 toastr.success("{{ session('status') }}");
             @endif

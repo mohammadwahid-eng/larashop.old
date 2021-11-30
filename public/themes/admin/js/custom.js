@@ -6,3 +6,10 @@
  */
 
 "use strict";
+
+
+$(document).on('keyup', '[data-slugify]', function () {
+    let target = $(this).data('slugify');
+    let slug = $(this).val().trim().toLowerCase().replace(/[^a-zA-Z0-9]+/g, '-');
+    $(target).val(slug);
+});

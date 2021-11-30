@@ -13,16 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-use App\Models\User;
-use Illuminate\Http\Request;
-
-Route::get('/users', function(Request $request) {
-    if($request->ajax()) {
-        $users = User::all();
-        return datatables()->of($users)->toJson();
-    }
-})->name('users');
-
 Route::view('/', 'index');
 Route::view('/shop', 'products.list.index')->name('shop');
 Route::view('/cart', 'cart.index')->name('cart');

@@ -22,3 +22,12 @@
 .gap-5 {
     gap: 3rem !important;
 }
+
+button.dt-button span.dt-down-arrow, div.dt-button span.dt-down-arrow, a.dt-button span.dt-down-arrow, input.dt-button span.dt-down-arrow {
+    display: none;
+}
+
+.dataTable.table th,
+.dataTable.table td {
+    vertical-align: middle;
+}
