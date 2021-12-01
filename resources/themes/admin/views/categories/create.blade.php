@@ -65,9 +65,9 @@
 				<div class="card-footer pt-0 d-flex justify-content-between">
 					<div>
 						<button class="btn btn-primary mr-1" type="submit">{{ __('Create Category') }}</button>
-						<a href="{{ route('admin.categories.index') }}" class="btn btn-secondary">{{ __('Back') }}</a>
+						<a href="{{ route('admin.categories.index') }}" class="btn btn-danger">{{ __('Back') }}</a>
 					</div>
-					<button class="btn btn-dark" type="reset">{{ __('Reset') }}</button>
+					<button class="btn btn-dark" type="reset">{{ __('Reset Form') }}</button>
 				</div>
 			</form>
 		</div>

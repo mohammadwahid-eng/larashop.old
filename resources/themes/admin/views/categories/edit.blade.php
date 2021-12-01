@@ -35,8 +35,11 @@
 						<label for="parent_id">{{ __('Parent category') }}</label>
 						<select name="parent_id" id="parent_id" class="form-control @error('parent_id') is-invalid @enderror">
 							<option value="">{{ __('None') }}</option>
-							@foreach (\App\Models\Category::all() as $category)
-								<option value="{{ $category->id }}" @if(old('parent_id') == $category->id) selected @endif>{{ $category->name }}</option>
+							@foreach (\App\Models\Category::all() as $cat)
+								@if ($cat->id === $category->id)
+									@continue
+								@endif
+								<option value="{{ $cat->id }}" @if((old('parent_id') ?? $category->parent_id) == $cat->id) selected @endif>{{ $cat->name }}</option>
 							@endforeach
 						</select>
 						@error('parent_id')
@@ -63,12 +66,9 @@
 						</div>
 					</div>
 				</div>
-				<div class="card-footer pt-0 d-flex justify-content-between">
-					<div>
-						<button class="btn btn-primary mr-1" type="submit">{{ __('Update Category') }}</button>
-						<a href="{{ route('admin.categories.index') }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
-					</div>
-					<a href="{{ route('admin.categories.destroy', $category) }}" class="btn btn-danger btn-delete">{{ __('Delete') }}</a>
+				<div class="card-footer pt-0">
+					<button class="btn btn-primary mr-1" type="submit">{{ __('Update Category') }}</button>
+					<a href="{{ route('admin.categories.index') }}" class="btn btn-danger">{{ __('Cancel') }}</a>
 				</div>
 			</form>
 		</div>

@@ -55,17 +55,25 @@
                             if(!confirm("Are you sure?")) return;
                             let list = [];
                             table.$('input[type="checkbox"]:checked').each(function() {
-                                list.push(this.value);
+                                if(this.value != 1) {
+                                    list.push(this.value);
+                                }
                             });
+
                             $.ajax({
                                 type: "DELETE",
-                                url: "{{ route('admin.categories.destroy.bulk') }}",
-
+                                dataType: 'JSON',
+                                url: '{{ route("admin.categories.destroy.bulk") }}',
+                                data: { _token: '{{ csrf_token() }}', id: list },
                                 success: function (data) {
-                                    console.log(data);
-                                },
-                                error: function (data) {
-                                    console.log('Error: ', data);
+                                    if (data.status) {
+                                        list.forEach(function(id) {
+                                            let el = $("input[value='"+id+"']");
+                                            table.row(el.parents('tr')).remove();
+                                        });
+                                        table.draw();
+                                        toastr.success(data.status);
+                                    }
                                 }
                             });
                         }
@@ -151,16 +159,16 @@
                     type: "DELETE",
                     dataType: 'JSON',
                     url: $(this).attr('href'),
-                    data: { _method: 'delete', _token: '{{ csrf_token() }}' },
+                    data: { _token: '{{ csrf_token() }}' },
                     success: function (data) {
                         if (data.status) {
                             table.row(el.parents('tr')).remove().draw();
                             toastr.success(data.status);
                         }
                     },
-                    error: function(data) {
-                        if (data.error) {
-                            toastr.danger(data.error);
+                    error: function(xhr, status, error) {
+                        if(error) {
+                            toastr.error(xhr.responseJSON.error);
                         }
                     }
                 });

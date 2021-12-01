@@ -77,8 +77,8 @@ Route::prefix('admin')->name('admin.')->middleware(['theme:admin'])->group(funct
         Route::middleware(['verified'])->group(function() {
             Route::view('/', 'dashboard.index')->name('home');
             Route::prefix('catalogue')->group(function() {
+                Route::delete('/categories/bulk', [CategoryController::class, 'destroy_bulk'])->name('categories.destroy.bulk'); // Must use before controller
                 Route::resource('categories', CategoryController::class);
-                Route::delete('categories/bulk', [CategoryController::class, 'destroy_bulk'])->name('categories.destroy.bulk');
             });
         });
 

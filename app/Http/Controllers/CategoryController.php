@@ -145,7 +145,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         if($category->id === 1) {
-            return response()->json(['error' => 'Failed to delete category.'], 404);
+            return response()->json(['error' => 'Failed to delete category.'], 400);
         }
 
         if($category->image) {
@@ -163,6 +163,8 @@ class CategoryController extends Controller
      */
     public function destroy_bulk(Request $request)
     {
-        return "bulk delete";
+        Category::whereIn('id', $request->id)->delete();
+
+        return response()->json(['status' => 'Categories have deleted successfully.']);
     }
 }
