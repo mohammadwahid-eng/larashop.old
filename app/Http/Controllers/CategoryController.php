@@ -42,7 +42,7 @@ class CategoryController extends Controller
             ->rawColumns(['image', 'name', 'products'])
             ->toJson();
         }
-        return view('categories.index');
+        return view('catalogue.categories.index');
     }
 
     /**
@@ -52,7 +52,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('categories.create');
+        return view('catalogue.categories.create');
     }
 
     /**
@@ -99,7 +99,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('categories.edit', compact('category'));
+        return view('catalogue.categories.edit', compact('category'));
     }
 
     /**

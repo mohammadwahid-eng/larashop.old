@@ -36,7 +36,7 @@ class TagController extends Controller
             ->rawColumns(['name', 'products'])
             ->toJson();
         }
-        return view('tags.index');
+        return view('catalogue.tags.index');
     }
 
     /**
@@ -46,7 +46,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        return view('tags.create');
+        return view('catalogue.tags.create');
     }
 
     /**
@@ -87,7 +87,7 @@ class TagController extends Controller
      */
     public function edit(Tag $tag)
     {
-        return view('tags.edit', compact('tag'));
+        return view('catalogue.tags.edit', compact('tag'));
     }
 
     /**
