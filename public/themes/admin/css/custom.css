@@ -27,7 +27,38 @@ button.dt-button span.dt-down-arrow, div.dt-button span.dt-down-arrow, a.dt-butt
     display: none;
 }
 
-.dataTable.table th,
-.dataTable.table td {
-    vertical-align: middle;
+div.dataTables_wrapper div.dataTables_filter label {
+    margin-bottom: 0;
+}
+
+.dtw-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.dtw-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+div.dataTables_wrapper div.dataTables_info {
+    padding-top: 0;
+}
+
+.dataTables_wrapper {
+    position: relative;
+}
+
+div.dataTables_wrapper div.dataTables_processing {
+    width: 100% !important;
+    height: 100%;
+    background-size: 30px 30px;
+    background-color: rgba(255, 255, 255, .75);
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 1;
 }

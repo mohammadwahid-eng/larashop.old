@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     * 
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -19,13 +19,13 @@ class CategoryController extends Controller
         if ($request->ajax()) {
             $categories = Category::all();
             return datatables()->of($categories)
-            ->editColumn('image', function(Category $category) {
-                if($category->image) {
-                    return '<img src="'. asset('storage/uploads/'.$category->image.'') .'" alt="'.$category->name.'" width="40" height="40">';
+            ->editColumn('image', function($category) {
+                if($category->getFirstMedia()) {
+                    return '<img src="'. $category->getFirstMediaUrl() .'" alt="'. $category->getFirstMedia()->name .'" width="40" height="40">';
                 }
                 return '<img src="'. asset("themes/admin/img/placeholder.png") .'" alt="'.$category->name.'" width="40" height="40">';
             })
-            ->editColumn('name', function(Category $category) {
+            ->editColumn('name', function($category) {
                 $html = '<a href="'. route("admin.categories.show", $category) .'">'.$category->name.'</a>';
                 $html .= '<div class="table-links">';
                     $html .= '<span" class="text-muted btn-view">ID: '.$category->id.'</span>';
@@ -36,13 +36,13 @@ class CategoryController extends Controller
                 $html .= '</div>';
                 return $html;
             })
-            ->editColumn('products', function(Category $category) {
+            ->editColumn('products', function($category) {
                 return '<a href="#" class="font-weight-bold">0</a>';
             })
             ->rawColumns(['image', 'name', 'products'])
             ->toJson();
         }
-        return view('categories.index');
+        return view('catalogue.categories.index');
     }
 
     /**
@@ -52,7 +52,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('categories.create');
+        return view('catalogue.categories.create');
     }
 
     /**
@@ -68,20 +68,16 @@ class CategoryController extends Controller
             'slug'        => 'required|string|max:255|unique:categories',
             'parent_id'   => 'nullable',
             'description' => 'nullable|string',
-            'photo'       => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
+            'image'       => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
         ]);
 
-        $request->merge(['slug' => Str::slug($request->slug)]);
+        $category = Category::create($request->all());
 
-        if(isset($request->photo)) {
-            $photoname = time() . '.' . $request->photo->extension();
-            $request->photo->move(public_path('storage/uploads'), $photoname);
-            $request->merge(['image' => $photoname]);
+        if($request->hasFile('image') && $request->file('image')->isValid()){
+            $category->addMedia($request->file('image'))->toMediaCollection();
         }
-        
-        Category::create($request->all());
 
-        return redirect()->route('admin.categories.index')->with('status', 'Category has created successfully.');
+        return redirect()->route('admin.categories.index')->with('status', 'Record has been created');
     }
 
     /**
@@ -103,7 +99,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('categories.edit', compact('category'));
+        return view('catalogue.categories.edit', compact('category'));
     }
 
     /**
@@ -120,20 +116,17 @@ class CategoryController extends Controller
             'slug'        => ['required', 'string', 'max:255', Rule::unique('categories')->ignore($category)],
             'parent_id'   => 'nullable',
             'description' => 'nullable|string',
-            'photo'       => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
+            'image'       => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
         ]);
-
-        $request->merge(['slug' => Str::slug($request->slug)]);
-
-        if(isset($request->photo)) {
-            $photoname = $category->image ?? time() . '.' . $request->photo->extension();
-            $request->photo->move(public_path('storage/uploads'), $photoname);
-            $request->merge(['image' => $photoname]);
-        }
         
+        if($request->hasFile('image') && $request->file('image')->isValid()) {
+            $category->clearMediaCollection();
+            $category->addMedia($request->file('image'))->toMediaCollection();
+        }
+
         $category->update($request->all());
 
-        return redirect()->route('admin.categories.index')->with('status', 'Category has updated successfully.');
+        return redirect()->route('admin.categories.index')->with('status', 'Record has been updated');
     }
 
     /**
@@ -144,15 +137,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        if($category->id === 1) {
-            return response()->json(['error' => 'Failed to delete category.'], 400);
-        }
-
-        if($category->image) {
-            unlink(public_path('storage/uploads/' . $category->image));
-        }
         $category->delete();
-        return response()->json(['status' => 'Category has deleted successfully.']);
+        return response()->json(['status' => 'Record has been deleted']);
     }
 
     /**
@@ -163,8 +149,9 @@ class CategoryController extends Controller
      */
     public function destroy_bulk(Request $request)
     {
-        Category::whereIn('id', $request->id)->delete();
-
-        return response()->json(['status' => 'Categories have deleted successfully.']);
+        foreach($request->id as $id) {
+            $this->destroy(Category::find($id));
+        }
+        return response()->json(['status' => 'Records have been deleted']);
     }
 }

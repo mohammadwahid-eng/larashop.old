@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('customer')->name('customer.')->middleware(['theme:default'])->group(function() {
@@ -79,6 +81,12 @@ Route::prefix('admin')->name('admin.')->middleware(['theme:admin'])->group(funct
             Route::prefix('catalogue')->group(function() {
                 Route::delete('/categories/bulk', [CategoryController::class, 'destroy_bulk'])->name('categories.destroy.bulk'); // Must use before controller
                 Route::resource('categories', CategoryController::class);
+                
+                Route::delete('/tags/bulk', [TagController::class, 'destroy_bulk'])->name('tags.destroy.bulk'); // Must use before controller
+                Route::resource('tags', TagController::class);
+                
+                Route::delete('/attributes/bulk', [AttributeController::class, 'destroy_bulk'])->name('attributes.destroy.bulk'); // Must use before controller
+                Route::resource('attributes', AttributeController::class);
             });
         });
 

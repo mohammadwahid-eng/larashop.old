@@ -31,3 +31,45 @@ Breadcrumbs::for('admin.categories.edit', function (BreadcrumbTrail $trail, $cat
     $trail->parent('admin.categories.index');
     $trail->push($category->name, route('admin.categories.edit', $category));
 });
+
+
+
+// Home > Tags
+Breadcrumbs::for('admin.tags.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.home');
+    $trail->push('Tags', route('admin.tags.index'));
+});
+
+
+// Home > Tags > Create
+Breadcrumbs::for('admin.tags.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.tags.index');
+    $trail->push('Create', route('admin.tags.create'));
+});
+
+// Home > Tags > Name
+Breadcrumbs::for('admin.tags.edit', function (BreadcrumbTrail $trail, $tag) {
+    $trail->parent('admin.tags.index');
+    $trail->push($tag->name, route('admin.tags.edit', $tag));
+});
+
+
+
+// Home > Attributes
+Breadcrumbs::for('admin.attributes.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.home');
+    $trail->push('Attributes', route('admin.attributes.index'));
+});
+
+
+// Home > Attributes > Create
+Breadcrumbs::for('admin.attributes.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.attributes.index');
+    $trail->push('Create', route('admin.attributes.create'));
+});
+
+// Home > Attributes > Name
+Breadcrumbs::for('admin.attributes.edit', function (BreadcrumbTrail $trail, $attribute) {
+    $trail->parent('admin.attributes.index');
+    $trail->push($attribute->name, route('admin.attributes.edit', $attribute));
+});
