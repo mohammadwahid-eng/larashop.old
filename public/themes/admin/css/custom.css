@@ -27,11 +27,6 @@ button.dt-button span.dt-down-arrow, div.dt-button span.dt-down-arrow, a.dt-butt
     display: none;
 }
 
-.dataTable.table th,
-.dataTable.table td {
-    vertical-align: middle;
-}
-
 div.dataTables_wrapper div.dataTables_filter label {
     margin-bottom: 0;
 }

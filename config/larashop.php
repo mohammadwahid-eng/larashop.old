@@ -23,6 +23,13 @@ return [
                         'sort'     => 0,
                         'children' => []
                     ],
+                    [
+                        'name'     => 'Tags',
+                        'icon'     => 'fas fa-home',
+                        'route'    => 'admin.tags.index',
+                        'sort'     => 1,
+                        'children' => []
+                    ],
                 ]
             ],
         ],

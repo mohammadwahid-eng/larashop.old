@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('title')
-	{{ __('All Categories') }}
+	{{ __('All Tags') }}
 @endsection
 
 @section('breadcrumbs')
-	{{ Breadcrumbs::render('admin.categories.index') }}
+	{{ Breadcrumbs::render('admin.tags.index') }}
 @endsection
 
 @section('content')
@@ -14,7 +14,6 @@
             <thead>
                 <tr>
                     <th width="13"><input type="checkbox" class="selectAll"><span class="d-none">Checkbox</span></th>
-                    <th width="40">{{ __('Image') }}</th>
                     <th>{{ __('Name') }}</th>
                     <th>{{ __('Description') }}</th>
                     <th>{{ __('Slug') }}</th>
@@ -34,7 +33,6 @@
 @push('js_lib')
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.colVis.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
 @endpush
 
@@ -43,7 +41,7 @@
         $(document).ready(function() {
             let selectAll = $('.selectAll');
             let table = $('.dataTable').DataTable({
-                ajax: '{{ route("admin.categories.index") }}',
+                ajax: '{{ route("admin.tags.index") }}',
                 serverSide: true,
                 processing: true,
                 dom: '<"dtw-head"Bf>t<"dtw-footer"ip>r',
@@ -61,7 +59,7 @@
                             $.ajax({
                                 type: "DELETE",
                                 dataType: 'JSON',
-                                url: '{{ route("admin.categories.destroy.bulk") }}',
+                                url: '{{ route("admin.tags.destroy.bulk") }}',
                                 data: { _token: '{{ csrf_token() }}', id: list },
                                 success: function (data) {
                                     if (data.status) {
@@ -79,17 +77,12 @@
                     {
                         text: 'Add New',
                         action: function ( e, dt, node, config ) {
-                            window.location = "{{ route('admin.categories.create') }}";
+                            window.location = "{{ route('admin.tags.create') }}";
                         }
                     },
-                    {
-                        extend: 'colvis',
-                        text: 'Columns Visibility'
-                    }
                 ],
                 columns: [
                     { data: 'id', name: 'id', searchable: false, orderable: false, },
-                    { data: 'image', name: 'image', searchable: false, orderable: false, },
                     { data: 'name', name: 'name' },
                     { data: 'description', name: 'description' },
                     { data: 'slug', name: 'slug' },
@@ -109,7 +102,7 @@
                     },
                 ],
                 autoWidth: true,
-                order: [[2, 'desc']],
+                order: [[1, 'desc']],
                 lengthMenu: [ 25, 50, 75, 100 ]
             });
 
