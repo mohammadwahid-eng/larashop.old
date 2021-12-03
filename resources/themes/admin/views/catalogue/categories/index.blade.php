@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-	{{ __('All Categories') }}
+	{{ __('Product Categories') }}
 @endsection
 
 @section('breadcrumbs')

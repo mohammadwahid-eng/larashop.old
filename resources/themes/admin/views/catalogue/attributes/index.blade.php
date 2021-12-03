@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('title')
-	{{ __('Product Tags') }}
+	{{ __('Product Attributes') }}
 @endsection
 
 @section('breadcrumbs')
-	{{ Breadcrumbs::render('admin.tags.index') }}
+	{{ Breadcrumbs::render('admin.attributes.index') }}
 @endsection
 
 @section('content')
@@ -15,9 +15,9 @@
                 <tr>
                     <th width="13"><input type="checkbox" class="selectAll"><span class="d-none">Checkbox</span></th>
                     <th>{{ __('Name') }}</th>
-                    <th>{{ __('Description') }}</th>
                     <th>{{ __('Slug') }}</th>
-                    <th width="55">{{ __('Products') }}</th>
+                    <th>{{ __('Frontnd Type') }}</th>
+                    <th>{{ __('Values') }}</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -41,7 +41,7 @@
         $(document).ready(function() {
             let selectAll = $('.selectAll');
             let table = $('.dataTable').DataTable({
-                ajax: '{{ route("admin.tags.index") }}',
+                ajax: '{{ route("admin.attributes.index") }}',
                 serverSide: true,
                 processing: true,
                 dom: '<"dtw-head"Bf>t<"dtw-footer"ip>r',
@@ -59,7 +59,7 @@
                             $.ajax({
                                 type: "DELETE",
                                 dataType: 'JSON',
-                                url: '{{ route("admin.tags.destroy.bulk") }}',
+                                url: '{{ route("admin.attributes.destroy.bulk") }}',
                                 data: { _token: '{{ csrf_token() }}', id: list },
                                 success: function (data) {
                                     if (data.status) {
@@ -77,16 +77,16 @@
                     {
                         text: 'Add New',
                         action: function ( e, dt, node, config ) {
-                            window.location = "{{ route('admin.tags.create') }}";
+                            window.location = "{{ route('admin.attributes.create') }}";
                         }
                     },
                 ],
                 columns: [
                     { data: 'id', name: 'id', searchable: false, orderable: false, },
                     { data: 'name', name: 'name' },
-                    { data: 'description', name: 'description' },
                     { data: 'slug', name: 'slug' },
-                    { data: 'products', name: 'products' },
+                    { data: 'frontend_type', name: 'frontend_type' },
+                    { data: 'values', name: 'values' },
                 ],
                 columnDefs: [
                     {
@@ -95,10 +95,6 @@
                         render: function (data, type, full, meta) {
                             return '<input type="checkbox" name="id[]" value="' + data + '">';
                         }
-                    },
-                    {
-                        targets: -1,
-                        className: 'dt-center',
                     },
                 ],
                 autoWidth: true,

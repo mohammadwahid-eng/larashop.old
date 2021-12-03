@@ -30,6 +30,13 @@ return [
                         'sort'     => 1,
                         'children' => []
                     ],
+                    [
+                        'name'     => 'Attributes',
+                        'icon'     => 'fas fa-home',
+                        'route'    => 'admin.attributes.index',
+                        'sort'     => 1,
+                        'children' => []
+                    ],
                 ]
             ],
         ],
