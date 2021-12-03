@@ -143,6 +143,7 @@
             // Uncheck the select-all if any ajax request made
             table.on('xhr.dt', function () {
                 $('.bulk_delete').addClass('d-none');
+                $('.dt-button').removeClass('disabled');
                 if(selectAll.is(":checked")) {
                     selectAll.prop('checked', false);
                 }
