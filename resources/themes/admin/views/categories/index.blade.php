@@ -13,12 +13,12 @@
         <table class="table table-striped table-bordered dataTable w-100">
             <thead>
                 <tr>
-                    <th><input type="checkbox" class="selectAll"><span class="d-none">Checkbox</span></th>
-                    <th>{{ __('Image') }}</th>
+                    <th width="13"><input type="checkbox" class="selectAll"><span class="d-none">Checkbox</span></th>
+                    <th width="40">{{ __('Image') }}</th>
                     <th>{{ __('Name') }}</th>
                     <th>{{ __('Description') }}</th>
                     <th>{{ __('Slug') }}</th>
-                    <th>{{ __('Products') }}</th>
+                    <th width="55">{{ __('Products') }}</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -46,7 +46,7 @@
                 ajax: '{{ route("admin.categories.index") }}',
                 serverSide: true,
                 processing: true,
-                dom: 'Bfrtip',
+                dom: '<"dtw-head"Bf>t<"dtw-footer"ip>r',
                 buttons: [
                     {
                         text: '<i class="fas fa-trash-alt"></i>',
@@ -55,9 +55,7 @@
                             if(!confirm("Are you sure?")) return;
                             let list = [];
                             table.$('input[type="checkbox"]:checked').each(function() {
-                                if(this.value != 1) {
-                                    list.push(this.value);
-                                }
+                                list.push(this.value);
                             });
 
                             $.ajax({
@@ -97,13 +95,19 @@
                     { data: 'slug', name: 'slug' },
                     { data: 'products', name: 'products' },
                 ],
-                columnDefs: [{
-                    targets: 0,
-                    className: 'dt-center',
-                    render: function (data, type, full, meta) {
-                        return '<input type="checkbox" name="id[]" value="' + data + '">';
-                    }
-                }],
+                columnDefs: [
+                    {
+                        targets: 0,
+                        className: 'dt-center',
+                        render: function (data, type, full, meta) {
+                            return '<input type="checkbox" name="id[]" value="' + data + '">';
+                        }
+                    },
+                    {
+                        targets: -1,
+                        className: 'dt-center',
+                    },
+                ],
                 autoWidth: true,
                 order: [[2, 'desc']],
                 lengthMenu: [ 25, 50, 75, 100 ]
@@ -164,11 +168,6 @@
                         if (data.status) {
                             table.row(el.parents('tr')).remove().draw();
                             toastr.success(data.status);
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        if(error) {
-                            toastr.error(xhr.responseJSON.error);
                         }
                     }
                 });

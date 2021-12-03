@@ -52,11 +52,11 @@
 						<small class="form-text text-muted">{{ __('The description is not prominent by default; however, some themes may show it.') }}</small>
 					</div>
 					<div class="form-group">
-						<label for="photo">{{ __('Image') }}</label>
+						<label for="image">{{ __('Image') }}</label>
 						<div class="custom-file">
-							<input type="file" class="custom-file-input h-100 @error('photo') is-invalid @enderror" id="photo" name="photo">
-							<label class="custom-file-label" for="photo">{{ __('Choose file') }}</label>
-							@error('photo')
+							<input type="file" class="custom-file-input h-100 @error('image') is-invalid @enderror" id="image" name="image">
+							<label class="custom-file-label" for="image">{{ __('Choose file') }}</label>
+							@error('image')
 								<div class="invalid-feedback">{{ $message }}</div>
 							@enderror
 						</div>
