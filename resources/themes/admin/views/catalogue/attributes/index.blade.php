@@ -15,8 +15,8 @@
                 <tr>
                     <th width="13"><input type="checkbox" class="selectAll"><span class="d-none">Checkbox</span></th>
                     <th>{{ __('Name') }}</th>
+                    <th>{{ __('Description') }}</th>
                     <th>{{ __('Slug') }}</th>
-                    <th>{{ __('Frontnd Type') }}</th>
                     <th>{{ __('Values') }}</th>
                 </tr>
             </thead>
@@ -84,8 +84,8 @@
                 columns: [
                     { data: 'id', name: 'id', searchable: false, orderable: false, },
                     { data: 'name', name: 'name' },
+                    { data: 'description', name: 'description' },
                     { data: 'slug', name: 'slug' },
-                    { data: 'frontend_type', name: 'frontend_type' },
                     { data: 'values', name: 'values' },
                 ],
                 columnDefs: [

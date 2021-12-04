@@ -18,7 +18,7 @@ class Attribute extends Model
     protected $fillable = [
         'name',
         'slug',
-        'frontend_type',
+        'description',
     ];
 
     public function setSlugAttribute($value) {

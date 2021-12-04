@@ -29,19 +29,14 @@
 							<div class="invalid-feedback">{{ $message }}</div>
 						@enderror
 						<small class="form-text text-muted">{{ __('The "slug" is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.') }}</small>
-					</div>
+					</div>					
 					<div class="form-group">
-						<label for="frontend_type">{{ __('Frontend Type') }} <span class="text-danger">*</span></label>
-						<select name="frontend_type" id="frontend_type" class="form-control @error('frontend_type') is-invalid @enderror" required>
-							<option value="">{{ __('Select an option') }}</option>
-							@foreach (['select', 'checkbox', 'radio'] as $type)
-								<option value="{{ $type }}" @if($type == old('frontend_type')) selected @endif>{{ ucfirst($type) }}</option>
-							@endforeach
-						</select>
-						@error('frontend_type')
+						<label for="description">{{ __('Description') }}</label>
+						<textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
+						@error('description')
 							<div class="invalid-feedback">{{ $message }}</div>
 						@enderror
-						<small class="form-text text-muted">{{ __('The "frontend type" is the type of the field that will appear in frontend.') }}</small>
+						<small class="form-text text-muted">{{ __('The description is not prominent by default; however, some themes may show it.') }}</small>
 					</div>
 				</div>
 				<div class="card-footer pt-0 d-flex justify-content-between">
