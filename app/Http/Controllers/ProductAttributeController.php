@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Attribute;
-use Illuminate\Validation\Rule;
+use App\Models\ProductAttribute;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
-class AttributeController extends Controller
+class ProductAttributeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +17,7 @@ class AttributeController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $attributes = Attribute::all();
-            return datatables()->of($attributes)
+            return datatables()->of(ProductAttribute::all())
             ->editColumn('name', function($attribute) {
                 $html = '<a href="'. route("admin.attributes.show", $attribute) .'">'.$attribute->name.'</a>';
                 $html .= '<div class="table-links">';
@@ -59,11 +58,11 @@ class AttributeController extends Controller
     {
         $request->validate([
             'name'        => 'required|string|max:255',
-            'slug'        => 'required|string|max:255|unique:attributes',
+            'slug'        => 'required|string|max:255|unique:product_attributes',
             'description' => 'nullable|string',
         ]);
 
-        Attribute::create($request->all());
+        ProductAttribute::create($request->all());
 
         return redirect()->route('admin.attributes.index')->with('status', 'Record has been created');
     }
@@ -71,10 +70,10 @@ class AttributeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Attribute  $attribute
+     * @param  \App\Models\ProductAttribute  $attribute
      * @return \Illuminate\Http\Response
      */
-    public function show(Attribute $attribute)
+    public function show(ProductAttribute $attribute)
     {
         //
     }
@@ -82,10 +81,10 @@ class AttributeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Attribute  $attribute
+     * @param  \App\Models\ProductAttribute  $attribute
      * @return \Illuminate\Http\Response
      */
-    public function edit(Attribute $attribute)
+    public function edit(ProductAttribute $attribute)
     {
         return view('catalogue.attributes.edit', compact('attribute'));
     }
@@ -94,14 +93,14 @@ class AttributeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Attribute  $attribute
+     * @param  \App\Models\ProductAttribute  $attribute
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Attribute $attribute)
+    public function update(Request $request, ProductAttribute $attribute)
     {
         $request->validate([
             'name'        => 'required|string|max:255',
-            'slug'        => ['required', 'string', 'max:255', Rule::unique('attributes')->ignore($attribute)],
+            'slug'        => ['required', 'string', 'max:255', Rule::unique('product_attributes')->ignore($attribute)],
             'description' => 'nullable|string',
         ]);
 
@@ -113,10 +112,10 @@ class AttributeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Attribute  $attribute
+     * @param  \App\Models\ProductAttribute  $attribute
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Attribute $attribute)
+    public function destroy(ProductAttribute $attribute)
     {
         $attribute->delete();
         return response()->json(['status' => 'Record has been deleted']);
@@ -131,7 +130,7 @@ class AttributeController extends Controller
     public function destroy_bulk(Request $request)
     {
         foreach($request->id as $id) {
-            $this->destroy(Attribute::find($id));
+            $this->destroy(ProductAttribute::find($id));
         }
         return response()->json(['status' => 'Records have been deleted']);
     }

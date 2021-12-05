@@ -35,7 +35,7 @@
 						<label for="parent_id">{{ __('Parent category') }}</label>
 						<select name="parent_id" id="parent_id" class="form-control @error('parent_id') is-invalid @enderror">
 							<option value="">{{ __('None') }}</option>
-							@foreach (\App\Models\Category::all() as $cat)
+							@foreach (\App\Models\ProductCategory::all() as $cat)
 								@if ($cat->id === $category->id)
 									@continue
 								@endif

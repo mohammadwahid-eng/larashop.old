@@ -3,15 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
-class Category extends Model implements HasMedia
+class ProductTag extends Model
 {
-    use HasFactory, InteractsWithMedia;
-
+    use HasFactory;
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -20,7 +18,6 @@ class Category extends Model implements HasMedia
     protected $fillable = [
         'name',
         'slug',
-        'parent_id',
         'description',
     ];
 

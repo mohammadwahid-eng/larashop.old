@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tag;
-use Illuminate\Validation\Rule;
+use App\Models\ProductTag;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
-class TagController extends Controller
+class ProductTagController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +17,7 @@ class TagController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $tags = Tag::all();
-            return datatables()->of($tags)
+            return datatables()->of(ProductTag::all())
             ->editColumn('name', function($tag) {
                 $html = '<a href="'. route("admin.tags.show", $tag) .'">'.$tag->name.'</a>';
                 $html .= '<div class="table-links">';
@@ -59,11 +58,11 @@ class TagController extends Controller
     {
         $request->validate([
             'name'        => 'required|string|max:255',
-            'slug'        => 'required|string|max:255|unique:tags',
+            'slug'        => 'required|string|max:255|unique:product_tags',
             'description' => 'nullable|string',
         ]);
 
-        Tag::create($request->all());
+        ProductTag::create($request->all());
 
         return redirect()->route('admin.tags.index')->with('status', 'Record has been created');
     }
@@ -71,10 +70,10 @@ class TagController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Tag  $tag
+     * @param  \App\Models\ProductTag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function show(Tag $tag)
+    public function show(ProductTag $tag)
     {
         //
     }
@@ -82,10 +81,10 @@ class TagController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Tag  $tag
+     * @param  \App\Models\ProductTag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tag $tag)
+    public function edit(ProductTag $tag)
     {
         return view('catalogue.tags.edit', compact('tag'));
     }
@@ -94,14 +93,14 @@ class TagController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tag  $tag
+     * @param  \App\Models\ProductTag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tag $tag)
+    public function update(Request $request, ProductTag $tag)
     {
         $request->validate([
             'name'        => 'required|string|max:255',
-            'slug'        => ['required', 'string', 'max:255', Rule::unique('tags')->ignore($tag)],
+            'slug'        => ['required', 'string', 'max:255', Rule::unique('product_tags')->ignore($tag)],
             'description' => 'nullable|string',
         ]);
 
@@ -113,10 +112,10 @@ class TagController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Tag  $tag
+     * @param  \App\Models\ProductTag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tag $tag)
+    public function destroy(ProductTag $tag)
     {
         $tag->delete();
         return response()->json(['status' => 'Record has been deleted']);
@@ -131,7 +130,7 @@ class TagController extends Controller
     public function destroy_bulk(Request $request)
     {
         foreach($request->id as $id) {
-            $this->destroy(Tag::find($id));
+            $this->destroy(ProductTag::find($id));
         }
         return response()->json(['status' => 'Records have been deleted']);
     }

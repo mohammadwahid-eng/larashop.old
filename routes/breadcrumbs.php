@@ -8,6 +8,9 @@ use Diglactic\Breadcrumbs\Breadcrumbs;
 //  with `$trail`. This is nice for IDE type checking and completion.
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
+use App\Models\ProductCategory;
+use App\Models\ProductTag;
+
 // Admin Home
 Breadcrumbs::for('admin.home', function (BreadcrumbTrail $trail) {
     $trail->push('Home', route('admin.home'));
@@ -27,7 +30,7 @@ Breadcrumbs::for('admin.categories.create', function (BreadcrumbTrail $trail) {
 });
 
 // Home > Categories > Name
-Breadcrumbs::for('admin.categories.edit', function (BreadcrumbTrail $trail, $category) {
+Breadcrumbs::for('admin.categories.edit', function (BreadcrumbTrail $trail, ProductCategory $category) {
     $trail->parent('admin.categories.index');
     $trail->push($category->name, route('admin.categories.edit', $category));
 });
@@ -48,7 +51,7 @@ Breadcrumbs::for('admin.tags.create', function (BreadcrumbTrail $trail) {
 });
 
 // Home > Tags > Name
-Breadcrumbs::for('admin.tags.edit', function (BreadcrumbTrail $trail, $tag) {
+Breadcrumbs::for('admin.tags.edit', function (BreadcrumbTrail $trail, ProductTag $tag) {
     $trail->parent('admin.tags.index');
     $trail->push($tag->name, route('admin.tags.edit', $tag));
 });
@@ -60,7 +63,6 @@ Breadcrumbs::for('admin.attributes.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.home');
     $trail->push('Attributes', route('admin.attributes.index'));
 });
-
 
 // Home > Attributes > Create
 Breadcrumbs::for('admin.attributes.create', function (BreadcrumbTrail $trail) {

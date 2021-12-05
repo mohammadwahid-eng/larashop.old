@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class CategoryController extends Controller
+class ProductCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +17,7 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $categories = Category::all();
-            return datatables()->of($categories)
+            return datatables()->of(ProductCategory::all())
             ->editColumn('image', function($category) {
                 if($category->getFirstMedia()) {
                     return '<img src="'. $category->getFirstMediaUrl() .'" alt="'. $category->getFirstMedia()->name .'" width="40" height="40">';
@@ -65,13 +64,13 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name'        => 'required|string|max:255',
-            'slug'        => 'required|string|max:255|unique:categories',
+            'slug'        => 'required|string|max:255|unique:product_categories',
             'parent_id'   => 'nullable',
             'description' => 'nullable|string',
             'image'       => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
         ]);
 
-        $category = Category::create($request->all());
+        $category = ProductCategory::create($request->all());
 
         if($request->hasFile('image') && $request->file('image')->isValid()){
             $category->addMedia($request->file('image'))->toMediaCollection();
@@ -83,10 +82,10 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\ProductCategory  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show(ProductCategory $category)
     {
         //
     }
@@ -94,10 +93,10 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\ProductCategory  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(ProductCategory $category)
     {
         return view('catalogue.categories.edit', compact('category'));
     }
@@ -106,14 +105,14 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\ProductCategory  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, ProductCategory $category)
     {
         $request->validate([
             'name'        => 'required|string|max:255',
-            'slug'        => ['required', 'string', 'max:255', Rule::unique('categories')->ignore($category)],
+            'slug'        => ['required', 'string', 'max:255', Rule::unique('product_categories')->ignore($category)],
             'parent_id'   => 'nullable',
             'description' => 'nullable|string',
             'image'       => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
@@ -132,10 +131,10 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\ProductCategory  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(ProductCategory $category)
     {
         $category->delete();
         return response()->json(['status' => 'Record has been deleted']);
@@ -150,7 +149,7 @@ class CategoryController extends Controller
     public function destroy_bulk(Request $request)
     {
         foreach($request->id as $id) {
-            $this->destroy(Category::find($id));
+            $this->destroy(ProductCategory::find($id));
         }
         return response()->json(['status' => 'Records have been deleted']);
     }
