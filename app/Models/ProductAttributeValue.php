@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class ProductAttribute extends Model
+class ProductAttributeValue extends Model
 {
     use HasFactory;
 
@@ -19,6 +19,7 @@ class ProductAttribute extends Model
         'name',
         'slug',
         'description',
+        'product_attribute_id',
     ];
 
     public function setSlugAttribute($value) {
@@ -26,10 +27,9 @@ class ProductAttribute extends Model
     }
 
     /**
-     * Get the values for the attribute.
+     * Get the attribute that owns the value.
      */
-    public function attributeValues()
-    {
-        return $this->hasMany(ProductAttributeValue::class);
+    public function productAttribute() {
+        return $this->belongsTo(ProductAttribute::class);
     }
 }

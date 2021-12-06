@@ -2,6 +2,9 @@
 
 // Note: Laravel will automatically resolve `Breadcrumbs::` without
 // this import. This is nice for IDE syntax and refactoring.
+
+use App\Models\ProductAttribute;
+use App\Models\ProductAttributeValue;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 
 // This import is also not required, and you could replace `BreadcrumbTrail $trail`
@@ -71,7 +74,27 @@ Breadcrumbs::for('admin.attributes.create', function (BreadcrumbTrail $trail) {
 });
 
 // Home > Attributes > Name
-Breadcrumbs::for('admin.attributes.edit', function (BreadcrumbTrail $trail, $attribute) {
+Breadcrumbs::for('admin.attributes.edit', function (BreadcrumbTrail $trail, ProductAttribute $attribute) {
     $trail->parent('admin.attributes.index');
     $trail->push($attribute->name, route('admin.attributes.edit', $attribute));
+});
+
+
+
+// Home > Attributes > Name
+Breadcrumbs::for('admin.attributes.values.index', function (BreadcrumbTrail $trail, ProductAttribute $attribute) {
+    $trail->parent('admin.attributes.index');
+    $trail->push($attribute->name, route('admin.attributes.values.index', $attribute));
+});
+
+// Home > Attributes > Name > Create
+Breadcrumbs::for('admin.attributes.values.create', function (BreadcrumbTrail $trail, ProductAttribute $attribute) {
+    $trail->parent('admin.attributes.values.index', $attribute);
+    $trail->push("Create", route('admin.attributes.values.create', $attribute));
+});
+
+// Home > Attributes > Name > Edit
+Breadcrumbs::for('admin.attributes.values.edit', function (BreadcrumbTrail $trail, ProductAttribute $attribute, ProductAttributeValue $value) {
+    $trail->parent('admin.attributes.values.index', $attribute);
+    $trail->push($value->name, route('admin.attributes.values.edit', [$attribute, $value]));
 });

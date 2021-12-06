@@ -19,7 +19,7 @@ class ProductAttributeController extends Controller
         if ($request->ajax()) {
             return datatables()->of(ProductAttribute::all())
             ->editColumn('name', function($attribute) {
-                $html = '<a href="'. route("admin.attributes.show", $attribute) .'">'.$attribute->name.'</a>';
+                $html = '<a href="'. route("admin.attributes.values.index", $attribute) .'">'.$attribute->name.'</a>';
                 $html .= '<div class="table-links">';
                     $html .= '<span" class="text-muted btn-view">ID: '.$attribute->id.'</span>';
                     $html .= '<div class="bullet"></div>';
@@ -30,7 +30,13 @@ class ProductAttributeController extends Controller
                 return $html;
             })
             ->editColumn('values', function($attribute) {
-                return '<a href="#" class="font-weight-bold">0</a>';
+                $html = '<div class="d-flex gap-1 flex-wrap align-items-center">';
+                    foreach($attribute->attributeValues as $value) {
+                        $html .= '<a href="'. route("admin.attributes.values.edit", [$attribute, $value]) .'" class="badge badge-primary">'. $value->name .'</a>';
+                    }
+                    $html .= '<a href="'. route("admin.attributes.values.index", $attribute) .'" class="font-weight-bold">Configure</a>';
+                $html .= '</div>';
+                return $html;
             })
             ->rawColumns(['name', 'values'])
             ->toJson();
