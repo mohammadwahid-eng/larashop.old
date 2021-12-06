@@ -88,7 +88,7 @@ Route::prefix('admin')->name('admin.')->middleware(['theme:admin'])->group(funct
                 
                 Route::delete('/attributes/bulk', [ProductAttributeController::class, 'destroy_bulk'])->name('attributes.destroy.bulk');
                 Route::resource('attributes', ProductAttributeController::class);
-                Route::delete('/attributes/{attribute}/values/bulk', [ProductTagController::class, 'destroy_bulk'])->name('attributes.values.destroy.bulk');
+                Route::delete('/attributes/{attribute}/values/bulk', [ProductAttributeValueController::class, 'destroy_bulk'])->name('attributes.values.destroy.bulk');
                 Route::resource('attributes.values', ProductAttributeValueController::class);
             });
         });

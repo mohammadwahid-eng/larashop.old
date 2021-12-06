@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('title')
-	{{ __('Product ') . $attribute->name }}
+	{{ __('All Products') }}
 @endsection
 
 @section('breadcrumbs')
-	{{ Breadcrumbs::render('admin.attributes.values.index', $attribute) }}
+	{{ Breadcrumbs::render('admin.products.index') }}
 @endsection
 
 @section('content')
@@ -14,6 +14,7 @@
             <thead>
                 <tr>
                     <th width="13"><input type="checkbox" class="selectAll"><span class="d-none">Checkbox</span></th>
+                    <th width="40">{{ __('Image') }}</th>
                     <th>{{ __('Name') }}</th>
                     <th>{{ __('Description') }}</th>
                     <th>{{ __('Slug') }}</th>
@@ -33,6 +34,7 @@
 @push('js_lib')
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.colVis.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
 @endpush
 
@@ -41,7 +43,7 @@
         $(document).ready(function() {
             let selectAll = $('.selectAll');
             let table = $('.dataTable').DataTable({
-                ajax: '{{ route("admin.attributes.values.index", $attribute) }}',
+                ajax: '{{ route("admin.categories.index") }}',
                 serverSide: true,
                 processing: true,
                 dom: '<"dtw-head"Bf>t<"dtw-footer"ip>r',
@@ -51,22 +53,19 @@
                         className: "bulk_delete d-none",
                         action: function ( e, dt, node, config ) {
                             if(!confirm("Are you sure?")) return;
-                            let values = [];
+                            let list = [];
                             table.$('input[type="checkbox"]:checked').each(function() {
-                                values.push({
-                                    attribute: $(this).data('product_attribute_id'),
-                                    value: $(this).val()
-                                });
+                                list.push(this.value);
                             });
 
                             $.ajax({
                                 type: "DELETE",
                                 dataType: 'JSON',
-                                url: '{{ route("admin.attributes.values.destroy.bulk", $attribute) }}',
-                                data: { _token: '{{ csrf_token() }}', values },
+                                url: '{{ route("admin.categories.destroy.bulk") }}',
+                                data: { _token: '{{ csrf_token() }}', id: list },
                                 success: function (data) {
                                     if (data.status) {
-                                        values.forEach(function(id) {
+                                        list.forEach(function(id) {
                                             let el = $("input[value='"+id+"']");
                                             table.row(el.parents('tr')).remove();
                                         });
@@ -80,12 +79,17 @@
                     {
                         text: 'Add New',
                         action: function ( e, dt, node, config ) {
-                            window.location = "{{ route('admin.attributes.values.create', $attribute) }}";
+                            window.location = "{{ route('admin.categories.create') }}";
                         }
                     },
+                    {
+                        extend: 'colvis',
+                        text: 'Columns Visibility'
+                    }
                 ],
                 columns: [
                     { data: 'id', name: 'id', searchable: false, orderable: false, },
+                    { data: 'image', name: 'image', searchable: false, orderable: false, },
                     { data: 'name', name: 'name' },
                     { data: 'description', name: 'description' },
                     { data: 'slug', name: 'slug' },
@@ -96,7 +100,7 @@
                         targets: 0,
                         className: 'dt-center',
                         render: function (data, type, full, meta) {
-                            return '<input type="checkbox" name="id[]" value="' + data + '" data-product_attribute_id="'+ full.product_attribute_id +'">';
+                            return '<input type="checkbox" name="id[]" value="' + data + '">';
                         }
                     },
                     {
@@ -105,7 +109,7 @@
                     },
                 ],
                 autoWidth: true,
-                order: [[1, 'desc']],
+                order: [[2, 'desc']],
                 lengthMenu: [ 25, 50, 75, 100 ]
             });
 

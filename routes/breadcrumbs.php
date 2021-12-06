@@ -3,6 +3,7 @@
 // Note: Laravel will automatically resolve `Breadcrumbs::` without
 // this import. This is nice for IDE syntax and refactoring.
 
+use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\ProductAttributeValue;
 use Diglactic\Breadcrumbs\Breadcrumbs;
@@ -19,12 +20,13 @@ Breadcrumbs::for('admin.home', function (BreadcrumbTrail $trail) {
     $trail->push('Home', route('admin.home'));
 });
 
+
+
 // Home > Categories
 Breadcrumbs::for('admin.categories.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.home');
     $trail->push('Categories', route('admin.categories.index'));
 });
-
 
 // Home > Categories > Create
 Breadcrumbs::for('admin.categories.create', function (BreadcrumbTrail $trail) {
@@ -45,7 +47,6 @@ Breadcrumbs::for('admin.tags.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.home');
     $trail->push('Tags', route('admin.tags.index'));
 });
-
 
 // Home > Tags > Create
 Breadcrumbs::for('admin.tags.create', function (BreadcrumbTrail $trail) {
@@ -97,4 +98,24 @@ Breadcrumbs::for('admin.attributes.values.create', function (BreadcrumbTrail $tr
 Breadcrumbs::for('admin.attributes.values.edit', function (BreadcrumbTrail $trail, ProductAttribute $attribute, ProductAttributeValue $value) {
     $trail->parent('admin.attributes.values.index', $attribute);
     $trail->push($value->name, route('admin.attributes.values.edit', [$attribute, $value]));
+});
+
+
+
+// Home > Products
+Breadcrumbs::for('admin.products.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.home');
+    $trail->push('Products', route('admin.products.index'));
+});
+
+// Home > Products > Create
+Breadcrumbs::for('admin.products.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.products.index');
+    $trail->push('Create', route('admin.products.create'));
+});
+
+// Home > Products > Name
+Breadcrumbs::for('admin.products.edit', function (BreadcrumbTrail $trail, Product $product) {
+    $trail->parent('admin.products.index');
+    $trail->push($product->name, route('admin.products.edit', $product));
 });

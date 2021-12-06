@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\ProductAttribute;
 use App\Models\ProductAttributeValue;
-use Attribute;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -141,5 +140,19 @@ class ProductAttributeValueController extends Controller
     {
         $value->delete();
         return response()->json(['status' => 'Record has been deleted']);
+    }
+
+    /**
+     * Remove all the specified resource from storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy_bulk(Request $request)
+    {
+        foreach($request->values as $item) {
+            $this->destroy(ProductAttribute::find($item['attribute']), ProductAttributeValue::find($item['value']));
+        }
+        return response()->json(['status' => 'Records have been deleted']);
     }
 }
