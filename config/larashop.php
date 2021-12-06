@@ -17,24 +17,31 @@ return [
                 'sort'     => 0,
                 'children' => [
                     [
+                        'name'     => 'Products',
+                        'icon'     => 'fas fa-home',
+                        'route'    => 'admin.products.index',
+                        'sort'     => 0,
+                        'children' => []
+                    ],
+                    [
                         'name'     => 'Categories',
                         'icon'     => 'fas fa-home',
                         'route'    => 'admin.categories.index',
-                        'sort'     => 0,
+                        'sort'     => 1,
                         'children' => []
                     ],
                     [
                         'name'     => 'Tags',
                         'icon'     => 'fas fa-home',
                         'route'    => 'admin.tags.index',
-                        'sort'     => 1,
+                        'sort'     => 2,
                         'children' => []
                     ],
                     [
                         'name'     => 'Attributes',
                         'icon'     => 'fas fa-home',
                         'route'    => 'admin.attributes.index',
-                        'sort'     => 1,
+                        'sort'     => 3,
                         'children' => []
                     ],
                 ]

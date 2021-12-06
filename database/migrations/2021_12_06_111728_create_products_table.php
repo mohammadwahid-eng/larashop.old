@@ -17,6 +17,15 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
+            $table->string('sku')->nullable();
+            $table->decimal('price', 8, 2)->nullable();
+            $table->decimal('sale_price', 8, 2)->nullable();
+            $table->decimal('weight', 8, 2)->nullable();
+            $table->unsignedBigInteger('quantity')->nullable();
+            $table->text('short_description')->nullable();
+            $table->text('description')->nullable();
+            $table->boolean('active')->default(true);
+            $table->boolean('featured')->default(false);
             $table->timestamps();
         });
     }
