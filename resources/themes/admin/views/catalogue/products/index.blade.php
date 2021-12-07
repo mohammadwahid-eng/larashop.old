@@ -16,9 +16,7 @@
                     <th width="13"><input type="checkbox" class="selectAll"><span class="d-none">Checkbox</span></th>
                     <th width="40">{{ __('Image') }}</th>
                     <th>{{ __('Name') }}</th>
-                    <th>{{ __('Description') }}</th>
                     <th>{{ __('Slug') }}</th>
-                    <th width="55">{{ __('Products') }}</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -43,7 +41,7 @@
         $(document).ready(function() {
             let selectAll = $('.selectAll');
             let table = $('.dataTable').DataTable({
-                ajax: '{{ route("admin.categories.index") }}',
+                ajax: '{{ route("admin.products.index") }}',
                 serverSide: true,
                 processing: true,
                 dom: '<"dtw-head"Bf>t<"dtw-footer"ip>r',
@@ -61,7 +59,7 @@
                             $.ajax({
                                 type: "DELETE",
                                 dataType: 'JSON',
-                                url: '{{ route("admin.categories.destroy.bulk") }}',
+                                url: '{{ route("admin.products.destroy.bulk") }}',
                                 data: { _token: '{{ csrf_token() }}', id: list },
                                 success: function (data) {
                                     if (data.status) {
@@ -79,7 +77,7 @@
                     {
                         text: 'Add New',
                         action: function ( e, dt, node, config ) {
-                            window.location = "{{ route('admin.categories.create') }}";
+                            window.location = "{{ route('admin.products.create') }}";
                         }
                     },
                     {
@@ -91,9 +89,7 @@
                     { data: 'id', name: 'id', searchable: false, orderable: false, },
                     { data: 'image', name: 'image', searchable: false, orderable: false, },
                     { data: 'name', name: 'name' },
-                    { data: 'description', name: 'description' },
                     { data: 'slug', name: 'slug' },
-                    { data: 'products', name: 'products' },
                 ],
                 columnDefs: [
                     {
@@ -102,10 +98,6 @@
                         render: function (data, type, full, meta) {
                             return '<input type="checkbox" name="id[]" value="' + data + '">';
                         }
-                    },
-                    {
-                        targets: -1,
-                        className: 'dt-center',
                     },
                 ],
                 autoWidth: true,

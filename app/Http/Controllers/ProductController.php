@@ -63,17 +63,15 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'        => 'required|string|max:255',
-            'slug'        => 'required|string|max:255|unique:products',
-            'parent_id'   => 'nullable',
-            'description' => 'nullable|string',
-            'image'       => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
+            'name'           => 'required|string|max:255',
+            'slug'           => 'required|string|max:255|unique:products',
+            'featured_image' => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
         ]);
 
         $product = Product::create($request->all());
 
-        if($request->hasFile('image') && $request->file('image')->isValid()){
-            $product->addMedia($request->file('image'))->toMediaCollection();
+        if($request->hasFile('featured_image') && $request->file('featured_image')->isValid()){
+            $product->addMedia($request->file('featured_image'))->toMediaCollection();
         }
 
         return redirect()->route('admin.products.index')->with('status', 'Record has been created');
@@ -111,16 +109,14 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $request->validate([
-            'name'        => 'required|string|max:255',
-            'slug'        => ['required', 'string', 'max:255', Rule::unique('products')->ignore($product)],
-            'parent_id'   => 'nullable',
-            'description' => 'nullable|string',
-            'image'       => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
+            'name'           => 'required|string|max:255',
+            'slug'           => ['required', 'string', 'max:255', Rule::unique('products')->ignore($product)],
+            'featured_image' => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
         ]);
         
-        if($request->hasFile('image') && $request->file('image')->isValid()) {
+        if($request->hasFile('featured_image') && $request->file('featured_image')->isValid()) {
             $product->clearMediaCollection();
-            $product->addMedia($request->file('image'))->toMediaCollection();
+            $product->addMedia($request->file('featured_image'))->toMediaCollection();
         }
 
         $product->update($request->all());
