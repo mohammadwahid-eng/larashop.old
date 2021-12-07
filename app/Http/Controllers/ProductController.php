@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use Illuminate\Http\Request;
+use App\Models\Product;
 use Illuminate\Validation\Rule;
+use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,32 +17,31 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $categories = Category::all();
-            return datatables()->of($categories)
-            ->editColumn('image', function($category) {
-                if($category->getFirstMedia()) {
-                    return '<img src="'. $category->getFirstMediaUrl() .'" alt="'. $category->getFirstMedia()->name .'" width="40" height="40">';
+            return datatables()->of(Product::all())
+            ->editColumn('image', function($product) {
+                if($product->getFirstMedia()) {
+                    return '<img src="'. $product->getFirstMediaUrl() .'" alt="'. $product->getFirstMedia()->name .'" width="40" height="40">';
                 }
-                return '<img src="'. asset("themes/admin/img/placeholder.png") .'" alt="'.$category->name.'" width="40" height="40">';
+                return '<img src="'. asset("themes/admin/img/placeholder.png") .'" alt="'.$product->name.'" width="40" height="40">';
             })
-            ->editColumn('name', function($category) {
-                $html = '<a href="'. route("admin.categories.show", $category) .'">'.$category->name.'</a>';
+            ->editColumn('name', function($product) {
+                $html = '<a href="'. route("admin.products.show", $product) .'">'.$product->name.'</a>';
                 $html .= '<div class="table-links">';
-                    $html .= '<span" class="text-muted btn-view">ID: '.$category->id.'</span>';
+                    $html .= '<span" class="text-muted btn-view">ID: '.$product->id.'</span>';
                     $html .= '<div class="bullet"></div>';
-                    $html .= '<a href="'. route("admin.categories.edit", $category) .'" class="btn-edit">Edit</a>';
+                    $html .= '<a href="'. route("admin.products.edit", $product) .'" class="btn-edit">Edit</a>';
                     $html .= '<div class="bullet"></div>';
-                    $html .= '<a href="'. route("admin.categories.destroy", $category) .'" class="text-danger btn-delete">Delete</a>';
+                    $html .= '<a href="'. route("admin.products.destroy", $product) .'" class="text-danger btn-delete">Delete</a>';
                 $html .= '</div>';
                 return $html;
             })
-            ->editColumn('products', function($category) {
+            ->editColumn('products', function($product) {
                 return '<a href="#" class="font-weight-bold">0</a>';
             })
             ->rawColumns(['image', 'name', 'products'])
             ->toJson();
         }
-        return view('catalogue.categories.index');
+        return view('catalogue.products.index');
     }
 
     /**
@@ -52,7 +51,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('catalogue.categories.create');
+        return view('catalogue.products.create');
     }
 
     /**
@@ -65,28 +64,28 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name'        => 'required|string|max:255',
-            'slug'        => 'required|string|max:255|unique:categories',
+            'slug'        => 'required|string|max:255|unique:products',
             'parent_id'   => 'nullable',
             'description' => 'nullable|string',
             'image'       => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
         ]);
 
-        $category = Category::create($request->all());
+        $product = Product::create($request->all());
 
         if($request->hasFile('image') && $request->file('image')->isValid()){
-            $category->addMedia($request->file('image'))->toMediaCollection();
+            $product->addMedia($request->file('image'))->toMediaCollection();
         }
 
-        return redirect()->route('admin.categories.index')->with('status', 'Record has been created');
+        return redirect()->route('admin.products.index')->with('status', 'Record has been created');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show(Product $product)
     {
         //
     }
@@ -94,50 +93,50 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(Product $product)
     {
-        return view('catalogue.categories.edit', compact('category'));
+        return view('catalogue.products.edit', compact('product'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Product $product)
     {
         $request->validate([
             'name'        => 'required|string|max:255',
-            'slug'        => ['required', 'string', 'max:255', Rule::unique('categories')->ignore($category)],
+            'slug'        => ['required', 'string', 'max:255', Rule::unique('products')->ignore($product)],
             'parent_id'   => 'nullable',
             'description' => 'nullable|string',
             'image'       => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
         ]);
         
         if($request->hasFile('image') && $request->file('image')->isValid()) {
-            $category->clearMediaCollection();
-            $category->addMedia($request->file('image'))->toMediaCollection();
+            $product->clearMediaCollection();
+            $product->addMedia($request->file('image'))->toMediaCollection();
         }
 
-        $category->update($request->all());
+        $product->update($request->all());
 
-        return redirect()->route('admin.categories.index')->with('status', 'Record has been updated');
+        return redirect()->route('admin.products.index')->with('status', 'Record has been updated');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Product $product)
     {
-        $category->delete();
+        $product->delete();
         return response()->json(['status' => 'Record has been deleted']);
     }
 
@@ -150,7 +149,7 @@ class CategoryController extends Controller
     public function destroy_bulk(Request $request)
     {
         foreach($request->id as $id) {
-            $this->destroy(Category::find($id));
+            $this->destroy(Product::find($id));
         }
         return response()->json(['status' => 'Records have been deleted']);
     }

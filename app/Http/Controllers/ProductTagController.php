@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Attribute;
-use Illuminate\Validation\Rule;
+use App\Models\ProductTag;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
-class AttributeController extends Controller
+class ProductTagController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,26 +17,25 @@ class AttributeController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $attributes = Attribute::all();
-            return datatables()->of($attributes)
-            ->editColumn('name', function($attribute) {
-                $html = '<a href="'. route("admin.attributes.show", $attribute) .'">'.$attribute->name.'</a>';
+            return datatables()->of(ProductTag::all())
+            ->editColumn('name', function($tag) {
+                $html = '<a href="'. route("admin.tags.show", $tag) .'">'.$tag->name.'</a>';
                 $html .= '<div class="table-links">';
-                    $html .= '<span" class="text-muted btn-view">ID: '.$attribute->id.'</span>';
+                    $html .= '<span" class="text-muted btn-view">ID: '.$tag->id.'</span>';
                     $html .= '<div class="bullet"></div>';
-                    $html .= '<a href="'. route("admin.attributes.edit", $attribute) .'" class="btn-edit">Edit</a>';
+                    $html .= '<a href="'. route("admin.tags.edit", $tag) .'" class="btn-edit">Edit</a>';
                     $html .= '<div class="bullet"></div>';
-                    $html .= '<a href="'. route("admin.attributes.destroy", $attribute) .'" class="text-danger btn-delete">Delete</a>';
+                    $html .= '<a href="'. route("admin.tags.destroy", $tag) .'" class="text-danger btn-delete">Delete</a>';
                 $html .= '</div>';
                 return $html;
             })
-            ->editColumn('values', function($attribute) {
+            ->editColumn('products', function($tag) {
                 return '<a href="#" class="font-weight-bold">0</a>';
             })
-            ->rawColumns(['name', 'values'])
+            ->rawColumns(['name', 'products'])
             ->toJson();
         }
-        return view('catalogue.attributes.index');
+        return view('catalogue.tags.index');
     }
 
     /**
@@ -46,7 +45,7 @@ class AttributeController extends Controller
      */
     public function create()
     {
-        return view('catalogue.attributes.create');
+        return view('catalogue.tags.create');
     }
 
     /**
@@ -59,22 +58,22 @@ class AttributeController extends Controller
     {
         $request->validate([
             'name'        => 'required|string|max:255',
-            'slug'        => 'required|string|max:255|unique:attributes',
+            'slug'        => 'required|string|max:255|unique:product_tags',
             'description' => 'nullable|string',
         ]);
 
-        Attribute::create($request->all());
+        ProductTag::create($request->all());
 
-        return redirect()->route('admin.attributes.index')->with('status', 'Record has been created');
+        return redirect()->route('admin.tags.index')->with('status', 'Record has been created');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Attribute  $attribute
+     * @param  \App\Models\ProductTag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function show(Attribute $attribute)
+    public function show(ProductTag $tag)
     {
         //
     }
@@ -82,43 +81,43 @@ class AttributeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Attribute  $attribute
+     * @param  \App\Models\ProductTag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function edit(Attribute $attribute)
+    public function edit(ProductTag $tag)
     {
-        return view('catalogue.attributes.edit', compact('attribute'));
+        return view('catalogue.tags.edit', compact('tag'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Attribute  $attribute
+     * @param  \App\Models\ProductTag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Attribute $attribute)
+    public function update(Request $request, ProductTag $tag)
     {
         $request->validate([
             'name'        => 'required|string|max:255',
-            'slug'        => ['required', 'string', 'max:255', Rule::unique('attributes')->ignore($attribute)],
+            'slug'        => ['required', 'string', 'max:255', Rule::unique('product_tags')->ignore($tag)],
             'description' => 'nullable|string',
         ]);
 
-        $attribute->update($request->all());
+        $tag->update($request->all());
 
-        return redirect()->route('admin.attributes.index')->with('status', 'Record has been updated');
+        return redirect()->route('admin.tags.index')->with('status', 'Record has been updated');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Attribute  $attribute
+     * @param  \App\Models\ProductTag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Attribute $attribute)
+    public function destroy(ProductTag $tag)
     {
-        $attribute->delete();
+        $tag->delete();
         return response()->json(['status' => 'Record has been deleted']);
     }
 
@@ -131,7 +130,7 @@ class AttributeController extends Controller
     public function destroy_bulk(Request $request)
     {
         foreach($request->id as $id) {
-            $this->destroy(Attribute::find($id));
+            $this->destroy(ProductTag::find($id));
         }
         return response()->json(['status' => 'Records have been deleted']);
     }

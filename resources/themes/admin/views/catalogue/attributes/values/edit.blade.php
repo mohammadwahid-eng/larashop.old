@@ -1,22 +1,24 @@
 @extends('layouts.app')
 
 @section('title')
-	{{ __('Create Attribute') }}
+	{{ __('Edit ') . $value->name }}
 @endsection
 
 @section('breadcrumbs')
-	{{ Breadcrumbs::render('admin.attributes.create') }}
+	{{ Breadcrumbs::render('admin.attributes.values.edit', $attribute, $value) }}
 @endsection
 
 @section('content')
 	<section class="section">
 		<div class="section-body">
-			<form action="{{ route('admin.attributes.store') }}" method="POST" class="card">
+			<form action="{{ route('admin.attributes.values.update', [$attribute, $value]) }}" method="POST" class="card">
 				@csrf
+				@method('PUT')
+				<input type="hidden" name="product_attribute_id" value="{{ $attribute->id }}">
 				<div class="card-body pb-0">
 					<div class="form-group">
 						<label for="name">{{ __('Name') }} <span class="text-danger">*</span></label>
-						<input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" data-slugify="#slug" required>
+						<input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') ?? $value->name }}" data-slugify="#slug" required>
 						@error('name')
 							<div class="invalid-feedback">{{ $message }}</div>
 						@enderror
@@ -24,27 +26,24 @@
 					</div>
 					<div class="form-group">
 						<label for="slug">{{ __('Slug') }} <span class="text-danger">*</span></label>
-						<input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug" value="{{ old('slug') }}" required>
+						<input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug" value="{{ old('slug') ?? $value->slug }}" required>
 						@error('slug')
 							<div class="invalid-feedback">{{ $message }}</div>
 						@enderror
 						<small class="form-text text-muted">{{ __('The "slug" is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.') }}</small>
-					</div>					
+					</div>
 					<div class="form-group">
 						<label for="description">{{ __('Description') }}</label>
-						<textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
+						<textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror">{{ old('description') ?? $value->description }}</textarea>
 						@error('description')
 							<div class="invalid-feedback">{{ $message }}</div>
 						@enderror
 						<small class="form-text text-muted">{{ __('The description is not prominent by default; however, some themes may show it.') }}</small>
 					</div>
 				</div>
-				<div class="card-footer pt-0 d-flex justify-content-between">
-					<div>
-						<button class="btn btn-primary mr-1" type="submit">{{ __('Create Attribute') }}</button>
-						<a href="{{ route('admin.attributes.index') }}" class="btn btn-danger">{{ __('Back') }}</a>
-					</div>
-					<button class="btn btn-dark" type="reset">{{ __('Reset Form') }}</button>
+				<div class="card-footer pt-0">
+					<button class="btn btn-primary mr-1" type="submit">{{ __('Update') }}</button>
+					<a href="{{ route('admin.attributes.values.index', $attribute) }}" class="btn btn-danger">{{ __('Cancel') }}</a>
 				</div>
 			</form>
 		</div>

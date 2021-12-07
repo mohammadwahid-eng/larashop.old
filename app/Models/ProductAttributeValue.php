@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
-class Attribute extends Model
+class ProductAttributeValue extends Model
 {
     use HasFactory;
 
@@ -18,10 +18,18 @@ class Attribute extends Model
     protected $fillable = [
         'name',
         'slug',
-        'frontend_type',
+        'description',
+        'product_attribute_id',
     ];
 
     public function setSlugAttribute($value) {
         $this->attributes['slug'] = Str::slug($value);
+    }
+
+    /**
+     * Get the attribute that owns the value.
+     */
+    public function productAttribute() {
+        return $this->belongsTo(ProductAttribute::class);
     }
 }

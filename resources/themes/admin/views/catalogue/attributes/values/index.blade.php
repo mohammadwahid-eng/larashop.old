@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('title')
-	{{ __('Product Attributes') }}
+	{{ __('Product ') . $attribute->name }}
 @endsection
 
 @section('breadcrumbs')
-	{{ Breadcrumbs::render('admin.attributes.index') }}
+	{{ Breadcrumbs::render('admin.attributes.values.index', $attribute) }}
 @endsection
 
 @section('content')
@@ -17,7 +17,7 @@
                     <th>{{ __('Name') }}</th>
                     <th>{{ __('Description') }}</th>
                     <th>{{ __('Slug') }}</th>
-                    <th>{{ __('Values') }}</th>
+                    <th width="55">{{ __('Products') }}</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -41,7 +41,7 @@
         $(document).ready(function() {
             let selectAll = $('.selectAll');
             let table = $('.dataTable').DataTable({
-                ajax: '{{ route("admin.attributes.index") }}',
+                ajax: '{{ route("admin.attributes.values.index", $attribute) }}',
                 serverSide: true,
                 processing: true,
                 dom: '<"dtw-head"Bf>t<"dtw-footer"ip>r',
@@ -51,19 +51,22 @@
                         className: "bulk_delete d-none",
                         action: function ( e, dt, node, config ) {
                             if(!confirm("Are you sure?")) return;
-                            let list = [];
+                            let values = [];
                             table.$('input[type="checkbox"]:checked').each(function() {
-                                list.push(this.value);
+                                values.push({
+                                    attribute: $(this).data('product_attribute_id'),
+                                    value: $(this).val()
+                                });
                             });
 
                             $.ajax({
                                 type: "DELETE",
                                 dataType: 'JSON',
-                                url: '{{ route("admin.attributes.destroy.bulk") }}',
-                                data: { _token: '{{ csrf_token() }}', id: list },
+                                url: '{{ route("admin.attributes.values.destroy.bulk", $attribute) }}',
+                                data: { _token: '{{ csrf_token() }}', values },
                                 success: function (data) {
                                     if (data.status) {
-                                        list.forEach(function(id) {
+                                        values.forEach(function(id) {
                                             let el = $("input[value='"+id+"']");
                                             table.row(el.parents('tr')).remove();
                                         });
@@ -77,7 +80,7 @@
                     {
                         text: 'Add New',
                         action: function ( e, dt, node, config ) {
-                            window.location = "{{ route('admin.attributes.create') }}";
+                            window.location = "{{ route('admin.attributes.values.create', $attribute) }}";
                         }
                     },
                 ],
@@ -86,15 +89,19 @@
                     { data: 'name', name: 'name' },
                     { data: 'description', name: 'description' },
                     { data: 'slug', name: 'slug' },
-                    { data: 'values', name: 'values' },
+                    { data: 'products', name: 'products' },
                 ],
                 columnDefs: [
                     {
                         targets: 0,
                         className: 'dt-center',
                         render: function (data, type, full, meta) {
-                            return '<input type="checkbox" name="id[]" value="' + data + '">';
+                            return '<input type="checkbox" name="id[]" value="' + data + '" data-product_attribute_id="'+ full.product_attribute_id +'">';
                         }
+                    },
+                    {
+                        targets: -1,
+                        className: 'dt-center',
                     },
                 ],
                 autoWidth: true,

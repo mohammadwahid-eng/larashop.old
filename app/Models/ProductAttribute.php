@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
-class Tag extends Model
+class ProductAttribute extends Model
 {
     use HasFactory;
 
@@ -23,5 +23,13 @@ class Tag extends Model
 
     public function setSlugAttribute($value) {
         $this->attributes['slug'] = Str::slug($value);
+    }
+
+    /**
+     * Get the values for the attribute.
+     */
+    public function attributeValues()
+    {
+        return $this->hasMany(ProductAttributeValue::class);
     }
 }

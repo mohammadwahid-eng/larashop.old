@@ -1,18 +1,19 @@
 @extends('layouts.app')
 
 @section('title')
-	{{ __('Create Attribute') }}
+	{{ __('Create ') . $attribute->name }}
 @endsection
 
 @section('breadcrumbs')
-	{{ Breadcrumbs::render('admin.attributes.create') }}
+	{{ Breadcrumbs::render('admin.attributes.values.create', $attribute) }}
 @endsection
 
 @section('content')
 	<section class="section">
 		<div class="section-body">
-			<form action="{{ route('admin.attributes.store') }}" method="POST" class="card">
+			<form action="{{ route('admin.attributes.values.store', $attribute) }}" method="POST" class="card">
 				@csrf
+				<input type="hidden" name="product_attribute_id" value="{{ $attribute->id }}" required>
 				<div class="card-body pb-0">
 					<div class="form-group">
 						<label for="name">{{ __('Name') }} <span class="text-danger">*</span></label>
@@ -41,8 +42,8 @@
 				</div>
 				<div class="card-footer pt-0 d-flex justify-content-between">
 					<div>
-						<button class="btn btn-primary mr-1" type="submit">{{ __('Create Attribute') }}</button>
-						<a href="{{ route('admin.attributes.index') }}" class="btn btn-danger">{{ __('Back') }}</a>
+						<button class="btn btn-primary mr-1" type="submit">{{ __('Create ') . $attribute->name }}</button>
+						<a href="{{ route('admin.attributes.values.index', $attribute) }}" class="btn btn-danger">{{ __('Back') }}</a>
 					</div>
 					<button class="btn btn-dark" type="reset">{{ __('Reset Form') }}</button>
 				</div>

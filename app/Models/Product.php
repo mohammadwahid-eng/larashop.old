@@ -8,7 +8,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model implements HasMedia
+class Product extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
@@ -20,8 +20,6 @@ class Category extends Model implements HasMedia
     protected $fillable = [
         'name',
         'slug',
-        'parent_id',
-        'description',
     ];
 
     public function setSlugAttribute($value) {
