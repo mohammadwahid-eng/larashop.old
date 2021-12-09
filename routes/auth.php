@@ -13,6 +13,7 @@ use App\Http\Controllers\ProductAttributeValueController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductTagController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('customer')->name('customer.')->middleware(['theme:default'])->group(function() {
@@ -95,6 +96,11 @@ Route::prefix('admin')->name('admin.')->middleware(['theme:admin'])->group(funct
 
                 Route::delete('/products/bulk', [ProductController::class, 'destroy_bulk'])->name('products.destroy.bulk');
                 Route::resource('products', ProductController::class);
+            });
+
+            Route::prefix('settings')->name('settings.')->group(function() {
+                Route::get('/', [SettingController::class, 'index'])->name('index');
+                Route::put('/', [SettingController::class, 'update'])->name('update');
             });
         });
 
