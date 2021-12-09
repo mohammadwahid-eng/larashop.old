@@ -31,7 +31,7 @@
 						<small class="form-text text-muted">{{ __('In a few words, explain what this site is about.') }}</small>
 					</div>
 				</div>
-				<div class="card-footer">
+				<div class="card-footer pt-0">
 					<button class="btn btn-primary" type="submit">{{ __('Update') }}</button>
 				</div>
 			</form>
