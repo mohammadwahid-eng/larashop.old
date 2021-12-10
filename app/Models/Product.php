@@ -76,5 +76,12 @@ class Product extends Model implements HasMedia
     public function tags() {
         return $this->belongsToMany(ProductTag::class, 'product_tag', 'product_id', 'tag_id')->withTimestamps();
     }
+
+    /**
+     * The attributes that belong to the product.
+     */
+    public function attrs() {
+        return $this->belongsToMany(ProductAttribute::class, 'attribute_product', 'product_id', 'attribute_id')->withTimestamps();
+    }
     
 }
