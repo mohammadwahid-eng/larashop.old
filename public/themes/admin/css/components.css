@@ -1333,27 +1333,32 @@ tr:first-child>td>.fc-day-grid-event {
 /* 1.26 Tags Input */
 
 .bootstrap-tagsinput {
-	background-color: #fdfdff;
-	border-color: #e4e6fc;
-	display: block;
-	height: 46px;
-	box-shadow: none;
-	overflow: auto;
+    background-color: #fdfdff;
+    border-color: #e4e6fc;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    min-height: 42px;
+    box-shadow: none;
+    align-items: center;
+    overflow: auto;
+    padding: 10px 15px;
 }
 
 .bootstrap-tagsinput input {
 	height: 100%;
-	padding: 0 8px;
+	padding: 0;
 }
 
 .bootstrap-tagsinput .tag {
 	background-color: #6777ef;
 	border-radius: 3px;
-	padding: 5px 10px;
+	padding: 0 5px;
+	margin: 0;
 }
 
 .bootstrap-tagsinput .tag:first-child {
-	margin-left: 5px;
+	
 }
 
 .bootstrap-tagsinput:focus {

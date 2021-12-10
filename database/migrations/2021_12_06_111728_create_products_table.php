@@ -15,14 +15,21 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+
             $table->string('name');
             $table->string('slug')->unique();
-            $table->enum('type', ['simple', 'group', 'external', 'variable'])->default('simple');
-            $table->boolean('status')->default(false);
-            $table->boolean('featured')->default(false);
-            $table->boolean('catalog_visibility')->default(true);
             $table->text('description')->nullable();
             $table->text('short_description')->nullable();
+
+            $table->string('status')->default('draft');
+            $table->string('visibility')->default('public');
+            $table->string('password')->nullable();
+
+            $table->enum('catalogue_visibility', ['shop_and_search', 'only_shop', 'only_search', 'hidden'])->default('shop_and_search');
+            $table->boolean('featured')->default(false);
+            $table->string('type')->default('simple');
+            $table->boolean('virtual')->default(false);
+            $table->boolean('downloadable')->default(false);
 
 
             $table->string('sku')->nullable();
@@ -48,9 +55,8 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->boolean('reviews_allowed')->default(true);
             $table->string('purchase_note')->nullable();
-            $table->string('password')->nullable();
-            $table->boolean('virtual')->default(false);
-            $table->boolean('downloadable')->default(false);
+            
+            
             $table->json('downloads')->nullable();
             $table->integer('download_limit')->nullable();
             $table->string('download_expiry')->nullable();
