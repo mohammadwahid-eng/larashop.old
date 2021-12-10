@@ -18,7 +18,8 @@ class CreateProductAttributeValuesTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->text('description')->nullable();
-            $table->foreignId('product_attribute_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('attribute_id');
+            $table->foreign('attribute_id')->references('id')->on('product_attributes')->onDelete('cascade');
             $table->timestamps();
         });
     }

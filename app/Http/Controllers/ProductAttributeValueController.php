@@ -19,7 +19,7 @@ class ProductAttributeValueController extends Controller
     public function index(Request $request, ProductAttribute $attribute)
     {
         if ($request->ajax()) {
-            return datatables()->of($attribute->attributeValues)
+            return datatables()->of($attribute->attr_values)
             ->editColumn('name', function($value) use($attribute) {
                 $html = '<a href="'. route("admin.attributes.values.show", [$attribute, $value]) .'">'.$value->name.'</a>';
                 $html .= '<div class="table-links">';
@@ -67,7 +67,7 @@ class ProductAttributeValueController extends Controller
                 'string',
                 'max:255',
                 Rule::unique('product_attribute_values')->where(function ($value) use($request) {
-                    return $value->where('slug', $request->slug)->where('product_attribute_id', $request->product_attribute_id);
+                    return $value->where('slug', $request->slug)->where('attribute_id', $request->attribute_id);
                 }),
             ],
             'description' => 'nullable|string',
@@ -118,7 +118,7 @@ class ProductAttributeValueController extends Controller
                 'string',
                 'max:255',
                 Rule::unique('product_attribute_values')->where(function ($value) use($request) {
-                    return $value->where('slug', $request->slug)->where('product_attribute_id', $request->product_attribute_id);
+                    return $value->where('slug', $request->slug)->where('attribute_id', $request->attribute_id);
                 })->ignore($value),
             ],
             'description' => 'nullable|string',

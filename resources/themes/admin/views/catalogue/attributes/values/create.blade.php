@@ -13,7 +13,7 @@
 		<div class="section-body">
 			<form action="{{ route('admin.attributes.values.store', $attribute) }}" method="POST" class="card">
 				@csrf
-				<input type="hidden" name="product_attribute_id" value="{{ $attribute->id }}" required>
+				<input type="hidden" name="attribute_id" value="{{ $attribute->id }}" required>
 				<div class="card-body pb-0">
 					<div class="form-group">
 						<label for="name">{{ __('Name') }} <span class="text-danger">*</span></label>
