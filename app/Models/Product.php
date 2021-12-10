@@ -62,4 +62,12 @@ class Product extends Model implements HasMedia
     public function setSlugAttribute($value) {
         $this->attributes['slug'] = Str::slug($value);
     }
+
+    /**
+     * The categories that belong to the product.
+     */
+    public function categories() {
+        return $this->belongsToMany(ProductCategory::class, 'category_product', 'category_id');
+    }
+    
 }
