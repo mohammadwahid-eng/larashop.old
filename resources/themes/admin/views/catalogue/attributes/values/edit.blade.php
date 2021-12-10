@@ -14,7 +14,7 @@
 			<form action="{{ route('admin.attributes.values.update', [$attribute, $value]) }}" method="POST" class="card">
 				@csrf
 				@method('PUT')
-				<input type="hidden" name="product_attribute_id" value="{{ $attribute->id }}">
+				<input type="hidden" name="attribute_id" value="{{ $attribute->id }}">
 				<div class="card-body pb-0">
 					<div class="form-group">
 						<label for="name">{{ __('Name') }} <span class="text-danger">*</span></label>

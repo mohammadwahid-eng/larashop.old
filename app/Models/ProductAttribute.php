@@ -28,8 +28,8 @@ class ProductAttribute extends Model
     /**
      * Get the values for the attribute.
      */
-    public function attributeValues()
+    public function attr_values()
     {
-        return $this->hasMany(ProductAttributeValue::class);
+        return $this->hasMany(ProductAttributeValue::class, 'attribute_id');
     }
 }

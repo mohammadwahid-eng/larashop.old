@@ -19,7 +19,7 @@ class ProductAttributeValue extends Model
         'name',
         'slug',
         'description',
-        'product_attribute_id',
+        'attribute_id',
     ];
 
     public function setSlugAttribute($value) {
@@ -29,7 +29,7 @@ class ProductAttributeValue extends Model
     /**
      * Get the attribute that owns the value.
      */
-    public function productAttribute() {
+    public function attr() {
         return $this->belongsTo(ProductAttribute::class);
     }
 }

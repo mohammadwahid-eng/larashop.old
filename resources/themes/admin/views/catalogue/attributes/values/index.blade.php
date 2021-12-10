@@ -54,7 +54,7 @@
                             let values = [];
                             table.$('input[type="checkbox"]:checked').each(function() {
                                 values.push({
-                                    attribute: $(this).data('product_attribute_id'),
+                                    attribute: $(this).data('attribute_id'),
                                     value: $(this).val()
                                 });
                             });
@@ -96,7 +96,7 @@
                         targets: 0,
                         className: 'dt-center',
                         render: function (data, type, full, meta) {
-                            return '<input type="checkbox" name="id[]" value="' + data + '" data-product_attribute_id="'+ full.product_attribute_id +'">';
+                            return '<input type="checkbox" name="id[]" value="' + data + '" data-attribute_id="'+ full.attribute_id +'">';
                         }
                     },
                     {

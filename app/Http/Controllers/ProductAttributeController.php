@@ -31,7 +31,7 @@ class ProductAttributeController extends Controller
             })
             ->editColumn('values', function($attribute) {
                 $html = '<div class="d-flex gap-1 flex-wrap align-items-center">';
-                    foreach($attribute->attributeValues as $value) {
+                    foreach($attribute->attr_values as $value) {
                         $html .= '<a href="'. route("admin.attributes.values.edit", [$attribute, $value]) .'" class="badge badge-primary">'. $value->name .'</a>';
                     }
                     $html .= '<a href="'. route("admin.attributes.values.index", $attribute) .'" class="font-weight-bold">Configure</a>';

@@ -41,4 +41,11 @@ class ProductCategory extends Model implements HasMedia
     public function parent() {
         return $this->belongsTo(ProductCategory::class, 'parent_id');
     }
+
+    /**
+     * The products that belong to the category.
+     */
+    public function products() {
+        return $this->belongsToMany(Product::class, 'category_product', 'category_id', 'product_id')->withTimestamps();
+    }
 }
