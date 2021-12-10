@@ -1548,7 +1548,7 @@ h6 .badge {
 /* 3.18 Navbar */
 .navbar {
   height: 70px;
-  left: 250px;
+  left: 220px;
   right: 5px;
   position: absolute;
   z-index: 890;
@@ -2495,7 +2495,7 @@ pre {
   position: fixed;
   top: 0;
   height: 100%;
-  width: 250px;
+  width: 220px;
   background-color: #fff;
   z-index: 880;
   left: 0; }
@@ -2507,7 +2507,7 @@ pre {
   transition: all .5s; }
 
 body.sidebar-gone .main-sidebar {
-  left: -250px; }
+  left: -220px; }
 
 body.sidebar-mini .hide-sidebar-mini {
   display: none !important; }
@@ -2887,7 +2887,7 @@ body.layout-3 .main-footer {
         padding-left: 10px; }
 
 .main-content {
-  padding-left: 280px;
+  padding-left: 250px;
   padding-right: 30px;
   padding-top: 80px;
   width: 100%;

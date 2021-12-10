@@ -13,7 +13,7 @@ return [
             [
                 'name'     => 'Catalogue',
                 'icon'     => 'fas fa-cubes',
-                'route'    => 'admin.home',
+                'route'    => 'admin.products.index',
                 'sort'     => 0,
                 'children' => [
                     [
@@ -42,6 +42,21 @@ return [
                         'icon'     => 'fas fa-home',
                         'route'    => 'admin.attributes.index',
                         'sort'     => 3,
+                        'children' => []
+                    ],
+                ]
+            ],
+            [
+                'name'     => 'Settings',
+                'icon'     => 'fas fa-sliders-h',
+                'route'    => 'admin.settings.index',
+                'sort'     => 3,
+                'children' => [
+                    [
+                        'name'     => 'General',
+                        'icon'     => 'fas fa-sliders-h',
+                        'route'    => 'admin.settings.index',
+                        'sort'     => 0,
                         'children' => []
                     ],
                 ]

@@ -119,3 +119,11 @@ Breadcrumbs::for('admin.products.edit', function (BreadcrumbTrail $trail, Produc
     $trail->parent('admin.products.index');
     $trail->push($product->name, route('admin.products.edit', $product));
 });
+
+
+
+// Home > Settings
+Breadcrumbs::for('admin.settings.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.home');
+    $trail->push('Settings', route('admin.settings.index'));
+});
