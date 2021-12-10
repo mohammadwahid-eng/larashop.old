@@ -24,4 +24,11 @@ class ProductTag extends Model
     public function setSlugAttribute($value) {
         $this->attributes['slug'] = Str::slug($value);
     }
+
+    /**
+     * The products that belong to the tag.
+     */
+    public function products() {
+        return $this->belongsToMany(ProductTag::class, 'product_tag', 'tag_id', 'product_id')->withTimestamps();
+    }
 }

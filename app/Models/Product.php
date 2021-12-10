@@ -67,7 +67,14 @@ class Product extends Model implements HasMedia
      * The categories that belong to the product.
      */
     public function categories() {
-        return $this->belongsToMany(ProductCategory::class, 'category_product', 'category_id');
+        return $this->belongsToMany(ProductCategory::class, 'category_product', 'product_id', 'category_id')->withTimestamps();
+    }
+
+    /**
+     * The tags that belong to the product.
+     */
+    public function tags() {
+        return $this->belongsToMany(ProductTag::class, 'product_tag', 'product_id', 'tag_id')->withTimestamps();
     }
     
 }
