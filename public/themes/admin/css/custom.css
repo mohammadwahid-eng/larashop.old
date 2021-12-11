@@ -94,16 +94,20 @@ div.dataTables_wrapper div.dataTables_processing {
     border-color: #f0f1ff;
 }
 
-.meta-card .list-group-item {    
+.meta-card .list-group-item {
     border-width: 0 0 1px 0;
+    white-space: nowrap;
 }
 
 .meta-card .list-group {
-    border-right: 1px solid #eee;
     height: 100%;
     background-color: #fafafa;
 }
 
 .meta-card .card-body {
     border-bottom: 1px solid #eee;
+}
+
+.meta-card .tab-content {
+    border-left: 1px solid #eee;
 }

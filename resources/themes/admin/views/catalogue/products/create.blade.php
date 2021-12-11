@@ -47,18 +47,20 @@
 						<div class="card meta-card">
 							<div class="card-body">
 								<div class="form-group mb-0">
-									<label for="type">{{ __('Product Type') }}</label>
 									<div class="row align-items-center">
-										<div class="col-lg-6">
-											<select class="form-control @error('type') is-invalid @enderror" name="type" id="type">
+										<div class="col-lg-auto">
+											<label for="type" class="mb-lg-0">{{ __('Product Type') }}</label>
+										</div>
+										<div class="col">
+											<select class="form-control form-control-sm @error('type') is-invalid @enderror" name="type" id="type">
 												<option value="simple">{{ __('Simple Product') }}</option>
 												<option value="grouped">{{ __('Grouped Product') }}</option>
 												<option value="external">{{ __('External Product') }}</option>
 												<option value="variable">{{ __('Variable Product') }}</option>
 											</select>
 										</div>
-										<div class="col-lg-3">
-											<label class="custom-switch pl-0">
+										<div class="col-lg-auto">
+											<label class="custom-switch py-1 pl-0">
 												<input type="checkbox" name="virtual" id="virtual" class="custom-switch-input">
 												<span class="custom-switch-indicator"></span>
 												<span class="custom-switch-description">{{ __('Virtual') }}</span>
@@ -67,8 +69,8 @@
 												<div class="invalid-feedback">{{ $message }}</div>
 											@enderror
 										</div>
-										<div class="col-lg-3">
-											<label class="custom-switch pl-0">
+										<div class="col-lg-auto">
+											<label class="custom-switch py-1 pl-0">
 												<input type="checkbox" name="downloadable" id="downloadable" class="custom-switch-input">
 												<span class="custom-switch-indicator"></span>
 												<span class="custom-switch-description">{{ __('Downloadable') }}</span>
@@ -82,30 +84,225 @@
 							</div>
 							<div class="d-flex">
 								<div class="list-group">
-									<a class="list-group-item list-group-item-action active" data-toggle="list" href="#list-general"><i class="fas fa-home mr-1"></i> {{ __('General') }}</a>
-									<a class="list-group-item list-group-item-action" data-toggle="list" href="#list-inventory"><i class="fas fa-home mr-1"></i> {{ __('Inventory') }}</a>
-									<a class="list-group-item list-group-item-action" data-toggle="list" href="#list-shipping"><i class="fas fa-car mr-1"></i> {{ __('Shipping') }}</a>
+									<a class="list-group-item list-group-item-action active" data-toggle="list" href="#list-general"><i class="fas fa-tachometer-alt mr-1"></i> {{ __('General') }}</a>
+									<a class="list-group-item list-group-item-action" data-toggle="list" href="#list-inventory"><i class="fas fa-warehouse mr-1"></i> {{ __('Inventory') }}</a>
+									<a class="list-group-item list-group-item-action" data-toggle="list" href="#list-shipping"><i class="fas fa-truck-moving mr-1"></i> {{ __('Shipping') }}</a>
 									<a class="list-group-item list-group-item-action" data-toggle="list" href="#list-linked_products"><i class="fas fa-link mr-1"></i> {{ __('Linked Products') }}</a>
-									<a class="list-group-item list-group-item-action" data-toggle="list" href="#list-attributes"><i class="fas fa-home mr-1"></i> {{ __('Attributes') }}</a>
+									<a class="list-group-item list-group-item-action" data-toggle="list" href="#list-attributes"><i class="fas fa-tags mr-1"></i> {{ __('Attributes') }}</a>
 									<a class="list-group-item list-group-item-action" data-toggle="list" href="#list-advanced"><i class="fas fa-cog mr-1"></i> {{ __('Advanced') }}</a>
 								</div>
 								<div class="tab-content px-4 flex-grow-1">
 									<div class="tab-pane fade show active" id="list-general">
-										<div class="form-group row mb-3">
-											<label for="regular_price" class="col-sm-3 col-form-label">{{ __('Regular Price') }}($)</label>
-											<div class="col-sm-9">
-												<input type="text" class="form-control form-control-sm @error('regular_price') is-invalid @enderror" id="regular_price" name="regular_price" value="{{ old('regular_price') }}">
-												@error('regular_price')
+										<div class="form-group mb-3">
+											<label class="mb-0" for="regular_price">{{ __('Regular Price') }}($)</label>
+											<input type="text" class="form-control form-control-sm @error('regular_price') is-invalid @enderror" id="regular_price" name="regular_price" value="{{ old('regular_price') }}">
+											@error('regular_price')
+												<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+										</div>
+										<div class="form-group mb-3">
+											<label class="mb-0" for="sale_price">{{ __('Sale Price') }}($)</label>
+											<input type="text" class="form-control form-control-sm @error('sale_price') is-invalid @enderror" id="sale_price" name="sale_price" value="{{ old('sale_price') }}">
+											@error('sale_price')
+												<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+											<a href="#schedule_price" data-toggle="collapse" class="small text-primary">Schedule</a>
+										</div>
+										<div class="collapse" id="schedule_price">
+											<div class="form-group mb-3">
+												<label class="mb-0" for="date_on_sale_from">{{ __('Sale price from') }}</label>
+												<input type="date" class="form-control form-control-sm @error('date_on_sale_from') is-invalid @enderror" id="date_on_sale_from" name="date_on_sale_from" value="{{ old('date_on_sale_from') }}">
+												@error('date_on_sale_from')
+													<div class="invalid-feedback">{{ $message }}</div>
+												@enderror
+											</div>
+											<div class="form-group mb-3">
+												<label class="mb-0" for="date_on_sale_to">{{ __('Sale price to') }}</label>
+												<input type="date" class="form-control form-control-sm @error('date_on_sale_to') is-invalid @enderror" id="date_on_sale_to" name="date_on_sale_to" value="{{ old('date_on_sale_to') }}">
+												@error('date_on_sale_to')
+													<div class="invalid-feedback">{{ $message }}</div>
+												@enderror
+
+											</div>
+										</div>
+										<div>
+											<div class="form-group mb-3">
+												<label class="mb-0" for="downloads">{{ __('Downloadble Files') }}</label>
+												<div class="custom-file">
+													<input type="file" class="custom-file-input h-100 @error('downloads') is-invalid @enderror" id="downloads" name="downloads">
+													<label class="custom-file-label" for="downloads">{{ __('Choose file') }}</label>
+													@error('downloads')
+														<div class="invalid-feedback">{{ $message }}</div>
+													@enderror
+												</div>
+											</div>											
+											<div class="form-group mb-3">
+												<label class="mb-0" for="download_limit">{{ __('Download Limit') }}</label>
+												<input type="text" class="form-control form-control-sm @error('download_limit') is-invalid @enderror" id="download_limit" name="download_limit" value="{{ old('download_limit') }}">
+												@error('download_limit')
+													<div class="invalid-feedback">{{ $message }}</div>
+												@enderror
+												<small class="form-text text-muted">{{ __('-1 or Leave blank for unlimited re-downloads.') }}</small>
+											</div>
+											<div class="form-group mb-3">
+												<label class="mb-0" for="download_expiry">{{ __('Download Expiry') }}</label>
+												<input type="text" class="form-control form-control-sm @error('download_expiry') is-invalid @enderror" id="download_expiry" name="download_expiry" value="{{ old('download_expiry') }}">
+												@error('download_expiry')
+													<div class="invalid-feedback">{{ $message }}</div>
+												@enderror
+												<small class="form-text text-muted">{{ __('Enter the number of days before a download link expires, or leave blank.') }}</small>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="list-inventory">
+										<div class="form-group mb-3">
+											<label class="mb-0" for="sku">{{ __('SKU') }}</label>
+											<input type="text" class="form-control form-control-sm @error('sku') is-invalid @enderror" id="sku" name="sku" value="{{ old('sku') }}">
+											@error('sku')
+												<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+										</div>
+										<div class="form-group mb-2">
+											<label class="mb-0 w-100" for="manage_stock">{{ __('Manage Stock') }}</label>
+											<label class="custom-switch pl-0">
+												<input type="checkbox" name="manage_stock" id="manage_stock" class="custom-switch-input" @if (old('manage_stock')) checked @endif>
+												<span class="custom-switch-indicator"></span>
+												<span class="custom-switch-description">{{ __('Enable stock management at product level') }}</span>
+											</label>
+											@error('manage_stock')
+												<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+										</div>
+
+										<div>
+											<div class="form-group mb-3">
+												<label class="mb-0" for="stock_quantity">{{ __('Stock Quantity') }}</label>
+												<input type="number" class="form-control form-control-sm @error('stock_quantity') is-invalid @enderror" id="stock_quantity" name="stock_quantity" value="{{ old('stock_quantity') }}">
+												@error('stock_quantity')
+													<div class="invalid-feedback">{{ $message }}</div>
+												@enderror
+											</div>
+											<div class="form-group mb-2">
+												<label class="mb-0 w-100" for="backorders">{{ __('Backorders') }}</label>
+												<label class="custom-switch pl-0">
+													<input type="checkbox" name="backorders" id="backorders" class="custom-switch-input" @if (old('backorders')) checked @endif>
+													<span class="custom-switch-indicator"></span>
+													<span class="custom-switch-description">{{ __('Allow Backorders') }}</span>
+												</label>
+												@error('backorders')
+													<div class="invalid-feedback">{{ $message }}</div>
+												@enderror
+											</div>
+											<div class="form-group mb-3">
+												<label class="mb-0" for="low_stock_amount">{{ __('Low Stock Threshold') }}</label>
+												<input type="number" class="form-control form-control-sm @error('low_stock_amount') is-invalid @enderror" id="low_stock_amount" name="low_stock_amount" value="{{ old('low_stock_amount') }}">
+												@error('low_stock_amount')
 													<div class="invalid-feedback">{{ $message }}</div>
 												@enderror
 											</div>
 										</div>
+
+										<div class="form-group mb-3">
+											<label class="mb-0" for="stock_status">{{ __('Stock Status') }}</label>
+											<select class="form-control form-control-sm @error('stock_status') is-invalid @enderror" id="stock_status" name="stock_status">
+												<option value="in_stock">{{ __('In Stock') }}</option>
+												<option value="out_of_stock">{{ __('Out Of Stock') }}</option>
+												<option value="on_backorder">{{ __('On Backorder') }}</option>
+											</select>
+											@error('stock_status')
+												<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+										</div>										
+										<div class="form-group mb-2">
+											<label class="mb-0 w-100" for="sold_individually">{{ __('Sold Individually') }}</label>
+											<label class="custom-switch pl-0">
+												<input type="checkbox" name="sold_individually" id="sold_individually" class="custom-switch-input" @if (old('sold_individually')) checked @endif>
+												<span class="custom-switch-indicator"></span>
+												<span class="custom-switch-description">{{ __('Enable this to only allow one of this item to be bought in a single order') }}</span>
+											</label>
+											@error('sold_individually')
+												<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+										</div>
 									</div>
-									<div class="tab-pane fade" id="list-inventory">Inventory</div>
-									<div class="tab-pane fade" id="list-shipping">Shipping</div>
-									<div class="tab-pane fade" id="list-linked_products">Linked Products</div>
+									<div class="tab-pane fade" id="list-shipping">
+										<div class="form-group mb-3">
+											<label class="mb-0" for="weight">{{ __('Weight') }}(Kg)</label>
+											<input type="text" class="form-control form-control-sm @error('weight') is-invalid @enderror" id="weight" name="weight" value="{{ old('weight') }}">
+											@error('weight')
+												<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+										</div>
+										<div class="form-group mb-3">
+											<label class="mb-0" for="length">{{ __('Dimensions LxWxH') }}(cm)</label>
+											<div class="row">
+												<div class="col">
+													<input type="number" class="form-control form-control-sm @error('length') is-invalid @enderror" id="length" name="length" value="{{ old('length') }}" placeholder="Length">
+													@error('length')
+														<div class="invalid-feedback">{{ $message }}</div>
+													@enderror
+												</div>
+												<div class="col">
+													<input type="number" class="form-control form-control-sm @error('width') is-invalid @enderror" id="weight" name="weight" value="{{ old('weight') }}" placeholder="Width">
+													@error('width')
+														<div class="invalid-feedback">{{ $message }}</div>
+													@enderror
+												</div>
+												<div class="col">
+													<input type="number" class="form-control form-control-sm @error('height') is-invalid @enderror" id="weight" name="weight" value="{{ old('weight') }}" placeholder="Height">
+													@error('height')
+														<div class="invalid-feedback">{{ $message }}</div>
+													@enderror
+												</div>
+											</div>
+										</div>
+										<div class="form-group mb-3">
+											<label class="mb-0" for="shipping_class_id">{{ __('Shipping Class') }}</label>
+											<select class="form-control form-control-sm @error('shipping_class_id') is-invalid @enderror" id="shipping_class_id" name="shipping_class_id">
+												<option value="">{{ __('No Shipping Class') }}</option>
+											</select>
+											@error('shipping_class_id')
+												<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+										</div>
+									</div>
+									<div class="tab-pane fade" id="list-linked_products">
+										<div class="form-group mb-3">
+											<label class="mb-0" for="upsell_ids">{{ __('Upsells') }}</label>
+											<input type="text" class="form-control form-control-sm @error('upsell_ids') is-invalid @enderror" id="upsell_ids" name="upsell_ids" value="{{ old('upsell_ids') }}">
+											@error('upsell_ids')
+												<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+										</div>
+										<div class="form-group mb-3">
+											<label class="mb-0" for="cross_sell_ids">{{ __('Cross-Sells') }}</label>
+											<input type="text" class="form-control form-control-sm @error('cross_sell_ids') is-invalid @enderror" id="cross_sell_ids" name="cross_sell_ids" value="{{ old('cross_sell_ids') }}">
+											@error('cross_sell_ids')
+												<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+										</div>
+									</div>
 									<div class="tab-pane fade" id="list-attributes">Attributes</div>
-									<div class="tab-pane fade" id="list-advanced">Advanced</div>
+									<div class="tab-pane fade" id="list-advanced">
+										<div class="form-group mb-2">
+											<label class="mb-0 w-100" for="reviews_allowed">{{ __('Customer Review') }}</label>
+											<label class="custom-switch pl-0">
+												<input type="checkbox" name="reviews_allowed" id="reviews_allowed" class="custom-switch-input" @if (old('reviews_allowed')) checked @endif>
+												<span class="custom-switch-indicator"></span>
+												<span class="custom-switch-description">{{ __('Allow') }}</span>
+											</label>
+											@error('reviews_allowed')
+												<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+										</div>
+										<div class="form-group mb-3">
+											<label class="mb-0" for="purchase_note">{{ __('Purchase note') }}</label>
+											<textarea class="summernote-simple form-control @error('purchase_note') is-invalid @enderror" id="purchase_note" name="purchase_note">{{ old('purchase_note') }}</textarea>
+											@error('purchase_note')
+												<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -157,7 +354,7 @@
 									</div>
 								</div>
 
-								<div class="form-group mb-4">
+								<div class="form-group mb-3">
 									<label for="catalogue_visibility">{{ __('Catalogue Visibility') }}</label>
 									<select class="form-control form-control-sm @error('catalogue_visibility') is-invalid @enderror" id="catalogue_visibility" name="catalogue_visibility">
 										<option value="shop_and_search">{{ __('Shop & Search') }}</option>
@@ -170,8 +367,9 @@
 									@enderror
 								</div>
 								<div class="form-group mb-0">
+									<label class="w-100" for="featured">{{ __('Featured') }}</label>
 									<label class="custom-switch pl-0">
-										<input type="checkbox" name="featured" id="featured" class="custom-switch-input">
+										<input type="checkbox" name="featured" id="featured" class="custom-switch-input" @if (old('featured')) checked @endif>
 										<span class="custom-switch-indicator"></span>
 										<span class="custom-switch-description">{{ __('This is a featured product') }}</span>
 									</label>
