@@ -46,39 +46,20 @@
 						
 						<div class="card meta-card">
 							<div class="card-body">
-								<div class="form-group mb-0">
-									<div class="row align-items-center">
-										<div class="col-lg-auto">
-											<label for="type" class="mb-lg-0">{{ __('Product Type') }}</label>
-										</div>
-										<div class="col">
-											<select class="form-control form-control-sm @error('type') is-invalid @enderror" name="type" id="type">
-												<option value="simple">{{ __('Simple Product') }}</option>
-												<option value="grouped">{{ __('Grouped Product') }}</option>
-												<option value="external">{{ __('External Product') }}</option>
-												<option value="variable">{{ __('Variable Product') }}</option>
-											</select>
-										</div>
-										<div class="col-lg-auto">
-											<label class="custom-switch py-1 pl-0">
-												<input type="checkbox" name="virtual" id="virtual" class="custom-switch-input">
-												<span class="custom-switch-indicator"></span>
-												<span class="custom-switch-description">{{ __('Virtual') }}</span>
-											</label>
-											@error('virtual')
-												<div class="invalid-feedback">{{ $message }}</div>
-											@enderror
-										</div>
-										<div class="col-lg-auto">
-											<label class="custom-switch py-1 pl-0">
-												<input type="checkbox" name="downloadable" id="downloadable" class="custom-switch-input">
-												<span class="custom-switch-indicator"></span>
-												<span class="custom-switch-description">{{ __('Downloadable') }}</span>
-											</label>
-											@error('downloadable')
-												<div class="invalid-feedback">{{ $message }}</div>
-											@enderror
-										</div>
+								<div class="form-group row mb-0 align-items-center">
+									<label for="type" class="col-auto col-form-label">{{ __('Product Type') }}</label>
+									<div class="col">
+										<select class="form-control @error('type') is-invalid @enderror" name="type" id="type">
+											<option value="simple">{{ __('Simple Product') }}</option>
+											<option value="grouped">{{ __('Grouped Product') }}</option>
+											<option value="external">{{ __('External Product') }}</option>
+											<option value="variable">{{ __('Variable Product') }}</option>
+											<option value="variable">{{ __('Virtual Product') }}</option>
+											<option value="variable">{{ __('Downloadable Product') }}</option>
+										</select>
+										@error('type')
+											<div class="invalid-feedback">{{ $message }}</div>
+										@enderror
 									</div>
 								</div>
 							</div>
@@ -95,69 +76,63 @@
 									<div class="tab-pane fade show active" id="list-general">
 										<div class="form-group mb-3">
 											<label class="mb-0" for="regular_price">{{ __('Regular Price') }}($)</label>
-											<input type="text" class="form-control form-control-sm @error('regular_price') is-invalid @enderror" id="regular_price" name="regular_price" value="{{ old('regular_price') }}">
+											<input type="text" class="form-control @error('regular_price') is-invalid @enderror" id="regular_price" name="regular_price" value="{{ old('regular_price') }}">
 											@error('regular_price')
 												<div class="invalid-feedback">{{ $message }}</div>
 											@enderror
 										</div>
 										<div class="form-group mb-3">
 											<label class="mb-0" for="sale_price">{{ __('Sale Price') }}($)</label>
-											<input type="text" class="form-control form-control-sm @error('sale_price') is-invalid @enderror" id="sale_price" name="sale_price" value="{{ old('sale_price') }}">
+											<input type="text" class="form-control @error('sale_price') is-invalid @enderror" id="sale_price" name="sale_price" value="{{ old('sale_price') }}">
 											@error('sale_price')
 												<div class="invalid-feedback">{{ $message }}</div>
 											@enderror
-											<a href="#schedule_price" data-toggle="collapse" class="small text-primary">Schedule</a>
 										</div>
-										<div class="collapse" id="schedule_price">
-											<div class="form-group mb-3">
-												<label class="mb-0" for="date_on_sale_from">{{ __('Sale price from') }}</label>
-												<input type="date" class="form-control form-control-sm @error('date_on_sale_from') is-invalid @enderror" id="date_on_sale_from" name="date_on_sale_from" value="{{ old('date_on_sale_from') }}">
-												@error('date_on_sale_from')
-													<div class="invalid-feedback">{{ $message }}</div>
-												@enderror
-											</div>
-											<div class="form-group mb-3">
-												<label class="mb-0" for="date_on_sale_to">{{ __('Sale price to') }}</label>
-												<input type="date" class="form-control form-control-sm @error('date_on_sale_to') is-invalid @enderror" id="date_on_sale_to" name="date_on_sale_to" value="{{ old('date_on_sale_to') }}">
-												@error('date_on_sale_to')
-													<div class="invalid-feedback">{{ $message }}</div>
-												@enderror
-
-											</div>
+										<div class="form-group mb-3">
+											<label class="mb-0" for="date_on_sale_from">{{ __('Sale price from') }}</label>
+											<input type="date" class="form-control @error('date_on_sale_from') is-invalid @enderror" id="date_on_sale_from" name="date_on_sale_from" value="{{ old('date_on_sale_from') }}">
+											@error('date_on_sale_from')
+												<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
 										</div>
-										<div>
-											<div class="form-group mb-3">
-												<label class="mb-0" for="downloads">{{ __('Downloadble Files') }}</label>
-												<div class="custom-file">
-													<input type="file" class="custom-file-input h-100 @error('downloads') is-invalid @enderror" id="downloads" name="downloads">
-													<label class="custom-file-label" for="downloads">{{ __('Choose file') }}</label>
-													@error('downloads')
-														<div class="invalid-feedback">{{ $message }}</div>
-													@enderror
-												</div>
-											</div>											
-											<div class="form-group mb-3">
-												<label class="mb-0" for="download_limit">{{ __('Download Limit') }}</label>
-												<input type="text" class="form-control form-control-sm @error('download_limit') is-invalid @enderror" id="download_limit" name="download_limit" value="{{ old('download_limit') }}">
-												@error('download_limit')
+										<div class="form-group mb-3">
+											<label class="mb-0" for="date_on_sale_to">{{ __('Sale price to') }}</label>
+											<input type="date" class="form-control @error('date_on_sale_to') is-invalid @enderror" id="date_on_sale_to" name="date_on_sale_to" value="{{ old('date_on_sale_to') }}">
+											@error('date_on_sale_to')
+												<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+										</div>
+										<div class="form-group mb-3">
+											<label class="mb-0" for="downloads">{{ __('Downloadble Files') }}</label>
+											<div class="custom-file">
+												<input type="file" class="custom-file-input h-100 @error('downloads') is-invalid @enderror" id="downloads" name="downloads">
+												<label class="custom-file-label" for="downloads">{{ __('Choose file') }}</label>
+												@error('downloads')
 													<div class="invalid-feedback">{{ $message }}</div>
 												@enderror
-												<small class="form-text text-muted">{{ __('-1 or Leave blank for unlimited re-downloads.') }}</small>
 											</div>
-											<div class="form-group mb-3">
-												<label class="mb-0" for="download_expiry">{{ __('Download Expiry') }}</label>
-												<input type="text" class="form-control form-control-sm @error('download_expiry') is-invalid @enderror" id="download_expiry" name="download_expiry" value="{{ old('download_expiry') }}">
-												@error('download_expiry')
-													<div class="invalid-feedback">{{ $message }}</div>
-												@enderror
-												<small class="form-text text-muted">{{ __('Enter the number of days before a download link expires, or leave blank.') }}</small>
-											</div>
+										</div>											
+										<div class="form-group mb-3">
+											<label class="mb-0" for="download_limit">{{ __('Download Limit') }}</label>
+											<input type="text" class="form-control @error('download_limit') is-invalid @enderror" id="download_limit" name="download_limit" value="{{ old('download_limit') }}">
+											@error('download_limit')
+												<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+											<small class="form-text text-muted">{{ __('Leave blank for unlimited re-downloads.') }}</small>
+										</div>
+										<div class="form-group mb-3">
+											<label class="mb-0" for="download_expiry">{{ __('Download Expiry') }}</label>
+											<input type="text" class="form-control @error('download_expiry') is-invalid @enderror" id="download_expiry" name="download_expiry" value="{{ old('download_expiry') }}">
+											@error('download_expiry')
+												<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+											<small class="form-text text-muted">{{ __('Enter the number of days before a download link expires, or leave blank.') }}</small>
 										</div>
 									</div>
 									<div class="tab-pane fade" id="list-inventory">
 										<div class="form-group mb-3">
 											<label class="mb-0" for="sku">{{ __('SKU') }}</label>
-											<input type="text" class="form-control form-control-sm @error('sku') is-invalid @enderror" id="sku" name="sku" value="{{ old('sku') }}">
+											<input type="text" class="form-control @error('sku') is-invalid @enderror" id="sku" name="sku" value="{{ old('sku') }}">
 											@error('sku')
 												<div class="invalid-feedback">{{ $message }}</div>
 											@enderror
@@ -173,38 +148,34 @@
 												<div class="invalid-feedback">{{ $message }}</div>
 											@enderror
 										</div>
-
-										<div>
-											<div class="form-group mb-3">
-												<label class="mb-0" for="stock_quantity">{{ __('Stock Quantity') }}</label>
-												<input type="number" class="form-control form-control-sm @error('stock_quantity') is-invalid @enderror" id="stock_quantity" name="stock_quantity" value="{{ old('stock_quantity') }}">
-												@error('stock_quantity')
-													<div class="invalid-feedback">{{ $message }}</div>
-												@enderror
-											</div>
-											<div class="form-group mb-2">
-												<label class="mb-0 w-100" for="backorders">{{ __('Backorders') }}</label>
-												<label class="custom-switch pl-0">
-													<input type="checkbox" name="backorders" id="backorders" class="custom-switch-input" @if (old('backorders')) checked @endif>
-													<span class="custom-switch-indicator"></span>
-													<span class="custom-switch-description">{{ __('Allow Backorders') }}</span>
-												</label>
-												@error('backorders')
-													<div class="invalid-feedback">{{ $message }}</div>
-												@enderror
-											</div>
-											<div class="form-group mb-3">
-												<label class="mb-0" for="low_stock_amount">{{ __('Low Stock Threshold') }}</label>
-												<input type="number" class="form-control form-control-sm @error('low_stock_amount') is-invalid @enderror" id="low_stock_amount" name="low_stock_amount" value="{{ old('low_stock_amount') }}">
-												@error('low_stock_amount')
-													<div class="invalid-feedback">{{ $message }}</div>
-												@enderror
-											</div>
+										<div class="form-group mb-3">
+											<label class="mb-0" for="stock_quantity">{{ __('Stock Quantity') }}</label>
+											<input type="number" class="form-control @error('stock_quantity') is-invalid @enderror" id="stock_quantity" name="stock_quantity" value="{{ old('stock_quantity') }}">
+											@error('stock_quantity')
+												<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
 										</div>
-
+										<div class="form-group mb-2">
+											<label class="mb-0 w-100" for="backorders">{{ __('Backorders') }}</label>
+											<label class="custom-switch pl-0">
+												<input type="checkbox" name="backorders" id="backorders" class="custom-switch-input" @if (old('backorders')) checked @endif>
+												<span class="custom-switch-indicator"></span>
+												<span class="custom-switch-description">{{ __('Allow Backorders') }}</span>
+											</label>
+											@error('backorders')
+												<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+										</div>
+										<div class="form-group mb-3">
+											<label class="mb-0" for="low_stock_amount">{{ __('Low Stock Threshold') }}</label>
+											<input type="number" class="form-control @error('low_stock_amount') is-invalid @enderror" id="low_stock_amount" name="low_stock_amount" value="{{ old('low_stock_amount') }}">
+											@error('low_stock_amount')
+												<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+										</div>
 										<div class="form-group mb-3">
 											<label class="mb-0" for="stock_status">{{ __('Stock Status') }}</label>
-											<select class="form-control form-control-sm @error('stock_status') is-invalid @enderror" id="stock_status" name="stock_status">
+											<select class="form-control @error('stock_status') is-invalid @enderror" id="stock_status" name="stock_status">
 												<option value="in_stock">{{ __('In Stock') }}</option>
 												<option value="out_of_stock">{{ __('Out Of Stock') }}</option>
 												<option value="on_backorder">{{ __('On Backorder') }}</option>
@@ -228,7 +199,7 @@
 									<div class="tab-pane fade" id="list-shipping">
 										<div class="form-group mb-3">
 											<label class="mb-0" for="weight">{{ __('Weight') }}(Kg)</label>
-											<input type="text" class="form-control form-control-sm @error('weight') is-invalid @enderror" id="weight" name="weight" value="{{ old('weight') }}">
+											<input type="text" class="form-control @error('weight') is-invalid @enderror" id="weight" name="weight" value="{{ old('weight') }}">
 											@error('weight')
 												<div class="invalid-feedback">{{ $message }}</div>
 											@enderror
@@ -237,19 +208,19 @@
 											<label class="mb-0" for="length">{{ __('Dimensions LxWxH') }}(cm)</label>
 											<div class="row">
 												<div class="col">
-													<input type="number" class="form-control form-control-sm @error('length') is-invalid @enderror" id="length" name="length" value="{{ old('length') }}" placeholder="Length">
+													<input type="number" class="form-control @error('length') is-invalid @enderror" id="length" name="length" value="{{ old('length') }}" placeholder="Length">
 													@error('length')
 														<div class="invalid-feedback">{{ $message }}</div>
 													@enderror
 												</div>
 												<div class="col">
-													<input type="number" class="form-control form-control-sm @error('width') is-invalid @enderror" id="weight" name="weight" value="{{ old('weight') }}" placeholder="Width">
+													<input type="number" class="form-control @error('width') is-invalid @enderror" id="weight" name="weight" value="{{ old('weight') }}" placeholder="Width">
 													@error('width')
 														<div class="invalid-feedback">{{ $message }}</div>
 													@enderror
 												</div>
 												<div class="col">
-													<input type="number" class="form-control form-control-sm @error('height') is-invalid @enderror" id="weight" name="weight" value="{{ old('weight') }}" placeholder="Height">
+													<input type="number" class="form-control @error('height') is-invalid @enderror" id="weight" name="weight" value="{{ old('weight') }}" placeholder="Height">
 													@error('height')
 														<div class="invalid-feedback">{{ $message }}</div>
 													@enderror
@@ -258,7 +229,7 @@
 										</div>
 										<div class="form-group mb-3">
 											<label class="mb-0" for="shipping_class_id">{{ __('Shipping Class') }}</label>
-											<select class="form-control form-control-sm @error('shipping_class_id') is-invalid @enderror" id="shipping_class_id" name="shipping_class_id">
+											<select class="form-control @error('shipping_class_id') is-invalid @enderror" id="shipping_class_id" name="shipping_class_id">
 												<option value="">{{ __('No Shipping Class') }}</option>
 											</select>
 											@error('shipping_class_id')
@@ -269,14 +240,14 @@
 									<div class="tab-pane fade" id="list-linked_products">
 										<div class="form-group mb-3">
 											<label class="mb-0" for="upsell_ids">{{ __('Upsells') }}</label>
-											<input type="text" class="form-control form-control-sm @error('upsell_ids') is-invalid @enderror" id="upsell_ids" name="upsell_ids" value="{{ old('upsell_ids') }}">
+											<input type="text" class="form-control @error('upsell_ids') is-invalid @enderror" id="upsell_ids" name="upsell_ids" value="{{ old('upsell_ids') }}">
 											@error('upsell_ids')
 												<div class="invalid-feedback">{{ $message }}</div>
 											@enderror
 										</div>
 										<div class="form-group mb-3">
 											<label class="mb-0" for="cross_sell_ids">{{ __('Cross-Sells') }}</label>
-											<input type="text" class="form-control form-control-sm @error('cross_sell_ids') is-invalid @enderror" id="cross_sell_ids" name="cross_sell_ids" value="{{ old('cross_sell_ids') }}">
+											<input type="text" class="form-control @error('cross_sell_ids') is-invalid @enderror" id="cross_sell_ids" name="cross_sell_ids" value="{{ old('cross_sell_ids') }}">
 											@error('cross_sell_ids')
 												<div class="invalid-feedback">{{ $message }}</div>
 											@enderror
@@ -326,7 +297,7 @@
 							<div class="card-body">
 								<div class="form-group mb-3">
 									<label for="status">{{ __('Status') }}</label>
-									<select class="form-control form-control-sm @error('status') is-invalid @enderror" id="status" name="status">
+									<select class="form-control @error('status') is-invalid @enderror" id="status" name="status">
 										<option value="draft">{{ __('Draft') }}</option>
 										<option value="pending_review">{{ __('Pending Review') }}</option>
 										<option value="publish">{{ __('Publish') }}</option>
@@ -337,7 +308,7 @@
 								</div>
 								<div class="form-group mb-3">
 									<label for="visibility">{{ __("Visibility") }}</label>
-									<select class="form-control form-control-sm @error('visibility') is-invalid @enderror" id="visibility" name="visibility">
+									<select class="form-control @error('visibility') is-invalid @enderror" id="visibility" name="visibility">
 										<option value="public">{{ __('Public') }}</option>
 										<option value="private">{{ __('Private') }}</option>
 										<option value="protected">{{ __('Protected') }}</option>
@@ -347,7 +318,7 @@
 									@enderror
 									<div class="form-group mb-0 mt-3 d-none">
 										<label for="password">{{ __("Password") }}</label>
-										<input type="password" class="form-control form-control-sm @error('password') is-invalid @enderror" id="password" name="password" value="{{ old("password") }}">
+										<input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" value="{{ old("password") }}">
 										@error('password')
 											<div class="invalid-feedback">{{ $message }}</div>
 										@enderror
@@ -356,7 +327,7 @@
 
 								<div class="form-group mb-3">
 									<label for="catalogue_visibility">{{ __('Catalogue Visibility') }}</label>
-									<select class="form-control form-control-sm @error('catalogue_visibility') is-invalid @enderror" id="catalogue_visibility" name="catalogue_visibility">
+									<select class="form-control @error('catalogue_visibility') is-invalid @enderror" id="catalogue_visibility" name="catalogue_visibility">
 										<option value="shop_and_search">{{ __('Shop & Search') }}</option>
 										<option value="only_shop">{{ __('Only Shop') }}</option>
 										<option value="only_search">{{ __('Only Search') }}</option>
