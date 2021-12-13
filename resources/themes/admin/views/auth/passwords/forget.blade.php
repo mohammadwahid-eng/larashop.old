@@ -13,10 +13,10 @@
                             <form method="POST" action="{{ route('admin.password.email') }}">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="email">{{ __('Email') }}</label>
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                    <label for="email" class="required">{{ __('Email') }}</label>
+                                    <input id="email" type="email" class="form-control @error('email') error @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                                     @error('email')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        <label id="email-error" class="error" for="email">{{ $message }}</label>
                                     @enderror
                                 </div>
                                 <div class="form-group">
@@ -36,3 +36,18 @@
         </div>
     </section>
 @endsection
+
+@push('footer')
+    <script>
+        (function($) {
+            $("form").validate({
+                rules: {
+                    email: {
+                        required: true,
+                        email: true
+                    }
+                },
+            });
+        }(jQuery))
+    </script>
+@endpush

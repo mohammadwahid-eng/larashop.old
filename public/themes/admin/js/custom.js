@@ -12,4 +12,8 @@ $(document).on('keyup', '[data-slugify]', function () {
     let target = $(this).data('slugify');
     let slug = $(this).val().trim().toLowerCase().replace(/[^a-zA-Z0-9]+/g, '-');
     $(target).val(slug);
+    if ($(target).val().trim()) {
+        $(target).removeClass('error');
+        $(target).parent().find('label.error').hide().text("");
+    }
 });

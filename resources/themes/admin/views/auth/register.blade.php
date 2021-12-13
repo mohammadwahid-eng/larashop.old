@@ -15,49 +15,52 @@
 
                                 <div class="row">
                                     <div class="form-group col-md-6">
-                                        <label for="first_name">{{ __('First Name') }} <span class="text-danger">*</span></label>
-                                        <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="given-name" autofocus>
+                                        <label for="first_name" class="required">{{ __('First Name') }}</label>
+                                        <input id="first_name" type="text" class="form-control @error('first_name') error @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="given-name" autofocus>
                                         @error('first_name')
-                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            <label id="first_name-error" class="error" for="first_name">{{ $message }}</label>
                                         @enderror
                                     </div>
                                     
                                     <div class="form-group col-md-6">
-                                        <label for="last_name">{{ __('Last Name') }} <span class="text-danger">*</span></label>
-                                        <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="family-name">
+                                        <label for="last_name" class="required">{{ __('Last Name') }}</label>
+                                        <input id="last_name" type="text" class="form-control @error('last_name') error @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="family-name">
                                         @error('last_name')
-                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            <label id="last_name-error" class="error" for="last_name">{{ $message }}</label>
                                         @enderror
                                     </div>
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label for="email">{{ __('Email') }} <span class="text-danger">*</span></label>
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                    <label for="email" class="required">{{ __('Email') }}</label>
+                                    <input id="email" type="email" class="form-control @error('email') error @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
                                     @error('email')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        <label id="email-error" class="error" for="email">{{ $message }}</label>
                                     @enderror
                                 </div>
                             
                                 <div class="form-group">
-                                    <label for="password">{{ __('Password') }} <span class="text-danger">*</span></label>
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                    <label for="password" class="required">{{ __('Password') }}</label>
+                                    <input id="password" type="password" class="form-control @error('password') error @enderror" name="password" required autocomplete="new-password">
                                     @error('password')
-                                        <span class="invalid-feedback">{{ $message }}</span>
+                                        <label id="password-error" class="error" for="password">{{ $message }}</label>
                                     @enderror
                                 </div>
                             
                                 <div class="form-group">
-                                    <label for="password">{{ __('Confirm Password') }} <span class="text-danger">*</span></label>
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                    <label for="password_confirmation" class="required">{{ __('Confirm Password') }}</label>
+                                    <input id="password_confirmation" type="password" class="form-control @error('password_confirmation') error @enderror" name="password_confirmation" required autocomplete="new-password">
+                                    @error('password_confirmation')
+                                        <label id="password_confirmation-error" class="error" for="password_confirmation">{{ $message }}</label>
+                                    @enderror
                                 </div>
                                 
                                 <div class="form-group">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" name="agree" class="custom-control-input @error('agree') is-invalid @enderror" id="agree" required {{ old('agree') ? 'checked' : '' }}>
-                                        <label class="custom-control-label" for="agree">{{ __('I agree with the') }} <a href="{{ route('terms') }}">{{ __('Terms of Service') }}</a></label>
+                                        <input type="checkbox" name="agree" class="custom-control-input @error('agree') error @enderror" id="agree" required {{ old('agree') ? 'checked' : '' }}>
+                                        <label class="custom-control-label" for="agree">{{ __('I agree with the') }} <a href="{{ route('terms') }}">{{ __('Terms of Service') }}</a><label class="required"></label></label>
                                         @error('agree')
-                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            <label id="agree-error" class="error" for="agree">{{ $message }}</label>
                                         @enderror
                                     </div>
                                 </div>
@@ -76,3 +79,41 @@
         </div>
     </section>
 @endsection
+
+@push('footer')
+    <script>
+        (function($) {
+            $("form").validate({
+                rules: {
+                    first_name: {
+                        required: true,
+                    },
+                    last_name: {
+                        required: true,
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    password: {
+                        minlength: 8,
+                    },
+                    password_confirmation: {
+                        minlength: 8,
+                        equalTo : "#password",
+                    },
+                    agree: {
+                        required: true,
+                    }
+                },
+                errorPlacement: function(error, element) {
+                    if (element.is(":checkbox") || element.is(":radio") ) {
+                        element.parent().append(error);
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
+        }(jQuery))
+    </script>
+@endpush

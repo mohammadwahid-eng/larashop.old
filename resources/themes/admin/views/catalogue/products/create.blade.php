@@ -11,7 +11,7 @@
 @section('content')
 	<section class="section">
 		<div class="section-body">
-			<form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
+			<form action="{{ route('admin.products.store') }}" class="product-form" method="POST" enctype="multipart/form-data">
 				@csrf
 				<div class="row">
 					<div class="col-lg-8">
@@ -19,16 +19,16 @@
 						<div class="card">
 							<div class="card-body pb-0">
 								<div class="form-group">
-									<label for="name">{{ __('Name') }} <span class="text-danger">*</span></label>
-									<input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" data-slugify="#slug">
+									<label for="name" class="required">{{ __('Name') }}</label>
+									<input type="text" class="form-control @error('name') error @enderror" id="name" name="name" value="{{ old('name') }}" data-slugify="#slug">
 									@error('name')
 										<div class="invalid-feedback">{{ $message }}</div>
 									@enderror
 									<small class="form-text text-muted">{{ __('The name is how it appears on your site.') }}</small>
 								</div>
 								<div class="form-group">
-									<label for="slug">{{ __('Slug') }} <span class="text-danger">*</span></label>
-									<input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug" value="{{ old('slug') }}">
+									<label for="slug" class="required">{{ __('Slug') }}</label>
+									<input type="text" class="form-control @error('slug') error @enderror" id="slug" name="slug" value="{{ old('slug') }}">
 									@error('slug')
 										<div class="invalid-feedback">{{ $message }}</div>
 									@enderror
@@ -36,7 +36,7 @@
 								</div>
 								<div class="form-group mb-0">
 									<label for="description">{{ __('Description') }}</label>
-									<textarea class="summernote form-control @error('description') is-invalid @enderror" id="description" name="description"></textarea>
+									<textarea class="summernote form-control @error('description') error @enderror" id="description" name="description"></textarea>
 									@error('description')
 										<div class="invalid-feedback">{{ $message }}</div>
 									@enderror
@@ -49,7 +49,7 @@
 								<div class="form-group row mb-0 align-items-center">
 									<label for="type" class="col-auto col-form-label">{{ __('Product Type') }}</label>
 									<div class="col">
-										<select class="form-control @error('type') is-invalid @enderror" name="type" id="type" onchange="alert(this.value)">
+										<select class="form-control @error('type') error @enderror" name="type" id="type" onchange="alert(this.value)">
 											<option value="simple">{{ __('Simple Product') }}</option>
 											<option value="grouped">{{ __('Grouped Product') }}</option>
 											<option value="external">{{ __('External Product') }}</option>
@@ -69,7 +69,7 @@
 							<div class="card-body pb-0">
 								<div class="form-group mb-0">
 									<label for="short_description">{{ __('Short Description') }}</label>
-									<textarea class="summernote-simple form-control @error('short_description') is-invalid @enderror" id="short_description" name="short_description"></textarea>
+									<textarea class="summernote-simple form-control @error('short_description') error @enderror" id="short_description" name="short_description"></textarea>
 									@error('short_description')
 										<div class="invalid-feedback">{{ $message }}</div>
 									@enderror
@@ -84,7 +84,7 @@
 							<div class="card-body">
 								<div class="form-group mb-3">
 									<label for="status">{{ __('Status') }}</label>
-									<select class="form-control @error('status') is-invalid @enderror" id="status" name="status">
+									<select class="form-control @error('status') error @enderror" id="status" name="status">
 										<option value="draft">{{ __('Draft') }}</option>
 										<option value="pending_review">{{ __('Pending Review') }}</option>
 										<option value="publish">{{ __('Publish') }}</option>
@@ -95,7 +95,7 @@
 								</div>
 								<div class="form-group mb-3">
 									<label for="visibility">{{ __("Visibility") }}</label>
-									<select class="form-control @error('visibility') is-invalid @enderror" id="visibility" name="visibility">
+									<select class="form-control @error('visibility') error @enderror" id="visibility" name="visibility">
 										<option value="public">{{ __('Public') }}</option>
 										<option value="private">{{ __('Private') }}</option>
 										<option value="protected">{{ __('Protected') }}</option>
@@ -105,7 +105,7 @@
 									@enderror
 									<div class="form-group mb-0 mt-3 d-none">
 										<label for="password">{{ __("Password") }}</label>
-										<input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" value="{{ old("password") }}">
+										<input type="password" class="form-control @error('password') error @enderror" id="password" name="password" value="{{ old("password") }}">
 										@error('password')
 											<div class="invalid-feedback">{{ $message }}</div>
 										@enderror
@@ -114,7 +114,7 @@
 
 								<div class="form-group mb-3">
 									<label for="catalogue_visibility">{{ __('Catalogue Visibility') }}</label>
-									<select class="form-control @error('catalogue_visibility') is-invalid @enderror" id="catalogue_visibility" name="catalogue_visibility">
+									<select class="form-control @error('catalogue_visibility') error @enderror" id="catalogue_visibility" name="catalogue_visibility">
 										<option value="shop_and_search">{{ __('Shop & Search') }}</option>
 										<option value="only_shop">{{ __('Only Shop') }}</option>
 										<option value="only_search">{{ __('Only Search') }}</option>
@@ -159,17 +159,20 @@
 									<a href="#new_cat_collapse" data-toggle="collapse" class="form-text text-primary"><u>{{ __('Add new category') }}</u></a>
 									<div class="collapse mt-2" id="new_cat_collapse">
 										<div class="form-group mb-2">
-											<label for="">{{ __('Name') }} <span class="text-danger">*</span></label>
-											<input type="text" class="form-control form-control-sm">
+											<label for="new_cat_name" class="required">{{ __('Name') }}</label>
+											<input type="text" class="form-control form-control-sm" name="new_cat_name" id="new_cat_name">
 										</div>
 										<div class="form-group mb-2">
-											<label for="">{{ __('Slug') }} <span class="text-danger">*</span></label>
-											<input type="text" class="form-control form-control-sm">
+											<label for="new_cat_slug" class="required">{{ __('Slug') }}</label>
+											<input type="text" class="form-control form-control-sm" name="new_cat_slug" id="new_cat_slug">
 										</div>										
 										<div class="form-group mb-3">
-											<label for="">{{ __('Parent') }}</label>
-											<select name="" id="" class="form-control form-control-sm">
+											<label for="new_cat_parent">{{ __('Parent') }}</label>
+											<select name="new_cat_parent" id="new_cat_parent" class="form-control form-control-sm">
 												<option value="">None</option>
+												@foreach (\App\Models\ProductCategory::all() as $category)
+													<option value="{{ $category->id }}">{{ $category->name }}</option>
+												@endforeach												
 											</select>
 										</div>
 										<button type="button" class="btn btn-sm w-100 btn-primary">{{ __('Add new category') }}</button>
@@ -182,7 +185,7 @@
 							<div class="card-body">
 								<div class="form-group mb-0">
 									<label for="tags">{{ __('Product Tags') }}</label>
-									<input type="text" class="form-control @error('tags') is-invalid @enderror" id="tags" name="tags" value="{{ old('tags') }}" data-role="tagsinput">
+									<input type="text" class="form-control @error('tags') error @enderror" id="tags" name="tags" value="{{ old('tags') }}" data-role="tagsinput">
 									@error('tags')
 										<div class="invalid-feedback">{{ $message }}</div>
 									@enderror
@@ -196,7 +199,7 @@
 								<div class="form-group mb-0">
 									<label for="featured_image">{{ __('Featured Image') }}</label>
 									<div class="custom-file">
-										<input type="file" class="custom-file-input h-100 @error('featured_image') is-invalid @enderror" id="featured_image" name="featured_image">
+										<input type="file" class="custom-file-input h-100 @error('featured_image') error @enderror" id="featured_image" name="featured_image">
 										<label class="custom-file-label" for="featured_image">{{ __('Choose file') }}</label>
 										@error('featured_image')
 											<div class="invalid-feedback">{{ $message }}</div>
@@ -211,7 +214,7 @@
 								<div class="form-group mb-0">
 									<label for="gallery_images">{{ __('Gallery Images') }}</label>
 									<div class="custom-file">
-										<input type="file" class="custom-file-input h-100 @error('gallery_images') is-invalid @enderror" id="gallery_images" name="gallery_images" multiple>
+										<input type="file" class="custom-file-input h-100 @error('gallery_images') error @enderror" id="gallery_images" name="gallery_images" multiple>
 										<label class="custom-file-label" for="gallery_images">{{ __('Choose file') }}</label>
 										@error('gallery_images')
 											<div class="invalid-feedback">{{ $message }}</div>
@@ -236,4 +239,27 @@
 @push('js_lib')
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs4.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
+@endpush
+
+@push('footer')
+    <script>
+        (function($) {
+            $(".product-form").validate({
+                rules: {
+                    name: {
+						required: true,
+						normalizer: function(value) {
+							return $.trim(value);
+						}
+					},
+                    slug: {
+						required: true,
+						normalizer: function(value) {
+							return $.trim(value);
+						}
+					},
+                },
+            });
+        }(jQuery))
+    </script>
 @endpush

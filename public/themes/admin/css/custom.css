@@ -160,3 +160,31 @@ div.dataTables_wrapper div.dataTables_processing {
 .card .card-header {
     min-height: auto;
 }
+
+label.error {
+    color: var(--danger);
+    margin-bottom: 0;
+    display: block;
+    margin-top: 2px;
+    font-weight: normal;
+    font-size: 12px;
+    letter-spacing: .5px;
+}
+
+.form-control.error {
+    border-color: var(--danger);
+}
+
+.custom-control-input.error ~ .error {
+    margin-top: 0;
+}
+
+.custom-control-input.error ~ .custom-control-label::before {
+    border-color: var(--danger);
+}
+
+label.required::after {
+    content: "*";
+    color: var(--danger);
+    margin-left: 1px;
+}
