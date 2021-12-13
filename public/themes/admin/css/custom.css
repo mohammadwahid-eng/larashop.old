@@ -111,3 +111,52 @@ div.dataTables_wrapper div.dataTables_processing {
 .meta-card .tab-content {
     border-left: 1px solid #eee;
 }
+
+.card .card-header h4 {
+    font-size: .875rem;
+    flex: 1;
+    padding: 0;
+    color: inherit;
+}
+
+.card .card-header h4 a {
+    font-weight: bold;
+}
+
+.card .card-header h4 a::after {
+    display: inline-block;
+    content: "";
+    border-top: 0;
+    border-right: .3em solid transparent;
+    border-bottom: .3em solid;
+    border-left: .3em solid transparent;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top: -.15em;
+    z-index: 1;
+}
+
+.card .card-header h4 a.collapsed::after {    
+    border-top: .3em solid;
+    border-bottom: 0;
+}
+
+
+.card .card-header h4 a:hover {
+    text-decoration: none;
+    color: var(--secondary);
+}
+
+
+.card .card-header a {
+    display: block;
+    padding: .75rem 1rem;    
+    line-height: 1;    
+    color: var(--secondary);
+    position: relative;
+}
+
+.card .card-header {
+    min-height: auto;
+}
