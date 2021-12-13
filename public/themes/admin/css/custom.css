@@ -188,3 +188,17 @@ label.required::after {
     color: var(--danger);
     margin-left: 1px;
 }
+
+.category-checkbox-tree {
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.category-checkbox-tree ul {
+    list-style: none;
+    padding-left: 24px;
+}
+
+.category-checkbox-tree > ul {
+    padding: 0;
+}

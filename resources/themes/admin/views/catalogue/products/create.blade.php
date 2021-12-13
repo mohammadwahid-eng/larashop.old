@@ -146,15 +146,20 @@
 							<div class="card-body">
 								<div class="form-group mb-0">
 									<label for="categories">{{ __('Product Categories') }}</label>
-									<div style="max-height: 180px; overflow-y:auto">
-										@forelse (\App\Models\ProductCategory::all() as $category)
-											<div class="custom-control custom-checkbox">
-												<input type="checkbox" class="custom-control-input" id="category-{{ $category->id }}" name="categories[]" value="{{ $category->id }}">
-												<label class="custom-control-label" for="category-{{ $category->id }}">{{ $category->name }}</label>
-											</div>
-										@empty
-											<span>{{ __("No Category") }}</span>
-										@endforelse
+									<div class="category-checkbox-tree">
+										<ul>
+											@forelse (\App\Models\ProductCategory::where('parent_id', null)->get() as $category)
+												<li>
+													<div class="custom-control custom-checkbox">
+														<input type="checkbox" class="custom-control-input" id="category-{{ $category->id }}" name="categories[]" value="{{ $category->id }}">
+														<label class="custom-control-label" for="category-{{ $category->id }}">{{ $category->name }}</label>
+													</div>
+													{{ \App\Models\ProductCategory::checkboxTree($category->children) }}
+												</li>												
+											@empty
+												<li>{{ __("No Category") }}</li>
+											@endforelse
+										</ul>
 									</div>																	
 									<a href="#new_cat_collapse" data-toggle="collapse" class="form-text text-primary"><u>{{ __('Add new category') }}</u></a>
 									<div class="collapse mt-2" id="new_cat_collapse">
