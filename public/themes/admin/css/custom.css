@@ -201,4 +201,36 @@ label.required::after {
 
 .category-checkbox-tree > ul {
     padding: 0;
+    margin: 0;
+}
+
+.attr_template_item_head {
+    padding: .875rem 1rem;
+    cursor: pointer;
+}
+
+.attr_template_item_head span {
+    line-height: 1;
+    font-weight: bold;
+    color: black;
+}
+
+.attr_template_item_body {
+    padding: 1rem;
+    border-color: var(--light);
+    background: #fafafa;
+    border-width: 0 1px 1px 1px;
+    border-style: solid;
+}
+
+.attr_template_item + .attr_template_item .attr_template_item_head {
+    border-top-width: 0 !important;
+}
+
+.attr_template_item:first-child {
+    margin-top: 15px;
+}
+
+.attr_template_item_head.active + .attr_template_item_body {
+    display: none;
 }

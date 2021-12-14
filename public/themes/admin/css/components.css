@@ -1342,7 +1342,7 @@ tr:first-child>td>.fc-day-grid-event {
     box-shadow: none;
     align-items: center;
     overflow: auto;
-    padding: 10px 15px;
+    padding: 9px 15px;
 }
 
 .bootstrap-tagsinput input {
