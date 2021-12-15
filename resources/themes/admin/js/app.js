@@ -5,3 +5,11 @@
  */
 
 require("./bootstrap");
+
+import { createApp } from 'vue';
+
+const app = createApp({});
+
+// app.component('sample', require('./components/Sample.vue').default);
+
+app.mount("#app");

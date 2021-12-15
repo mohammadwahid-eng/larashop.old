@@ -14,4 +14,5 @@ const mix = require("laravel-mix");
  
 mix.setPublicPath("public/themes/admin")
     .js(`${__dirname}/js/app.js`, "js")
+    .vue()
     .sass(`${__dirname}/sass/app.scss`, "css");
