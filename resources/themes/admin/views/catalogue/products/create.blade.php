@@ -116,7 +116,7 @@
 								<div class="invalid-feedback">{{ $message }}</div>
 							@enderror
 							<small class="form-text text-muted">{{ __('Separate tags with commas') }}</small>
-						</div>						
+						</div>
 					</div>
 					<div class="card-footer">
 						<button class="btn btn-primary" type="submit">{{ __('Publish') }}</button>

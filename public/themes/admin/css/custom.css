@@ -219,3 +219,60 @@ label {
 .note-editor.note-frame {
     margin-bottom: 0;
 }
+
+.card-widget + .card-widget {
+    margin-top: 15px;
+}
+
+.card-widget.active .cw-body {
+    display: block;
+}
+
+.card-widget.active .cw-header .name::after {
+    content: "\f106";
+}
+
+.cw-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 1px solid #e4e6fc;
+    padding: .675rem 1rem;
+}
+
+.cw-header span {
+    cursor: pointer;
+}
+
+.cw-header .name {
+    position: relative;
+    flex: 1;
+    font-weight: bold;
+    padding-right: 30px;
+}
+
+.cw-header .name::after {
+    content: "\f107";
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+}
+
+.cw-header .action {
+    color: var(--danger);
+    font-size: .75rem;
+}
+
+.cw-header .action:hover {
+    text-decoration: underline;
+}
+
+.cw-body {
+    display: none;
+    padding: 1rem;
+    border-width: 0 1px 1px 1px;
+    border-style: solid;
+    border-color: #e4e6fc;
+}

@@ -229,6 +229,7 @@
 								</div>
 							</div>
 						</div>
+						<attribute-widget></attribute-widget>
 					</div>
 					<div class="tab-pane fade p-0" id="pmbox-variations">variations</div>
 					<div class="tab-pane fade p-0" id="pmbox-advanced">
@@ -252,7 +253,11 @@
 </template>
 
 <script>
+	import AttributeWidget from './Attribute/Widget.vue';
 	export default {
+		components: {
+			AttributeWidget,
+		},
 		data() {
 			return {
 				product_type: 'simple',
@@ -260,14 +265,7 @@
 				downloadable: false,
 				downloadable_files: [],
 				schedule_sale: false,
-				attributes: [
-					{
-						name: "Color",
-						values: "Red|Green|Blue",
-						frontend_type: 'checkbox',
-						used_for_variations: false,
-					}
-				],
+				attributes: [],
 			}
 		},
 		methods: {
