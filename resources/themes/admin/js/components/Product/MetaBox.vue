@@ -221,15 +221,15 @@
 						<div class="form-group">
 							<div class="input-group">
 								<select class="custom-select custom-select-sm">
-									<option value="custom">Custom product attributes</option>
-									<option value="color">Color</option>
+									<option value="0">Custom product attributes</option>
+									<option v-for="(item, index) in attr_list" :key="index" :value="item.id">{{ item.name }}</option>
 								</select>
 								<div class="input-group-append">
-									<button class="btn btn-primary" type="button" @click="choose_attribute">Add</button>
+									<button class="btn btn-primary" type="button" @click="add_attribute_widget">Add</button>
 								</div>
 							</div>
 						</div>
-						<attribute-widget></attribute-widget>
+						<widget-item v-for="(item, index) in attr_widget_list" :key="index" :attribute="item" :product_type="product_type" @remove="remove_attribute_widget"></widget-item>
 					</div>
 					<div class="tab-pane fade p-0" id="pmbox-variations">variations</div>
 					<div class="tab-pane fade p-0" id="pmbox-advanced">
@@ -253,10 +253,10 @@
 </template>
 
 <script>
-	import AttributeWidget from './Attribute/Widget.vue';
+	import WidgetItem from './AttributeWidget/WidgetItem.vue';
 	export default {
 		components: {
-			AttributeWidget,
+			WidgetItem,
 		},
 		data() {
 			return {
@@ -265,7 +265,8 @@
 				downloadable: false,
 				downloadable_files: [],
 				schedule_sale: false,
-				attributes: [],
+				attr_list: [],
+				attr_widget_list: [],
 			}
 		},
 		methods: {
@@ -274,7 +275,7 @@
 			},
 			remove_downloadable_file(file) {
 				if(!confirm('Are you sure to delete?')) return;
-				this.downloadable_files = this.downloadable_files.filter(function(item) {
+				this.downloadable_files = this.downloadable_files.filter((item) => {
 					return item.id != file.id;
 				});
 			},
@@ -282,10 +283,39 @@
 				this.schedule_sale = !this.schedule_sale;
 				event.target.classList.toggle('fa-times');
 			},
-			choose_attribute(event) {
-				let attr = event.target.closest('.input-group').querySelector('select').value;
-				console.log(attr)
+			add_attribute_widget(event) {
+				let attr_id = event.target.closest('.input-group').querySelector('select').value;
+				let attr = this.attr_list.find((item) => {
+					return item.id == attr_id;
+				});
+
+				let index = this.attr_widget_list.findIndex((item) => {
+					return item.id == attr.id;
+				});
+
+				if(index === -1) {
+					this.attr_widget_list.push(attr);
+				} else {
+					alert(attr.name + ' already attached.');
+				}
+			},
+			remove_attribute_widget(attr) {
+				this.attr_widget_list = this.attr_widget_list.filter((item) => {
+					return item.id != attr.id;
+				});
+			},
+			async fetch_all_attr() {
+				axios.get('/api/product-attributes')
+				.then((response) => {
+					this.attr_list = response.data;
+				})
+				.catch(function(error) {
+					console.log(error)
+				});
 			}
 		},
+		mounted() {
+			this.fetch_all_attr();
+		}
 	}
 </script>

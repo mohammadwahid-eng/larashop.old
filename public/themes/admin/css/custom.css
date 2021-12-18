@@ -213,23 +213,32 @@ label.required::after {
 }
 
 label {
-    margin-bottom: 0;
+    margin-bottom: .125rem;
+    line-height: 1.5;
 }
 
 .note-editor.note-frame {
     margin-bottom: 0;
 }
 
+.card-widget {
+    background-color: white;
+}
+
 .card-widget + .card-widget {
-    margin-top: 15px;
+    margin-top: 25px;
 }
 
 .card-widget.active .cw-body {
-    display: block;
+    display: none;
 }
 
 .card-widget.active .cw-header .name::after {
-    content: "\f106";
+    content: "\f107";
+}
+
+.card-widget.active .cw-footer {
+    display: none;
 }
 
 .cw-header {
@@ -248,16 +257,22 @@ label {
     position: relative;
     flex: 1;
     font-weight: bold;
+    color: var(--secondary);
+    letter-spacing: .5px;
     padding-right: 30px;
 }
 
 .cw-header .name::after {
-    content: "\f107";
+    content: "\f106";
     position: absolute;
     right: 0;
     z-index: 1;
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 
 .cw-header .action {
@@ -270,9 +285,22 @@ label {
 }
 
 .cw-body {
-    display: none;
+    display: block;
     padding: 1rem;
+    border: 1px solid #e4e6fc;
+}
+
+.cw-body .form-group:last-child {
+    margin-bottom: 0;
+}
+
+.cw-footer {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-color: #e4e6fc;
     border-width: 0 1px 1px 1px;
     border-style: solid;
-    border-color: #e4e6fc;
+    padding: .675rem 1rem;
+    background-color: #f8f9fa;
 }
