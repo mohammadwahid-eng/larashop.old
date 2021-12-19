@@ -5,11 +5,3 @@
  */
 
 require("./bootstrap");
-
-import { createApp } from 'vue';
-
-const app = createApp({});
-
-app.component('product-metabox', require('./components/Product/MetaBox.vue').default);
-
-app.mount("#app");

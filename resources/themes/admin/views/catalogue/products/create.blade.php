@@ -43,7 +43,7 @@
 							</div>
 						</div>
 
-						@include('catalogue.products.meta.index')
+						@include('catalogue.products.metabox.index')
 
 						<div class="card-widget">
 							<div class="cw-header">
@@ -189,7 +189,7 @@
 @push('footer')
 
     <script>
-        (function($) {
+        (function($) {			
 			// Form Validation
             $(".product-form").validate({
                 rules: {

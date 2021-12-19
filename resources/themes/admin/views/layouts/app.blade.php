@@ -47,7 +47,6 @@
         </div>
 
         <!-- General JS Scripts -->
-        <script src="{{ asset('themes/admin/js/app.js') }}"></script>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -68,7 +67,7 @@
 
         <!-- Template JS File -->
         <script src="{{ asset('themes/admin/js/scripts.js') }}"></script>
-        <script src="{{ asset('themes/admin/js/custom.js') }}"></script>
+        <script src="{{ asset('themes/admin/js/custom.js') }}"></script>        
 
         <!-- Page Specific JS File -->
         @stack('footer')
