@@ -5,67 +5,52 @@
 	<div class="cw-body p-0">
 		<div class="form-group d-flex gap-3 align-items-center m-0 p-3 border-bottom">
 			<label>Product type</label>
-			<select class="form-control form-control-sm w-auto" name="product_type" v-model="product_type">
+			<select class="form-control form-control-sm w-auto" name="product_type">
 				<option value="simple">{{ __('Simple product') }}</option>
-				<option value="group">{{ __('Group product') }}</option>
-				<option value="external">{{ __('External/Affiliate product') }}</option>
-				<option value="variable">{{ __('Variable product') }}</option>
 			</select>
 			<label class="custom-switch pl-0">
-				<input type="checkbox" name="is_virtual" id="is_virtual" class="custom-switch-input" v-model="is_virtual">
+				<input type="checkbox" name="virtual" id="virtual" class="custom-switch-input" v-model="virtual">
 				<span class="custom-switch-indicator"></span>
 				<span class="custom-switch-description" data-toggle="tooltip" title="Virtual products are intangible and are not shipped.">Virtual</span>
 			</label>
 			<label class="custom-switch pl-0">
-				<input type="checkbox" name="is_downloadable" id="is_downloadable" class="custom-switch-input" v-model="is_downloadable">
+				<input type="checkbox" name="downloadable" id="downloadable" class="custom-switch-input" v-model="downloadable">
 				<span class="custom-switch-indicator"></span>
 				<span class="custom-switch-description" data-toggle="tooltip" title="Downloadable products give access to a file upon purchase.">Downloadable</span>
 			</label>
 		</div>
 
-		<div class="card-widget">
+		<div class="card-widget active">
 			<div class="cw-header">
 				<span class="name">General</span>
 			</div>
 			<div class="cw-body">
-				<fieldset class="show_if_external">
+
+				<div class="form-group">
+					<label for="regular_price">Regular price</label>
+					<input type="number" class="form-control" id="regular_price" name="regular_price">
+				</div>
+				<div class="form-group">
+					<label for="sale_price">Sale price</label>
+					<div class="input-group">
+						<input type="number" class="form-control" id="sale_price" name="sale_price">
+						<div class="input-group-append">
+							<div class="input-group-text d-flex align-items-center cursor-pointer fas fa-clock" data-toggle="tooltip" title="Schedule" v-on:click="schedule_sale = !schedule_sale"></div>
+						</div>
+					</div>
+				</div>				
+				<fieldset v-show="schedule_sale">
 					<div class="form-group">
-						<label for="external_product_url">Product URL <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the external URL to the product."></i></label>
-						<input type="text" class="form-control" id="external_product_url" name="external_product_url" placeholder="https://">
+						<label for="sale_price_date_from">Sales price date from</label>
+						<input type="date" class="form-control" id="sale_price_date_from" name="sale_price_date_from">
 					</div>
 					<div class="form-group">
-						<label for="external_product_button_text">Button text <i class="fas fa-info-circle" data-toggle="tooltip" title="This text will be shown on the button linking to the external product."></i></label>
-						<input type="text" class="form-control" id="external_product_button_text" name="external_product_button_text" placeholder="Buy Product">
+						<label for="sale_price_date_to">Sales price date to</label>
+						<input type="date" class="form-control" id="sale_price_date_to" name="sale_price_date_to">
 					</div>
 				</fieldset>
 				
-				<fieldset class="show_if_simple show_if_external">
-					<div class="form-group">
-						<label for="regular_price">Regular price</label>
-						<input type="number" class="form-control" id="regular_price" name="regular_price">
-					</div>
-					<div class="form-group">
-						<label for="sale_price">Sale price</label>
-						<div class="input-group">
-							<input type="number" class="form-control" id="sale_price" name="sale_price">
-							<div class="input-group-append">
-								<div class="input-group-text d-flex align-items-center cursor-pointer fas fa-clock" data-toggle="tooltip" title="Schedule" @click="is_schedule_sale = !is_schedule_sale"></div>
-							</div>
-						</div>
-					</div>
-					<fieldset>
-						<div class="form-group">
-							<label for="sale_price_date_from">Sales price date from</label>
-							<input type="date" class="form-control" id="sale_price_date_from" name="sale_price_date_from">
-						</div>
-						<div class="form-group">
-							<label for="sale_price_date_to">Sales price date to</label>
-							<input type="date" class="form-control" id="sale_price_date_to" name="sale_price_date_to">
-						</div>
-					</fieldset>	
-				</fieldset>
-				
-				<fieldset class="show_if_downloadable">
+				<fieldset v-show="downloadable">
 					<div class="form-group">
 						<label for="download_limit">Downloadable files</label>
 						<table class="table table-sm table-bordered mb-0">
@@ -76,7 +61,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-for="(file, index) in downloadable_files" :key="file.id">
+								<tr v-for="(file, index) in files" :key="file.id">
 									<td>
 										<input type="text" class="form-control form-control-sm" placeholder="File name">
 									</td>
@@ -84,13 +69,13 @@
 										<div class="d-flex gap-2">
 											<input type="text" class="form-control form-control-sm" placeholder="https://">
 											<button type="button" class="btn btn-sm btn-light nowrap">Choose File</button>
-											<button type="button" class="btn btn-sm btn-link text-danger" @click="remove_downloadable_file(file)"><i class="fas fa-times-circle"></i></button>
+											<button type="button" class="btn btn-sm btn-link text-danger" v-on:click="remove_file(file)"><i class="fas fa-times-circle"></i></button>
 										</div>
 									</td>
 								</tr>
 								<tr>
 									<td colspan="2">
-										<button type="button" class="btn btn-sm btn-primary" @click="add_downloadable_file">Add file</button>
+										<button type="button" class="btn btn-sm btn-primary" v-on:click="add_file">Add file</button>
 									</td>
 								</tr>
 							</tbody>
@@ -105,90 +90,83 @@
 						<input type="number" class="form-control" id="download_expiry" name="download_expiry" placeholder="Never">
 					</div>
 				</fieldset>
-				
-				<fieldset class="show_if_simple show_if_external show_if_variable">
-					<div class="form-group">
-						<label for="tax_status">Tax status <i class="fas fa-info-circle" data-toggle="tooltip" title="Define whether or not the entire product is taxable, or just the cost of shipping it."></i></label>
-						<select name="tax_status" id="tax_status" class="form-control" v-model="tax_status">
-							<option value="taxable">Taxable</option>
-							<option value="shipping">Shipping only</option>
-							<option value="none">None</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="tax_class">Tax class <i class="fas fa-info-circle" data-toggle="tooltip" title="Choose a tax class for this product. Tax classes are used to apply different tax rates specific to certain types of product."></i></label>
-						<select name="tax_class" id="tax_class" class="form-control">
-							<option value="standard">Standard</option>
-							<option value="reduced-rate">Reduced rate</option>
-							<option value="zero-rate">Zero rate</option>
-						</select>
-					</div>
-				</fieldset>
+
+				<div class="form-group">
+					<label for="tax_status">Tax status <i class="fas fa-info-circle" data-toggle="tooltip" title="Define whether or not the entire product is taxable, or just the cost of shipping it."></i></label>
+					<select name="tax_status" id="tax_status" class="form-control" v-model="tax_status">
+						<option value="taxable">Taxable</option>
+						<option value="shipping">Shipping only</option>
+						<option value="">None</option>
+					</select>
+				</div>
+				<div class="form-group" v-show="tax_status">
+					<label for="tax_class">Tax class <i class="fas fa-info-circle" data-toggle="tooltip" title="Choose a tax class for this product. Tax classes are used to apply different tax rates specific to certain types of product."></i></label>
+					<select name="tax_class" id="tax_class" class="form-control">
+						<option value="standard">Standard</option>
+						<option value="reduced-rate">Reduced rate</option>
+						<option value="zero-rate">Zero rate</option>
+					</select>
+				</div>
 			</div>
 		</div>
-		<div class="card-widget mt-0 active">
+		<div class="card-widget show_if_simple mt-0 active">
 			<div class="cw-header">
 				<span class="name">Inventory</span>
 			</div>
 			<div class="cw-body">
-				<fieldset>
+				<div class="form-group">
+					<label for="sku">SKU <i class="fas fa-info-circle" data-toggle="tooltip" title="SKU refers to a Stock-keeping unit, a unique identifier for each distinct product and service that can be purchased."></i></label>
+					<input type="text" class="form-control" id="sku" name="sku">
+				</div>
+
+				<div class="form-group">
+					<label class="w-100" for="manage_stock">Manage stock?</label>
+					<label class="custom-switch pl-0">
+						<input type="checkbox" name="manage_stock" id="manage_stock" class="custom-switch-input" v-model="manage_stock">
+						<span class="custom-switch-indicator"></span>
+						<span class="custom-switch-description">Enable stock management at product level</span>
+					</label>
+				</div>
+
+				<fieldset v-show="manage_stock">						
 					<div class="form-group">
-						<label for="sku">SKU <i class="fas fa-info-circle" data-toggle="tooltip" title="SKU refers to a Stock-keeping unit, a unique identifier for each distinct product and service that can be purchased."></i></label>
-						<input type="text" class="form-control" id="sku" name="sku">
+						<label for="stock_quantity">Stock quantity <i class="fas fa-info-circle" data-toggle="tooltip" title="If this is a variable product this value will be used to control stock for all variations, unless you define stock at variation level."></i></label>
+						<input type="number" class="form-control" id="stock_quantity" name="stock_quantity" placeholder="0">
 					</div>
-
-					<fieldset class="show_if_simple show_if_variable">
-						<div class="form-group">
-							<label class="w-100" for="manage_stock">Manage stock?</label>
-							<label class="custom-switch pl-0">
-								<input type="checkbox" name="manage_stock" id="manage_stock" class="custom-switch-input" v-model="manage_stock">
-								<span class="custom-switch-indicator"></span>
-								<span class="custom-switch-description">Enable stock management at product level</span>
-							</label>
-						</div>
-						<div class="form-group">
-							<label for="stock_quantity">Stock quantity <i class="fas fa-info-circle" data-toggle="tooltip" title="If this is a variable product this value will be used to control stock for all variations, unless you define stock at variation level."></i></label>
-							<input type="number" class="form-control" id="stock_quantity" name="stock_quantity" placeholder="0">
-						</div>
-						<div class="form-group">
-							<label for="allow_backorders">Allow backorders? <i class="fas fa-info-circle" data-toggle="tooltip" title="If managing stock, this controls wheather or not backorders are allowed. If enabled, stock quantity can go below 0."></i></label>
-							<select name="allow_backorders" id="allow_backorders" class="form-control">
-								<option value="no">Do not allow</option>
-								<option value="notify">Allow, but notify customers</option>
-								<option value="yes">Allow</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="low_stock_amount">Low stock threshold <i class="fas fa-info-circle" data-toggle="tooltip" title="When product stock reaches this amount you will be notified by email. It is possible to define different values for each variation individually."></i></label>
-							<input type="number" class="form-control" id="low_stock_amount" name="low_stock_amount" placeholder="Store-wide threshold (2)">
-						</div>
-					</fieldset>
-
-					<fieldset class="hide_if_variable hide_if_external hide_if_grouped">
-						<div class="form-group">
-							<label for="stock_status">Stock status <i class="fas fa-info-circle" data-toggle="tooltip" title="Controls wheather or not the product is listed as 'in stock' or 'out of stock' on the frontend."></i></label>
-							<select name="stock_status" id="stock_status" class="form-control">
-								<option value="instock">In stock</option>
-								<option value="outofstock">Out of stock</option>
-								<option value="onbackorder">On backorder</option>
-							</select>
-						</div>
-					</fieldset>
-				</fieldset>
-
-				<fieldset class="show_if_simple show_if_variable">
 					<div class="form-group">
-						<label class="w-100" for="sold_individually">Sold individually</label>
-						<label class="custom-switch pl-0">
-							<input type="checkbox" name="sold_individually" id="sold_individually" class="custom-switch-input">
-							<span class="custom-switch-indicator"></span>
-							<span class="custom-switch-description">Enable this to only allow one of this item to be bought in a single order</span>
-						</label>
+						<label for="allow_backorders">Allow backorders? <i class="fas fa-info-circle" data-toggle="tooltip" title="If managing stock, this controls wheather or not backorders are allowed. If enabled, stock quantity can go below 0."></i></label>
+						<select name="allow_backorders" id="allow_backorders" class="form-control">
+							<option value="no">Do not allow</option>
+							<option value="notify">Allow, but notify customers</option>
+							<option value="yes">Allow</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="low_stock_amount">Low stock threshold <i class="fas fa-info-circle" data-toggle="tooltip" title="When product stock reaches this amount you will be notified by email. It is possible to define different values for each variation individually."></i></label>
+						<input type="number" class="form-control" id="low_stock_amount" name="low_stock_amount" placeholder="Store-wide threshold (2)">
 					</div>
 				</fieldset>
+
+				<div class="form-group" v-show="!manage_stock">
+					<label for="stock_status">Stock status <i class="fas fa-info-circle" data-toggle="tooltip" title="Controls wheather or not the product is listed as 'in stock' or 'out of stock' on the frontend."></i></label>
+					<select name="stock_status" id="stock_status" class="form-control">
+						<option value="instock">In stock</option>
+						<option value="outofstock">Out of stock</option>
+						<option value="onbackorder">On backorder</option>
+					</select>
+				</div>
+
+				<div class="form-group">
+					<label class="w-100" for="sold_individually">Sold individually</label>
+					<label class="custom-switch pl-0">
+						<input type="checkbox" name="sold_individually" id="sold_individually" class="custom-switch-input">
+						<span class="custom-switch-indicator"></span>
+						<span class="custom-switch-description">Enable this to only allow one of this item to be bought in a single order</span>
+					</label>
+				</div>
 			</div>
 		</div>
-		<div class="card-widget mt-0 active">
+		<div class="card-widget mt-0 active" v-show="!virtual">
 			<div class="cw-header">
 				<span class="name">Shipping</span>
 			</div>
@@ -224,24 +202,14 @@
 				<span class="name">Linked Products</span>
 			</div>
 			<div class="cw-body">
-				<fieldset class="show_if_grouped">
-					<div class="form-group">
-						<label for="grouped_products">Grouped products <i class="fas fa-info-circle" data-toggle="tooltip" title="This lets you choose which products are part of this group."></i></label>
-						<input type="text" class="form-control" id="grouped_products" name="grouped_products" placeholder="Search for a product…">
-					</div>
-				</fieldset>
-
 				<div class="form-group">
 					<label for="upsell_ids">Upsells <i class="fas fa-info-circle" data-toggle="tooltip" title="Upsells are products which you recommend instead of the currently viewed product, for example, products that are more profitable or better quality or more expensive."></i></label>
 					<input type="text" class="form-control" id="upsell_ids" name="upsell_ids" placeholder="Search for a product…">
 				</div>
-
-				<fieldset class="hide_if_grouped hide_if_external">
-					<div class="form-group">
-						<label for="cross_sell_ids">Cross-sells <i class="fas fa-info-circle" data-toggle="tooltip" title="Cross-sells are products which you promote in the cart, based on the current product."></i></label>
-						<input type="text" class="form-control" id="cross_sell_ids" name="cross_sell_ids" placeholder="Search for a product…">
-					</div>
-				</fieldset>
+				<div class="form-group">
+					<label for="cross_sell_ids">Cross-sells <i class="fas fa-info-circle" data-toggle="tooltip" title="Cross-sells are products which you promote in the cart, based on the current product."></i></label>
+					<input type="text" class="form-control" id="cross_sell_ids" name="cross_sell_ids" placeholder="Search for a product…">
+				</div>
 			</div>
 		</div>
 		<div class="card-widget mt-0 active">
@@ -249,15 +217,43 @@
 				<span class="name">Attributes</span>
 			</div>
 			<div class="cw-body">
-				Attributes
-			</div>
-		</div>
-		<div class="card-widget mt-0 active">
-			<div class="cw-header">
-				<span class="name">Variations</span>
-			</div>
-			<div class="cw-body">
-				Variations
+				<div class="form-group">
+					<div class="input-group">
+						<select class="custom-select custom-select-sm" v-model="choosen_attribute">					
+							<option value="">Create product attribute</option>
+							<option :value="attribute.id" v-for="(attribute, index) in all_attributes" :key="attribute.id">@{{ attribute.name }}</option>
+						</select>
+						<div class="input-group-append">
+							<button class="btn btn-primary" type="button" v-on:click="create_attribute_widget">Add Attribute</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="card-widget mt-0" v-for="(attribute, index) in attribute_widgets" :key="attribute.id">
+					<div class="cw-header">
+						<span class="name">@{{ attribute.name }}</span>
+						<span class="action" v-on:click="remove_attribute_widget(attribute)">Remove</span>
+					</div>
+					<div class="cw-body">
+						<div class="form-group">
+							<label class="w-100">Name</label>
+							<input type="hidden" name="attr[]" :value="attribute.id">
+							<label class="text-primary" v-if="!attribute.type">@{{ attribute.name }}</label>
+							<input type="text" class="form-control" v-if="attribute.type">
+						</div>
+						<div class="form-group">
+							<label>Value(s)</label>
+							<input type="text" class="form-control" v-if="!attribute.type">
+							<textarea class="form-control" v-if="attribute.type" placeholder="Enter some text, or some attributes by '|' separating values."></textarea>
+							<div class="d-flex mt-1">
+								<button type="button" class="btn btn-sm btn-primary" v-on:click="create_attribute" v-if="attribute.type">Create Attribute</button>
+								<button type="button" class="btn btn-sm btn-light" v-if="!attribute.type">Select All</button>
+								<button type="button" class="btn btn-sm btn-secondary ml-1" v-if="!attribute.type">Select None</button>
+								<button type="button" class="btn btn-sm btn-primary ml-auto" v-if="!attribute.type" v-on:click="create_attribute_value(attribute)">Add New</button>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="card-widget mt-0 active">
@@ -273,12 +269,10 @@
 						<span class="custom-switch-description">Allow</span>
 					</label>
 				</div>
-				<fieldset class="hide_if_external hide_if_grouped">
-					<div class="form-group mb-0">
-						<label for="purchase_note">Purchase note <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter an optional note to send the customer after purchase."></i></label>
-						<textarea class="summernote-simple" id="purchase_note" name="purchase_note"></textarea>
-					</div>
-				</fieldset>
+				<div class="form-group mb-0">
+					<label for="purchase_note">Purchase note <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter an optional note to send the customer after purchase."></i></label>
+					<textarea class="summernote-simple" id="purchase_note" name="purchase_note"></textarea>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -286,6 +280,7 @@
 
 @push('js_lib')
 	<script src="https://unpkg.com/vue@next"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
 @endpush
 
 @push('footer')
@@ -293,40 +288,60 @@
 		Vue.createApp({
 			data() {
 				return {
-					product_type: "simple",
-					is_virtual: false,
-					is_downloadable: false,
-					is_schedule_sale: false,
-					downloadable_files: [],
+					virtual: false,
+					downloadable: false,
+					schedule_sale: false,
+					files: [],
 					tax_status: 'taxable',
-
 					manage_stock: false,
+					choosen_attribute: '',
+					all_attributes: [],
+					attribute_widgets: [],
 				}
 			},
 			methods: {
-				add_downloadable_file() {
-					this.downloadable_files.push({ id: this.downloadable_files.length });
+				add_file() {
+					this.files.push({ id: this.files.length });
 				},
-				remove_downloadable_file(file) {
-					this.downloadable_files = this.downloadable_files.filter((item) => {
+				remove_file(file) {
+					this.files = this.files.filter((item) => {
 						return item.id != file.id;
 					});
 				},
-				hide_if_grouped() {
+				get_attributes() {
+					axios.get('/api/catalogue/attributes')
+					.then((response) => {
+						this.all_attributes = response.data;
+					})
+					.catch((error) => {
+						console.log(error);
+					});
+				},
+				create_attribute_widget() {
+					if(this.choosen_attribute !== '') {
+						let attribute = this.all_attributes.find((item) => {
+							return item.id == this.choosen_attribute;
+						});
+						this.attribute_widgets.indexOf(attribute) === -1 ? this.attribute_widgets.push(attribute) : alert("Attribute already attached");
+					} else {
+						alert(1);
+					}
+				},
+				remove_attribute_widget(attribute) {
+					this.attribute_widgets = this.attribute_widgets.filter((item) => {
+						return item.id !== attribute.id;
+					});
+				},
+				create_attribute() {
 
 				},
-				show_if_simple() {
-
-				},
-				show_if_variable() {
-
-				},
-				show_if_grouped(){
-
-				},
-				show_if_external() {
-
+				create_attribute_value(attribute) {
+					let value = prompt("Enter " + attribute.name + " name");
+					if(!value) return;
 				}
+			},
+			mounted() {
+				this.get_attributes();
 			}
 		}).mount(".product-metabox");
 	</script>
