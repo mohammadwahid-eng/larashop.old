@@ -2,6 +2,7 @@
 
 use App\Models\ProductAttribute;
 use App\Models\ProductAttributeValue;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,10 +23,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('catalogue')->group(function () {
     Route::get('/attributes', function() {
-        return response()->json(ProductAttribute::all());
-    });
-
-    Route::post('/attributes/{attribute}/values/store', function(Request $request, ProductAttribute $attribute) {
-        return response()->json($attribute);
+        return response()->json(ProductAttribute::with('attr_values')->get());
     });
 });

@@ -219,37 +219,34 @@
 			<div class="cw-body">
 				<div class="form-group">
 					<div class="input-group">
-						<select class="custom-select custom-select-sm" v-model="choosen_attribute">					
-							<option value="">Create product attribute</option>
-							<option :value="attribute.id" v-for="(attribute, index) in all_attributes" :key="attribute.id">@{{ attribute.name }}</option>
+						<select class="custom-select custom-select-sm" v-model="attr_picked">
+							<option :value="attribute.id" v-for="attribute in attr_list" :key="attribute.id">@{{ attribute.name }}</option>
 						</select>
 						<div class="input-group-append">
-							<button class="btn btn-primary" type="button" v-on:click="create_attribute_widget">Add Attribute</button>
+							<button class="btn btn-primary" type="button" v-on:click="create_widget">Add Attribute</button>
 						</div>
 					</div>
 				</div>
 
-				<div class="card-widget mt-0" v-for="(attribute, index) in attribute_widgets" :key="attribute.id">
+				<div class="card-widget mt-0" v-for="attribute in widget_list" :key="attribute.id">
 					<div class="cw-header">
 						<span class="name">@{{ attribute.name }}</span>
-						<span class="action" v-on:click="remove_attribute_widget(attribute)">Remove</span>
+						<span class="action" v-on:click="remove_widget(attribute)">Remove</span>
 					</div>
 					<div class="cw-body">
 						<div class="form-group">
 							<label class="w-100">Name</label>
-							<input type="hidden" name="attr[]" :value="attribute.id">
-							<label class="text-primary" v-if="!attribute.type">@{{ attribute.name }}</label>
-							<input type="text" class="form-control" v-if="attribute.type">
+							<label class="text-primary">@{{ attribute.name }}</label>
 						</div>
 						<div class="form-group">
 							<label>Value(s)</label>
-							<input type="text" class="form-control" v-if="!attribute.type">
-							<textarea class="form-control" v-if="attribute.type" placeholder="Enter some text, or some attributes by '|' separating values."></textarea>
+							<select class="form-control select2">
+								<option :value="value.id" v-for="value in attribute.attr_values" :key="value.id">@{{ value.name }}</option>
+							</select>
 							<div class="d-flex mt-1">
-								<button type="button" class="btn btn-sm btn-primary" v-on:click="create_attribute" v-if="attribute.type">Create Attribute</button>
-								<button type="button" class="btn btn-sm btn-light" v-if="!attribute.type">Select All</button>
-								<button type="button" class="btn btn-sm btn-secondary ml-1" v-if="!attribute.type">Select None</button>
-								<button type="button" class="btn btn-sm btn-primary ml-auto" v-if="!attribute.type" v-on:click="create_attribute_value(attribute)">Add New</button>
+								<button type="button" class="btn btn-sm btn-light">Select All</button>
+								<button type="button" class="btn btn-sm btn-secondary ml-1">Select None</button>
+								<button type="button" class="btn btn-sm btn-primary ml-auto" v-on:click="create_value(attribute)">Add New</button>
 							</div>
 						</div>
 					</div>
@@ -278,13 +275,19 @@
 	</div>
 </div>
 
+@push('css_lib')
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endpush
+
 @push('js_lib')
 	<script src="https://unpkg.com/vue@next"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 @endpush
 
 @push('footer')
 	<script>
+		axios.defaults.baseURL = 'https://larashop.devs';
 		Vue.createApp({
 			data() {
 				return {
@@ -294,9 +297,9 @@
 					files: [],
 					tax_status: 'taxable',
 					manage_stock: false,
-					choosen_attribute: '',
-					all_attributes: [],
-					attribute_widgets: [],
+					attr_picked: '',
+					attr_list: [],
+					widget_list: [],
 				}
 			},
 			methods: {
@@ -308,40 +311,35 @@
 						return item.id != file.id;
 					});
 				},
-				get_attributes() {
+				async fetch_attrs() {
 					axios.get('/api/catalogue/attributes')
 					.then((response) => {
-						this.all_attributes = response.data;
+						this.attr_list = response.data;
 					})
 					.catch((error) => {
 						console.log(error);
 					});
 				},
-				create_attribute_widget() {
-					if(this.choosen_attribute !== '') {
-						let attribute = this.all_attributes.find((item) => {
-							return item.id == this.choosen_attribute;
-						});
-						this.attribute_widgets.indexOf(attribute) === -1 ? this.attribute_widgets.push(attribute) : alert("Attribute already attached");
-					} else {
-						alert(1);
+				create_widget() {
+					if(!this.attr_picked) {
+						alert("Please choose an attribute");
+						return false;
 					}
+					let attribute = this.attr_list.find(item => item.id == this.attr_picked);
+					this.widget_list.indexOf(attribute) === -1 ? this.widget_list.unshift(attribute) : alert(attribute.name + " already attached");
 				},
-				remove_attribute_widget(attribute) {
-					this.attribute_widgets = this.attribute_widgets.filter((item) => {
+				remove_widget(attribute) {
+					this.widget_list = this.widget_list.filter((item) => {
 						return item.id !== attribute.id;
 					});
 				},
-				create_attribute() {
-
-				},
-				create_attribute_value(attribute) {
+				create_value(attribute) {
 					let value = prompt("Enter " + attribute.name + " name");
 					if(!value) return;
 				}
 			},
 			mounted() {
-				this.get_attributes();
+				this.fetch_attrs();
 			}
 		}).mount(".product-metabox");
 	</script>
