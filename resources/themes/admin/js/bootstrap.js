@@ -6,8 +6,11 @@ window._ = require('lodash');
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
+import { createApp } from 'vue';
+
 try {
     window.$ = window.jQuery = require('jquery');
+    window.Vue = createApp({});
 } catch (e) {}
 
 window.axios = require('axios');

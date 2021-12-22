@@ -16,7 +16,3 @@ $(document).on('keyup', '[data-slugify]', function () {
         $(target).parent().find('label.error').hide().text("");
     }
 });
-
-$(document).on('click', '.cw-header .name', function () {
-    $(this).closest('.card-widget').toggleClass('active');
-});

@@ -43,18 +43,20 @@
 							</div>
 						</div>
 
-						@include('catalogue.products.metabox.index')
+						@include('catalogue.products.partials.metabox')
 
 						<div class="card-widget">
 							<div class="cw-header">
-								<span class="name">{{ __('Product short description') }}</span>
+								<span class="name" data-toggle="collapse" data-target="#product-short-description">{{ __('Product short description') }}</span>
 							</div>
-							<div class="cw-body">
-								<div class="form-group">
-									<textarea class="summernote-simple @error('short_description') error @enderror" id="short_description" name="short_description"></textarea>
-									@error('short_description')
-										<div class="invalid-feedback">{{ $message }}</div>
-									@enderror
+							<div class="collapse show" id="product-short-description">
+								<div class="cw-body">
+									<div class="form-group">
+										<textarea class="summernote-simple @error('short_description') error @enderror" id="short_description" name="short_description"></textarea>
+										@error('short_description')
+											<div class="invalid-feedback">{{ $message }}</div>
+										@enderror
+									</div>
 								</div>
 							</div>
 						</div>
@@ -62,58 +64,62 @@
 					<div class="col-md-4">
 						<div class="card-widget">
 							<div class="cw-header">
-								<span class="name">{{ __('Publish') }}</span>
+								<span class="name" data-toggle="collapse" data-target="#product-publish">{{ __('Publish') }}</span>
 							</div>
-							<div class="cw-body">
-								<div class="form-group">
-									<label class="w-100" for="status">{{ __('Status') }}</label>
-									<label class="custom-switch pl-0">
-										<input type="checkbox" name="status" id="status" class="custom-switch-input" @if (old('status')) checked @endif>
-										<span class="custom-switch-indicator"></span>
-										<span class="custom-switch-description">{{ __('Make this product active for customers') }}</span>
-									</label>
-									@error('status')
-										<div class="invalid-feedback">{{ $message }}</div>
-									@enderror
+							<div class="collapse show" id="product-publish">
+								<div class="cw-body">
+									<div class="form-group">
+										<label class="w-100" for="status">{{ __('Status') }}</label>
+										<label class="custom-switch pl-0">
+											<input type="checkbox" name="status" id="status" class="custom-switch-input" @if (old('status')) checked @endif>
+											<span class="custom-switch-indicator"></span>
+											<span class="custom-switch-description">{{ __('Make this product active for customers') }}</span>
+										</label>
+										@error('status')
+											<div class="invalid-feedback">{{ $message }}</div>
+										@enderror
+									</div>
+									<div class="form-group">
+										<label class="w-100" for="featured">{{ __('Featured') }}</label>
+										<label class="custom-switch pl-0">
+											<input type="checkbox" name="featured" id="featured" class="custom-switch-input" @if (old('featured')) checked @endif>
+											<span class="custom-switch-indicator"></span>
+											<span class="custom-switch-description">{{ __('This is a featured product') }}</span>
+										</label>
+										@error('featured')
+											<div class="invalid-feedback">{{ $message }}</div>
+										@enderror
+									</div>
 								</div>
-								<div class="form-group">
-									<label class="w-100" for="featured">{{ __('Featured') }}</label>
-									<label class="custom-switch pl-0">
-										<input type="checkbox" name="featured" id="featured" class="custom-switch-input" @if (old('featured')) checked @endif>
-										<span class="custom-switch-indicator"></span>
-										<span class="custom-switch-description">{{ __('This is a featured product') }}</span>
-									</label>
-									@error('featured')
-										<div class="invalid-feedback">{{ $message }}</div>
-									@enderror
+								<div class="cw-footer">
+									<button class="btn" type="button">{{ __('Save as Draft') }}</button>
+									<button class="btn btn-primary ml-auto" type="submit">{{ __('Publish') }}</button>
 								</div>
-							</div>
-							<div class="cw-footer">
-								<button class="btn" type="button">{{ __('Save as Draft') }}</button>
-								<button class="btn btn-primary ml-auto" type="submit">{{ __('Publish') }}</button>
 							</div>
 						</div>
 						
 						<div class="card-widget">
 							<div class="cw-header">
-								<span class="name">{{ __('Product categories') }}</span>
+								<span class="name" data-toggle="collapse" data-target="#product-categories">{{ __('Product categories') }}</span>
 							</div>
-							<div class="cw-body">
-								<div class="form-group">
-									<div class="category-checkbox-tree">
-										<ul>
-											@forelse (\App\Models\ProductCategory::where('parent_id', null)->get() as $category)
-												<li>
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" id="category-{{ $category->id }}" name="categories[]" value="{{ $category->id }}">
-														<label class="custom-control-label" for="category-{{ $category->id }}">{{ $category->name }}</label>
-													</div>
-													{{ \App\Models\ProductCategory::checkboxTree($category->children) }}
-												</li>												
-											@empty
-												<li><a href="{{ route('admin.categories.create') }}" class="text-primary">{{ __("Add new category") }}</a></li>
-											@endforelse
-										</ul>
+							<div class="collapse show" id="product-categories">
+								<div class="cw-body">
+									<div class="form-group">
+										<div class="category-checkbox-tree">
+											<ul>
+												@forelse (\App\Models\ProductCategory::where('parent_id', null)->get() as $category)
+													<li>
+														<div class="custom-control custom-checkbox">
+															<input type="checkbox" class="custom-control-input" id="category-{{ $category->id }}" name="categories[]" value="{{ $category->id }}">
+															<label class="custom-control-label" for="category-{{ $category->id }}">{{ $category->name }}</label>
+														</div>
+														{{ \App\Models\ProductCategory::checkboxTree($category->children) }}
+													</li>												
+												@empty
+													<li><a href="{{ route('admin.categories.create') }}" class="text-primary">{{ __("Add new category") }}</a></li>
+												@endforelse
+											</ul>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -121,31 +127,16 @@
 						
 						<div class="card-widget">
 							<div class="cw-header">
-								<span class="name">{{ __('Product tags') }}</span>
+								<span class="name" data-toggle="collapse" data-target="#product-tags">{{ __('Product tags') }}</span>
 							</div>
-							<div class="cw-body">
-								<div class="form-group">
-									<input type="text" class="form-control @error('tags') error @enderror" id="tags" name="tags" value="{{ old('tags') }}" data-role="tagsinput">
-									@error('tags')
-										<div class="invalid-feedback">{{ $message }}</div>
-									@enderror
-									<small class="form-text text-muted">{{ __('Separate tags with commas') }}</small>
-								</div>
-							</div>
-						</div>
-						
-						<div class="card-widget">
-							<div class="cw-header">
-								<span class="name">{{ __('Product image') }}</span>
-							</div>
-							<div class="cw-body">
-								<div class="form-group">
-									<div class="custom-file">
-										<input type="file" class="custom-file-input h-100 @error('featured_image') is-invalid @enderror" id="featured_image" name="featured_image">
-										<label class="custom-file-label" for="featured_image">{{ __('Choose file') }}</label>
-										@error('featured_image')
+							<div class="collapse show" id="product-tags">
+								<div class="cw-body">
+									<div class="form-group">
+										<input type="text" class="form-control @error('tags') error @enderror" id="tags" name="tags" value="{{ old('tags') }}" data-role="tagsinput">
+										@error('tags')
 											<div class="invalid-feedback">{{ $message }}</div>
 										@enderror
+										<small class="form-text text-muted">{{ __('Separate tags with commas') }}</small>
 									</div>
 								</div>
 							</div>
@@ -153,16 +144,37 @@
 						
 						<div class="card-widget">
 							<div class="cw-header">
-								<span class="name">{{ __('Product gallery') }}</span>
+								<span class="name" data-toggle="collapse" data-target="#product-image">{{ __('Product image') }}</span>
 							</div>
-							<div class="cw-body">
-								<div class="form-group">
-									<div class="custom-file">
-										<input type="file" class="custom-file-input h-100 @error('gallery_images') is-invalid @enderror" id="gallery_images" name="gallery_images" multiple>
-										<label class="custom-file-label" for="gallery_images">{{ __('Choose file') }}</label>
-										@error('gallery_images')
-											<div class="invalid-feedback">{{ $message }}</div>
-										@enderror
+							<div class="collapse show" id="product-image">
+								<div class="cw-body">
+									<div class="form-group">
+										<div class="custom-file">
+											<input type="file" class="custom-file-input h-100 @error('featured_image') is-invalid @enderror" id="featured_image" name="featured_image">
+											<label class="custom-file-label" for="featured_image">{{ __('Choose file') }}</label>
+											@error('featured_image')
+												<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="card-widget">
+							<div class="cw-header">
+								<span class="name" data-toggle="collapse" data-target="#product-gallery">{{ __('Product gallery') }}</span>
+							</div>
+							<div class="collapse show" id="product-gallery">
+								<div class="cw-body">
+									<div class="form-group">
+										<div class="custom-file">
+											<input type="file" class="custom-file-input h-100 @error('gallery_images') is-invalid @enderror" id="gallery_images" name="gallery_images" multiple>
+											<label class="custom-file-label" for="gallery_images">{{ __('Choose file') }}</label>
+											@error('gallery_images')
+												<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+										</div>
 									</div>
 								</div>
 							</div>

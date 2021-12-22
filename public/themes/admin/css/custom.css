@@ -229,24 +229,10 @@ label {
     margin-top: 25px;
 }
 
-.card-widget.active .cw-body {
-    display: none;
-}
-
-.card-widget.active .cw-header .name::after {
-    content: "\f107";
-}
-
-.card-widget.active .cw-footer {
-    display: none;
-}
-
 .cw-header {
     display: flex;
     align-items: center;
-    gap: 15px;
     border: 1px solid #e4e6fc;
-    padding: .675rem 1rem;
 }
 
 .cw-header span {
@@ -259,13 +245,13 @@ label {
     font-weight: bold;
     color: var(--secondary);
     letter-spacing: .5px;
-    padding-right: 30px;
+    padding: .675rem 30px .675rem 1rem;
 }
 
 .cw-header .name::after {
     content: "\f106";
     position: absolute;
-    right: 0;
+    right: 1rem;
     z-index: 1;
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
@@ -275,9 +261,14 @@ label {
     transform: translateY(-50%);
 }
 
+.cw-header .name.collapsed::after {
+    content: "\f107";
+}
+
 .cw-header .action {
     color: var(--danger);
     font-size: .75rem;
+    padding: .675rem 1rem .675rem 0;
 }
 
 .cw-header .action:hover {
@@ -303,4 +294,14 @@ label {
     border-style: solid;
     padding: .675rem 1rem;
     background-color: #f8f9fa;
+}
+
+.attr_val_container {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(151px, 1fr));
+    line-height: 1 !important;
+    gap: 10px;
 }
