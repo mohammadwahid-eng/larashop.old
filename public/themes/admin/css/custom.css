@@ -305,3 +305,7 @@ label {
     line-height: 1 !important;
     gap: 10px;
 }
+
+.product-metabox .form-group {
+    margin-bottom: 15px;
+}
