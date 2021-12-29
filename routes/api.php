@@ -25,4 +25,13 @@ Route::prefix('catalogue')->group(function () {
     Route::get('/attributes', function() {
         return response()->json(ProductAttribute::with('attr_values')->get());
     });
+    Route::post('/attributes/{attribute}/values', function(Request $request, ProductAttribute $attribute) {
+        $value = ProductAttributeValue::firstOrCreate([
+            'name'         => $request->name,
+            'slug'         => $request->name,
+            'description'  => $request->description,
+            'attribute_id' => $attribute->id,
+        ]);
+        return response()->json($value);
+    });
 });
