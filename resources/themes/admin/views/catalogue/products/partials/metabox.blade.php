@@ -342,6 +342,34 @@
 									</div>
 								</div>
 
+								<div class="card-widget mt-3" v-if="custom_attr_wizard">
+									<div class="cw-header">
+										<span class="name" data-toggle="collapse" data-target="#product-custom-attribute">@{{ custom_attr_name }} &nbsp;</span>
+										<span class="action" v-on:click="custom_attr_wizard = !custom_attr_wizard">Remove</span>
+									</div>
+									<div class="collapse show" id="product-custom-attribute" data-parent="#product-attributes-collapse">
+										<div class="cw-body">
+											<div class="row">
+												<div class="col-md-4">
+													<div class="form-group">
+														<label>Name:</label>
+														<input type="text" class="form-control" v-model="custom_attr_name">
+													</div>
+												</div>
+												<div class="col-md-8">
+													<div class="form-group">
+														<label>Value(s):</label>
+														<textarea class="form-control" placeholder="Enter some text, or some attributes by '|' separating values." v-model="custom_attr_values"></textarea>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="cw-footer">
+											<button type="button" class="btn btn-sm btn-primary ml-auto" v-on:click="create_attr">Create Attribute</button>
+										</div>
+									</div>
+								</div>
+
 								<div class="card-widget" :class="[ index === 0 ? 'mt-3' : 'mt-0' ]" v-for="(attribute, index) in picked_attr_list" :key="attribute.id">
 									<div class="cw-header">
 										<span class="name" :class="[ index !== 0 ? 'collapsed' : '' ]" data-toggle="collapse" :data-target="'#product-attribute-'+attribute.id">@{{ attribute.name }}</span>
@@ -431,6 +459,9 @@
 					attributes: [],
 					picked_attr: '',
 					picked_attr_list: [],
+					custom_attr_wizard: false,
+					custom_attr_name: '',
+					custom_attr_values: '',
 				}
 			},
 			methods: {
@@ -455,11 +486,31 @@
 					});
 				},
 				create_attr() {
-					
+					this.preloader = true;
+					axios.post('/api/catalogue/attributes', {
+						name: this.custom_attr_name,
+						slug: this.custom_attr_name,
+						values: this.custom_attr_values.split('|'),
+					})
+					.then((response) => {
+						let _attr = this.attributes.find(item => item.id == response.data.id);
+						
+
+						// if(this.picked_attr_list.indexOf(_attr) === -1) {
+						// 	this.picked_attr_list.unshift(_attr);
+						// } else {
+
+						// }
+					})
+					.catch(error => console.log(error))
+					.then(() => {
+						this.custom_attr_wizard = false;
+						this.preloader = false;
+					});
 				},
 				pick_attr() {
 					if(!this.picked_attr) {
-						this.create_attr();
+						this.custom_attr_wizard = true;
 						return;
 					}
 
@@ -482,7 +533,6 @@
 					axios.post('/api/catalogue/attributes/'+attribute.id+'/values', {
 						name: name,
 						slug: name,
-						description: null,
 					})
 					.then((response) => {
 						let values = this.attributes.find(item => item.id === attribute.id).attr_values;
@@ -492,7 +542,7 @@
 					.catch(error => console.log(error))
 					.then(() => {
 						this.preloader = false;
-					})
+					});
 				},
 			},
 			mounted() {
