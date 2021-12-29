@@ -16,24 +16,27 @@
                                 <input type="hidden" name="token" value="{{ request()->token }}">
 
                                 <div class="form-group">
-                                    <label for="email">{{ __('Email') }}</label>
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                    <label for="email" class="required">{{ __('Email') }}</label>
+                                    <input id="email" type="email" class="form-control @error('email') error @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                                     @error('email')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        <label id="email-error" class="error" for="email">{{ $message }}</label>
                                     @enderror
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="password">{{ __('New Password') }}</label>
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                    <label for="password" class="required">{{ __('New Password') }}</label>
+                                    <input id="password" type="password" class="form-control @error('password') error @enderror" name="password" required autocomplete="new-password">
                                     @error('password')
-                                        <span class="invalid-feedback">{{ $message }}</span>
+                                        <label id="password-error" class="error" for="password">{{ $message }}</label>
                                     @enderror
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="password">{{ __('Confirm New Password') }}</label>
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                    <label for="password_confirmation" class="required">{{ __('Confirm New Password') }}</label>
+                                    <input id="password_confirmation" type="password" class="form-control @error('password_confirmation') error @enderror" name="password_confirmation" required autocomplete="new-password">
+                                    @error('password_confirmation')
+                                        <label id="password_confirmation-error" class="error" for="password_confirmation">{{ $message }}</label>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
@@ -50,3 +53,25 @@
         </div>
     </section>
 @endsection
+
+@push('footer')
+    <script>
+        (function($) {
+            $("form").validate({
+                rules: {
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    password: {
+                        minlength: 8
+                    },
+                    password_confirmation: {
+                        minlength: 8,
+                        equalTo : "#password",
+                    },
+                },
+            });
+        }(jQuery))
+    </script>
+@endpush

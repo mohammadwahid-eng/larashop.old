@@ -10,20 +10,18 @@
                     <form method="POST" action="{{ route('admin.login') }}">
                         @csrf
                         <div class="form-group">
-                            <label for="email">{{ __('Email') }}</label>
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                            <label for="email" class="required">{{ __('Email') }}</label>
+                            <input id="email" type="email" class="form-control @error('email') error @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                             @error('email')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <label id="email-error" class="error" for="email">{{ $message }}</label>
                             @enderror
                         </div>
 
                         <div class="form-group">
-                            <div class="d-block">
-                                <label for="password" class="control-label">{{ __('Password') }}</label>
-                            </div>
-                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                            <label for="password" class="required">{{ __('Password') }}</label>
+                            <input id="password" type="password" class="form-control @error('password') error @enderror" name="password" required autocomplete="current-password">
                             @error('password')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <label id="password-error" class="error" for="password">{{ $message }}</label>
                             @enderror
                         </div>
                         
@@ -66,3 +64,21 @@
         </div>
     </section>
 @endsection
+
+@push('footer')
+    <script>
+        (function($) {
+            $("form").validate({
+                rules: {
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    password: {
+                        minlength: 8
+                    }
+                },
+            });
+        }(jQuery))
+    </script>
+@endpush

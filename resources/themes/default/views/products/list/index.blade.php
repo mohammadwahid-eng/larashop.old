@@ -1508,4 +1508,4 @@
             <!--End Main Content-->
         </div>
     </div>
-</x-app-layout>
+@endsection

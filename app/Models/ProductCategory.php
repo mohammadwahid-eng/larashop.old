@@ -48,4 +48,23 @@ class ProductCategory extends Model implements HasMedia
     public function products() {
         return $this->belongsToMany(Product::class, 'category_product', 'category_id', 'product_id')->withTimestamps();
     }
+
+    public static function checkboxTree($categories) {
+        if(count($categories)) {
+            echo '<ul>';
+                foreach($categories as $category) {
+                    echo '<li>';
+                        echo '<div class="custom-control custom-checkbox">';
+                            echo '<input type="checkbox" class="custom-control-input" id="category-'. $category->id .'" name="categories[]" value="'. $category->id .'">';
+                            echo '<label class="custom-control-label" for="category-'. $category->id .'">'. $category->name .'</label>';
+                        echo '</div>';
+                        
+                        if(count($category->children)) {
+                            self::checkboxTree($category->children);
+                        }
+                    echo '</li>';
+                }
+            echo '</ul>';
+        }
+    }
 }
